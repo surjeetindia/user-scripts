@@ -12,7 +12,7 @@
 
 (async function () {
   "use strict";
-  console.log('this is console intentionally');
+
   let namedVote = true;
 
   function sleep(ms) {
@@ -20,8 +20,8 @@
   }
   async function scroll() {
     console.log("scrolling");
-    await sleep(8000);
-    window.scrollTo(0, 2200);
+    await sleep(3000);
+    window.scrollTo(0, 3000);
   }
   async function fillName() {
     let control = await document.getElementById("v");
