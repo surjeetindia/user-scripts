@@ -6,6 +6,8 @@
   // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
   // Placeholders with the same ids are connected.
   // Example:
+
+  //   start events
   "@todo": {
     "scope": "typescript, javascript",
     "prefix": "todo",
@@ -19,7 +21,9 @@
     "body": ["// @discuss: $1"],
     "description": ""
   },
+  //   end events
 
+  //   start regions
   "region block": {
     "scope": "typescript",
     "prefix": "region-ins",
@@ -38,7 +42,9 @@
     "body": ["// #endregion $1"],
     "description": ""
   },
+  //   end regions
 
+  // start api
   "spv GET": {
     "scope": "http",
     "prefix": "GET",
@@ -66,7 +72,9 @@
     ],
     "description": "create new request"
   },
+  // end api
 
+  // start exception handling
   "spv try catch log": {
     "scope": "typescript",
     "prefix": "spv.tryCatchLog",
@@ -80,6 +88,7 @@
     ],
     "description": ""
   },
+  // end exception handling
 
   "spv asyncfun trycatchlog": {
     "scope": "typescript",
@@ -89,24 +98,6 @@
       "* $1",
       "*/",
       "async $1($2): Promise<any$3>{",
-      "  try {",
-      "    $4",
-      "  } catch (error: any) {",
-      "    this.logger.logError(error, 'Function: $1. message:' + error.message, error);",
-      "    throw error;",
-      "  }",
-      "}"
-    ],
-    "description": ""
-  },
-  "spv fun trycatchlog": {
-    "scope": "typescript",
-    "prefix": "spv.fun",
-    "body": [
-      "/**",
-      "* $1",
-      "*/",
-      "$1($2): Promise<any$3>{",
       "  try {",
       "    $4",
       "  } catch (error: any) {",
