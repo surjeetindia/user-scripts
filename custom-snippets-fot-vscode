@@ -21,6 +21,42 @@
     "body": ["// @discuss: $1"],
     "description": ""
   },
+
+  "@not-in-use": {
+    "scope": "typescript, javascript",
+    "prefix": "inusen",
+    "body": ["// @not-in-use", "$1"],
+    "description": "marker not in use"
+  },
+
+  "@in-use": {
+    "scope": "typescript, javascript",
+    "prefix": "inuse",
+    "body": ["// @in-use", "$1"],
+    "description": "marker in use"
+  },
+
+  "File header": {
+    "prefix": "header",
+    "body": [
+      "title: ${title:Enter title}",
+      "date: ${date:Insert datetime string (⇧⌘I or Ctrl+Shift+I)}"
+    ]
+  },
+
+  "file description": {
+    "prefix": "template",
+    "body": [
+      "/* _* coding: utf8 *_",
+      " *",
+      " * filename: $TM_FILENAME",
+      " *",
+      " * @author: surjeet",
+      " * createdAt: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
+      " */"
+    ],
+    "description": "file description"
+  },
   //   end events
 
   //   start regions
@@ -82,7 +118,7 @@
       "try {",
       "  $2",
       "} catch (error: any) {",
-      "  this.logger.logError(error, 'Function: $1. message:' + error.message, error);",
+      "  this.logger.logError(error, `$1 message: ${error.message}`, error);",
       "  throw error;",
       "}"
     ],
@@ -101,7 +137,7 @@
       "  try {",
       "    $4",
       "  } catch (error: any) {",
-      "    this.logger.logError(error, 'Function: $1. message:' + error.message, error);",
+      "    this.logger.logError(error, `$1 message: ${error.message}`, error);",
       "    throw error;",
       "  }",
       "}"
@@ -127,7 +163,7 @@
   "spv console": {
     "scope": "typescript, javascript",
     "prefix": "spv.log",
-    "body": ["console.log('$1', $1);", "$2"],
+    "body": ["console.log(`$1`, $1);", "$2"],
     "description": "Log output to console"
   },
 
@@ -135,7 +171,7 @@
     "scope": "typescript",
     "prefix": "spv.logError",
     "body": [
-      "this.logger.logError(error, `Function: $1. Error: ${error.message}`, error);$2"
+      "this.logger.logError(error, `$1 message: ${error.message}`, error);$2"
     ],
     "description": "Log output to kibana"
   },
@@ -148,14 +184,14 @@
   "this.logger.log('fn')": {
     "scope": "typescript",
     "prefix": "spv.logblog",
-    "body": ["this.logger.log(`Function: $1`, undefined, undefined, res$2);$3"],
+    "body": ["this.logger.log(`$1`, undefined, undefined, res$2);$3"],
     "description": "Log output to kibana"
   },
   "this.logger.error('fn')": {
     "scope": "typescript",
     "prefix": "spv.logberr",
     "body": [
-      "this.logger.error(`Function: $1. Error: ${error.message}`, error?.stack ?? '', undefined, undefined, clone(error));$2"
+      "this.logger.error(`$1 message: ${error.message}`, error?.stack ?? '', undefined, undefined, clone(error));$2"
     ],
     "description": "Log output to kibana"
   },
@@ -188,6 +224,23 @@
     "description": ""
   },
 
+  "prisma-seed-package": {
+    "scope": "json",
+    "prefix": "prisma-seed-package",
+    "body": [
+      "\"prisma\": {",
+      "  \"seed\": \"ts-node prisma/seed.ts\"",
+      "},",
+    ],
+    "description": ""
+  },
+
+  "ignore": {
+    "scope": "ignore",
+    "prefix": "ignore",
+    "body": ["# Surjeet", "api", "*.http", ".vscode", "spv/"]
+  },
+
   "prisma-query-log-init": {
     "scope": "typescript",
     "prefix": "prisma-query-log-onmoduleinit",
@@ -213,6 +266,24 @@
       "def initialize($1)",
       "${1/([^,]+)((,\\s*)|)/\t@$1 = $1${2:+\n}/g}",
       "end"
+    ],
+    "description": "Initialize Class"
+  },
+
+  "cc": {
+    "scope": "typescript, javascript",
+    "prefix": "cc",
+    "body": [
+      "${1/([^,]+)([,\\s]*|)/console.log(`$1`, $1)\n/g}",
+    ],
+    "description": "short console log"
+  },
+
+  "afn": {
+    "scope": "typescript, javascript",
+    "prefix": "afn",
+    "body": [
+      "${1/([^,]+)([,\\s]*|)/async $1(){\n  try {\n  } catch (error: any) {\n  }\n}\n/g}",
     ],
     "description": "Initialize Class"
   }
