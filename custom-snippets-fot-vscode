@@ -286,5 +286,18 @@
       "${1/([^,]+)([,\\s]*|)/async $1(){\n  try {\n  } catch (error: any) {\n  }\n}\n/g}",
     ],
     "description": "Initialize Class"
+  },
+
+  "constructor": {
+    "scope": "typescript",
+    "prefix": "construct with logger",
+    "body": [
+      "constructor(",
+      "  private readonly logger: LoggerService,",
+      "){",
+      "  this.logger.setContext(this.constructor.name);",
+      "}",
+    ],
+    "description": "Initialize Class"
   }
 }
