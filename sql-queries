@@ -1,0 +1,174 @@
+use drpt_db;
+
+SET FOREIGN_KEY_CHECKS=0;
+
+
+TRUNCATE `_prisma_migrations`; 
+
+drop table drpt_db.country;
+drop table drpt_db.messageBus;
+drop table drpt_db.survey;
+drop table drpt_db.userAccount;
+drop table drpt_db.userContact;
+drop table drpt_db.userProfile;
+drop table drpt_db.mntcAccount;
+
+drop table drpt_db.country, drpt_db.messageBus, drpt_db.survey, drpt_db.userAccount, drpt_db.userContact, drpt_db.userProfile, drpt_db.mntcAccount;
+
+
+delete from `_prisma_migrations` where migration_name like '20220901102157_mntc_account';
+
+
+alter table gtaAccount drop mntcId;
+
+delete from _prisma_migrations where migration_name like "%mntc%";
+
+
+
+update gtaCountry set iso="B123";
+
+
+select LENGTH(c.phoneCountryCode) from country c order by 1 desc;
+
+
+select 
+	count(accountId),
+	(select createdAt from survey s
+	where
+	accountId = 1
+	order by id 
+	limit 1) 'firstSurveyRequest'
+from survey s
+where 
+accountId = 1
+
+
+select * from survey s 
+where createdAt > DATE_SUB(CURRENT_TIMESTAMP, 1 HOUR)
+order by createdAt desc
+
+	
+order by s.createdAt limit 1;
+
+
+select * from survey s
+where 
+createdAt >= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 24 hour)
+
+
+
+and createdAt = DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 4 hour)
+#group by accountId 
+;
+
+SELECT current_timestamp, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 3600 second) as 'after_min';
+
+
+
+ALTER TABLE `gtaContact` 
+    change COLUMN `emailUid` email VARCHAR(255) NOT NULL,
+    change COLUMN `phoneUid` phone VARCHAR(255) NOT NULL;
+
+alter table gtaContact
+	drop index gtaContact_emailUid_key,
+	add unique gtaContact_email_key(email);
+   
+
+
+
+
+insert ignore into mntcPerformance
+(mntcUserId, seriesId, moduleId, learnerName)
+select 
+'1444980616811266048',
+'1558013872759061105',
+id,
+'LearnerTestName'
+from mntcModule mm;
+
+
+
+INSERT INTO drpt_db.survey
+(userAccountId, surveyId, surveyName, requestLogId, hashLink, maxScore, score, `result`, status, attemptCount, weakAreas, strongAreas, cutOffQuestionsCleared, started_at, completed_at, createdAt, updatedAt)
+select
+userAccountId, surveyId, surveyName, requestLogId, hashLink, maxScore, score, `result`, status, attemptCount, weakAreas, strongAreas, cutOffQuestionsCleared, started_at, completed_at, createdAt, updatedAt from 
+drpt_db.survey where id = 8;
+
+
+
+
+delete uc, ua from userContact uc, userAccount ua where uc.userAccountId = 112;
+
+
+
+select 
+ua.id, 
+ua.status, 
+ua.hrmId, 
+ua.emcId,
+uc.id as ucId, 
+uc.tokenExpiredAt,
+uc.verificationToken, 
+uc.verifyAttemptCount, 
+uc.fname, 
+uc.lname,
+uc.emailUid, 
+uc.phoneUid
+from
+userAccount ua left join userContact uc on ua.id = uc.userAccountId 
+where status < 4;
+
+select CURRENT_TIMESTAMP();
+
+
+
+-- readding Foreign key
+ALTER TABLE mntc_db.userSeriesCert DROP FOREIGN KEY userSeriesCert_seriesId_fkey;
+ALTER TABLE mntc_db.userSeriesCert DROP KEY userSeriesCert_seriesId_key;
+ALTER TABLE mntc_db.userSeriesCert ADD CONSTRAINT userSeriesCert_seriesId_key FOREIGN KEY (seriesId) REFERENCES series(id);
+
+
+
+
+
+
+select status, if(ISNULL(profileId), 'NA', 'NN') fes, count(*)
+from userApplication ua
+-- WHERE profileId is null
+group by status, fes;
+
+
+select DATE_SUB(CURRENT_TIMESTAMP(), INTERVAL 7 DAY);
+
+
+select DATE_FORMAT('2024-01-01', '%Y-%m-%d %h:%i:%s') ;
+-- 2024-01-01 08:23:45
+
+
+-- delete primary key
+alter table users drop primary key, change id id int(11);
+alter table usersArchive drop primary key, change id id int(11); 
+alter table users drop column id;
+alter table usersArchive drop column id;
+
+
+
+
+
+-- date reformat
+select id, issueDate, CONCAT_WS('-',trim(SUBSTRING_INDEX(SUBSTRING_INDEX(issueDate, '-', 3), '-', -1)),LPAD(trim(SUBSTRING_INDEX(SUBSTRING_INDEX(issueDate, '-', 2), '-', -1)),2,0),LPAD(trim(SUBSTRING_INDEX(SUBSTRING_INDEX(issueDate, '-', 1), '-', -1)),2,0)) v from itmDocuments where issueDate like '%-%'
+
+update itmDocuments set issueDate=CONCAT_WS('-',trim(SUBSTRING_INDEX(SUBSTRING_INDEX(issueDate, '-', 3), '-', -1)),LPAD(trim(SUBSTRING_INDEX(SUBSTRING_INDEX(issueDate, '-', 2), '-', -1)),2,0),LPAD(trim(SUBSTRING_INDEX(SUBSTRING_INDEX(issueDate, '-', 1), '-', -1)),2,0)) where issueDate like '%-%'
+
+select LPAD('1',2,'a');
+
+-- reformat date
+SELECT 
+CONCAT_WS("-",
+trim(SUBSTRING_INDEX(SUBSTRING_INDEX('20 - 05 - 2013', '-', 3), '-', -1)),
+LPAD(trim(SUBSTRING_INDEX(SUBSTRING_INDEX('20 - 05 - 2013', '-', 2), '-', -1)),2,0),
+LPAD(trim(SUBSTRING_INDEX(SUBSTRING_INDEX('20 - 05 - 2013', '-', 1), '-', -1)),2,0)) v;
+
+select STR_TO_DATE('01-02-1990', '%Y-%m-%d');
+
+select SUBSTRING_INDEX("2001-02-19T00:00:00.000Z","T",1) 
