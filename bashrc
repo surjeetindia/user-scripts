@@ -126,3 +126,27 @@ npm-clean-cache-one(){
   npm cache ls "$1" | xargs npm cache clean
 }
 
+
+#commit code without ticket reference by renaming husky
+gh(){
+  # omits the error message 2>/dev/null
+  # cheks for empty value
+  if [[ -z "$1" ]];
+  then
+    # default renaming back to .husky
+    mv 1.husky .husky 2>/dev/null
+  else
+    # renaming to 1.husky
+    mv .husky 1.husky 2>/dev/null
+  fi
+}
+
+husky-d(){
+  mv .husky 1.husky
+}
+
+husky-e(){
+  mv 1.husky .husky
+}
+
+
