@@ -1,4 +1,4 @@
-#Surjeet
+#Surjeet GIT
 export CI_JOB_TOKEN=glpat-atfAA2RJCUXBCPy8DAL1
 #export GITLAB_KEY=glpat-atfAA2RJCUXBCPy8DAL1
 
@@ -56,6 +56,12 @@ alias gss="git stash show -p"
 alias gssid="git stash show -p <commit>"
 alias gsd="git diff develop stash@{0}"
 alias gsdn="git diff --name-only develop stash@{0}"
+gbc() {
+  git ls-remote origin $(git branch --show-current)
+}
+gbp() {
+  git push --set-upstream origin $(git branch --show-current)
+}
 
 alias gbparent="git show-branch --current"
 
@@ -81,6 +87,8 @@ alias glog-stat="git log --stat -2"
 alias docker-df="docker system df"
 alias docker-up="docker-compose up --remove-orphans"
 alias docker-down="docker-compose down --remove-orphans"
+alias dockrst="docker-compose restart"
+
 
 alias docker-upd="docker-compose up -d"
 alias docker-upb="docker-compose up --force-recreate --build -V"
@@ -97,7 +105,6 @@ docksh() {
 alias dockps="docker-compose ps"
 
 docksh() {
-
   docker-compose ps
   read num
   docker exec -it $(docker-compose ps -q | head -$num | tail -1) sh
@@ -114,6 +121,7 @@ mkvpropupdate(){
 
 # primsa hack for new migration to take effect
 alias prisma-ref="rm -rf node_modules/@prisma/ node_modules/.prisma/ && npm i"
+alias prisma-pref="rm -rf node_modules/.pnpm/@prisma* && pnpm i"
 
 # refresh client-component to take effect
 alias cc-ref="npm i && npm run build"
@@ -127,17 +135,16 @@ npm-clean-cache-one(){
 }
 
 
-#commit code without ticket reference by renaming husky
 gh(){
   # omits the error message 2>/dev/null
   # cheks for empty value
   if [[ -z "$1" ]];
   then
     # default renaming back to .husky
-    mv 1.husky .husky 2>/dev/null
+    mv .husky/.commit-msg .husky/commit-msg 2>/dev/null
   else
     # renaming to 1.husky
-    mv .husky 1.husky 2>/dev/null
+    mv .husky/commit-msg .husky/.commit-msg 2>/dev/null
   fi
 }
 
@@ -149,4 +156,44 @@ husky-e(){
   mv 1.husky .husky
 }
 
+
+cc-clear-gen(){
+  sudo rm -rf lib rest-client-generator/out cc-test-pkg 
+}
+
+cc-gen-openapi(){
+  cd rest-client-generator
+  sudo mkdir out
+  docker run --rm -v ${PWD}:/local openapitools/openapi-generator-cli:v5.0.1 generate \
+    -i $2 \
+    -g typescript-nestjs \
+    -o /local/out \
+    -t /local/templates/nestjs \
+    --additional-properties=variableNamingConvention=camelCase \
+    --additional-properties=invokerPackage=Dyninno\\RestClients\\$1 \
+    --git-host=gitlab.dyninno.net \
+    --git-repo-id=rest-client-$1 \
+    --git-user-id=common-libraries
+  sudo mkdir --parents ../src
+  sudo cp -r out/* ../src
+  cd ..
+  cc-ref
+}
+
+cc-test-pkg(){
+  testPkg=cc-test-pkg
+  rm -rf $testPkg && mkdir $testPkg && cp -r lib jest.config.js README.md package.json $testPkg
+}
+
+cc-link-test-pkg(){
+  testPkg=cc-test-pkg
+  rm -rf $testPkg
+  cp -r $1/$testPkg $testPkg && cd $testPkg && npm link && npm list -g && cd ..
+}
+
+
+cc-unlink-test-pkg(){
+  testPkg=cc-test-pkg
+  npm unlink -g $1 && sudo rm -rf $testPkg
+}
 
