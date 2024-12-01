@@ -1,0 +1,230 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    {
+      "key": "shift+alt+down",
+      "command": "-editor.action.insertCursorBelow",
+      "when": "editorTextFocus"
+    },
+    {
+      "key": "shift+alt+down",
+      "command": "editor.action.duplicateSelection"
+    },
+    {
+      "key": "alt+up",
+      "command": "workbench.action.toggleMaximizedPanel",
+      "when": "terminalFocus"
+    },
+    {
+      "key": "ctrl+shift+alt+n",
+      "command": "workbench.output.action.clearOutput"
+    },
+    {
+      "key": "ctrl+shift+alt+\\",
+      "command": "editor.action.selectToBracket"
+    },
+    {
+      "key": "alt+left",
+      "command": "editor.action.moveCarretLeftAction"
+    },
+    {
+      "key": "alt+right",
+      "command": "editor.action.moveCarretRightAction"
+    },
+    {
+      "key": "shift+alt+d",
+      "command": "editor.debug.action.selectionToRepl"
+    },
+    {
+      "key": "alt+.",
+      "command": "editor.action.surroundWithSnippet"
+    },
+    {
+      "key": "ctrl+k ctrl+v",
+      "command": "workbench.action.toggleActivityBarVisibility"
+    },
+    {
+      "key": "ctrl+shift+alt+w",
+      "command": "editor.debug.action.selectionToWatch"
+    },
+    {
+      "key": "ctrl+shift+alt+m",
+      "command": "workbench.debug.panel.action.clearReplAction",
+      "when": "editorTextFocus"
+    },
+    {
+      "key": "ctrl+shift+alt+p",
+      "command": "peacock.changeColorToRandom"
+    },
+    {
+      "key": "ctrl+shift+alt+a",
+      "command": "bookmarks.toggle",
+      "when": "editorTextFocus"
+    },
+    {
+      "key": "ctrl+alt+k",
+      "command": "-bookmarks.toggle",
+      "when": "editorTextFocus"
+    },
+    {
+      "key": "ctrl+shift+alt+s",
+      "command": "bookmarks.list"
+    },
+    {
+      "key": "ctrl+shift+alt+.",
+      "command": "bookmarks.jumpToNext",
+      "when": "editorTextFocus"
+    },
+    {
+      "key": "ctrl+alt+l",
+      "command": "-bookmarks.jumpToNext",
+      "when": "editorTextFocus"
+    },
+    {
+      "key": "ctrl+shift+alt+,",
+      "command": "bookmarks.jumpToPrevious",
+      "when": "editorTextFocus"
+    },
+    {
+      "key": "ctrl+alt+j",
+      "command": "-bookmarks.jumpToPrevious",
+      "when": "editorTextFocus"
+    },
+    {
+      "key": "ctrl+shift+v",
+      "command": "markdown.showPreview",
+      "when": "!notebookEditorFocused && editorLangId == 'html' || !notebookEditorFocused && editorLangId == 'markdown' ||  && editorLangId == 'http'"
+    },
+    {
+      "key": "ctrl+alt+\\",
+      "command": "workbench.action.toggleEditorWidths"
+    },
+    {
+      "key": "ctrl+k ctrl+shift+r",
+      "command": "workbench.files.action.showActiveFileInExplorer"
+    },
+    {
+      "key": "ctrl+shift+alt+c 1",
+      "desc": "one line comma separated integers",
+      "command": "runCommands",
+      "args": {
+        "commands": [
+          // "cursorHome",
+          // "cursorEndSelect",
+          // "editor.action.clipboardCutAction",
+          // "default:paste"
+          "editor.action.selectAll",
+          "editor.action.insertCursorAtEndOfEachLineSelected",
+          { "command": "type", "args": { "text": "," } },
+          "deleteAllRight",
+          "cursorEnd",
+          "deleteLeft",
+          "editor.action.selectAll",
+          "editor.action.clipboardCopyAction"
+          // "default:paste",
+          // {
+          //   "command": "workbench.action.files.newUntitledFile",
+          //   "args": {
+          //     "languageId": "typescript"
+          //   }
+          // }
+          // "editor.action.addCursorsToBottom"
+          // "cursorEnd",
+          // "cursorEnd",
+          // "deleteRight"
+          // "editor.action.copyLinesDownAction",
+          // "editor.action.addCommentLine"
+          // "cursorUp",
+          // "cursorDown"
+        ]
+      }
+    },
+    {
+      "key": "ctrl+shift+alt+c",
+      "desc": "one line comma separated integers with replace",
+      "command": "runCommands",
+      "args": {
+        "commands": [
+          // "toggleFindRegex",
+          {
+            "command": "workbench.action.findInFiles",
+            "args": { "filesToInclude": "", "isRegex": true, "query": "\n" }
+          }
+          // "search.focus.nextInputBox",
+          // { "command": "actions.find" }
+          // { "command": "type", "args": { "text": "\\n" } }
+  
+          // "editor.action.selectAll",
+          // "editor.action.insertCursorAtEndOfEachLineSelected",
+          // { "command": "type", "args": { "text": "," } },
+          // "deleteAllRight",
+          // "cursorEnd",
+          // "deleteLeft",
+          // "editor.action.selectAll",
+          // "editor.action.clipboardCopyAction"
+          // "default:paste",
+          // {
+          //   "command": "workbench.action.files.newUntitledFile",
+          //   "args": {
+          //     "languageId": "typescript"
+          //   }
+          // }
+          // "editor.action.addCursorsToBottom"
+          // "cursorEnd",
+          // "cursorEnd",
+          // "deleteRight"
+          // "editor.action.copyLinesDownAction",
+          // "editor.action.addCommentLine"
+          // "cursorUp",
+          // "cursorDown"
+          // "toggleFindRegex"
+        ]
+      }
+    },
+    {
+      "key": "ctrl+alt+down",
+      "command": "workbench.action.splitEditorDown"
+    },
+    {
+      "key": "ctrl+k ctrl+\\",
+      "command": "-workbench.action.splitEditorDown"
+    },
+    {
+      "key": "shift+alt+up",
+      "command": "-editor.action.insertCursorAbove",
+      "when": "editorTextFocus"
+    },
+    {
+      "key": "shift+alt+up",
+      "command": "editor.action.copyLinesUpAction",
+      "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+      "key": "ctrl+shift+alt+up",
+      "command": "-editor.action.copyLinesUpAction",
+      "when": "editorTextFocus && !editorReadonly"
+    },
+    /* {
+      "key": "ctrl+v tab",
+      "command": "type",
+      "args": { "text": "\t" },
+      "when": "editorTextFocus"
+    } */
+  
+    // Send selected bash code to terminal
+    {
+      "key": "shift+enter",
+      "command": "workbench.action.terminal.runSelectedText",
+      "when": "editorTextFocus && !findInputFocussed && !replaceInputFocussed && editorLangId == 'shellscript'"
+    },
+    {
+      "key": "ctrl+shift+i",
+      "command": "-codeium.openCodeiumCommand",
+      "when": "codeium.commandEnabled && editorTextFocus && !inlineSuggestionsVisible"
+    },
+    {
+      "key": "ctrl+shift+v",
+      "command": "markdown.showPreview",
+      "when": "!notebookEditorFocused && editorLangId == 'markdown'"
+    }
+  ]
+  
