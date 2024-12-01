@@ -1,8 +1,10 @@
 #Surjeet GIT
 export CI_JOB_TOKEN=glpat-atfAA2RJCUXBCPy8DAL1
-#export GITLAB_KEY=glpat-atfAA2RJCUXBCPy8DAL1
+export GITLAB_TOKEN=glpat-atfAA2RJCUXBCPy8DAL1
+export CI_JOB_TOKEN_CI_CD=glpat-p3Wp2nME-7fq8qqHuZrz
 
 export CI_JOB_TOKEN_ANKIT=glpat-f5YaKxwhih3VHddFgies
+export CI_JOB_TOKEN_ANKIT1=glpat-VFkkWg913Uf56CsRRGEQ
 #system
 
 
@@ -27,7 +29,7 @@ rm-r(){
 alias of=nautilus
 
 check-address(){
-  netstat -tulpn | grep "$1"
+  netstat -tulpn | grep --color :$1
 }
 
 alias chkadd='sudo netstat -tulpn | grep LISTEN'
@@ -39,6 +41,9 @@ alias r='fc -s'
 
 
 # SURJEET php
+alias apache-enable-on-boot='sudo systemctl enable apache2'
+alias apache-disable-on-boot='sudo systemctl disable apache2'
+
 alias apache-up='sudo systemctl start apache2.service'
 alias apache-down='sudo systemctl stop apache2.service'
 
@@ -92,15 +97,14 @@ alias dockrst="docker-compose restart"
 
 alias docker-upd="docker-compose up -d"
 alias docker-upb="docker-compose up --force-recreate --build -V"
+docker-upb1() {
+  sudo docker-compose up --force-recreate --build -V $1
+}
 alias docker-up-network="docker network create dev-travel.com"
 alias docker-up-proxy="docker network create dev-travel.com | docker run -d --name dev-travel-network -p 80:80 -p 443:443 --restart always --net dev-travel.com -v /var/run/docker.sock:/tmp/docker.sock:ro registry.dyninno.net/docker/nginx-proxy:latest"
 alias docker-down-proxy="docker rm -f dev-travel-network"
 
 alias docker-clear-c="docker rm $(docker ps -aq)"
-
-docksh() {
-  docker exec -it $1 sh
-}
 
 alias dockps="docker-compose ps"
 
@@ -108,6 +112,13 @@ docksh() {
   docker-compose ps
   read num
   docker exec -it $(docker-compose ps -q | head -$num | tail -1) sh
+}
+
+
+dockrst1() {
+  docker-compose ps --services
+  read num
+  docker-compose restart $(docker-compose ps --services | head -$num | tail -1)
 }
 
 
@@ -162,6 +173,7 @@ cc-clear-gen(){
 }
 
 cc-gen-openapi(){
+  cc-clear-gen
   cd rest-client-generator
   sudo mkdir out
   docker run --rm -v ${PWD}:/local openapitools/openapi-generator-cli:v5.0.1 generate \
