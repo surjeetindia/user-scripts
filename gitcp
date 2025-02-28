@@ -5,6 +5,9 @@ cp ~/.bashrc .
 cp ~/.config/Code/User/snippets/surjeet-global-snippet.code-snippets .
 cp ~/.config/Code/User/keybindings.json .
 
+gst
+git pull
+git add .
 git cp 'updated-files'
 
 
