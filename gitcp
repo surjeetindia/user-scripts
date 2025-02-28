@@ -4,3 +4,14 @@ cd ../my-user-scripts
 cp ~/.bashrc .
 cp ~/.config/Code/User/snippets/surjeet-global-snippet.code-snippets .
 cp ~/.config/Code/User/keybindings.json .
+
+git cp 'updated-files'
+
+
+
+cd ../mindtickle-v2
+git remote add originn https://github.com/surjeetindia/mindtickle.git
+git status
+git checkout master
+git pull
+git push -u originn master
