@@ -1,0 +1,11 @@
+[user]
+	name = spv
+	email = surjeet.verma@dyninno.in
+[credential]
+	helper = store
+[alias]
+    	bp = "!f() { git checkout -b \"$1\" && git push -u origin \"$1\"; }; f"
+    	cp = "!f() { git commit -m \"$1\" && git push; }; f"
+
+[pull]
+	ff = true
