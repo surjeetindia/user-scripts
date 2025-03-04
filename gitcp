@@ -5,6 +5,20 @@ cp ~/.bashrc .
 cp ~/.config/Code/User/snippets/surjeet-global-snippet.code-snippets .
 cp ~/.config/Code/User/keybindings.json .
 
+
+git remote set-url --push origin ssh://git@gitlab.dyninno.net:1022/dreamport/drpt-backend.git
+git remote set-url --add --push origin https://github.com/surjeetindia/drpt-backend.git
+
+git remote get-url --push --all origin
+
+git remote set-url --delete --push origin https://github.com/surjeetindia/drpt-backend.git
+
+git branch --unset-upstream
+git branch --set-upstream-to=origin/master
+
+git branch --set-upstream-to=origin/master master
+
+
 gst
 git pull
 git add .
