@@ -1,17 +1,31 @@
 #!/bin/bash
 
+# backup all the files
 cd ../my-user-scripts
 cp ~/.bashrc .
 cp ~/.config/Code/User/snippets/surjeet-global-snippet.code-snippets .
 cp ~/.config/Code/User/keybindings.json .
+
+# backup all the request.http and devspace from repo
+cp -r ../drpt-backend-v2/.vscode ../drpt-backend-v2/devspace drpt-backend/.
+cp -r ../drpt-bo-backend-v2/.vscode ../drpt-bo-backend-v2/devspace ../drpt-bo-backend-v2/prisma/seed.ts drpt-bo-backend/.
+cp -r ../mindtickle-v2/.vscode ../mindtickle-v2/devspace mindtickle/.
+cp -r ../mindtickle-analytics/.vscode ../mindtickle-analytics/devspace mindtickle-analytics/.
+
+cd ../drpt-bo-backend
+cd ../mindtickle
+cd ../mindtickle-analytics
+
 
 
 git remote set-url --push origin ssh://git@gitlab.dyninno.net:1022/dreamport/mindtickle-analytics.git
 git remote set-url --add --push origin https://github.com/surjeetindia/mindtickle-analytics.git
 
 git remote get-url --push --all origin
+
 git push --set-upstream origin master
-git remote set-url --delete --push origin https://github.com/surjeetindia/mindtickle-analytics.git
+git remote set-url --delete --push origin ssh://git@gitlab.dyninno.net:1022/dreamport/mindtickle-analytics.git
+git remote set-url --delete --push origin https://github.com/surjeetindia/drpt-backend.git
 
 git branch --unset-upstream
 git branch --set-upstream-to=origin/master

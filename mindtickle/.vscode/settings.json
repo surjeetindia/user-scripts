@@ -1,0 +1,76 @@
+{
+  "rest-client.environmentVariables": {
+    "$shared": {
+      "version": "v1",
+      "createdAt": "{{$datetime iso8601}}",
+      "modifiedBy": "{{$processEnv USERNAME}}",
+      "authTypeBearer": "Authorization: Bearer",
+      "mtHostName": "https://admin.mindtickle.com/Odata.svc/",
+      "userAgent": "user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36",
+      "authTypeBasic": "Authorization: Basic",
+      "tokenMt": "NDA4NjRfMTA4NDc4OmlsZDJhMmZx",
+      "trainingSeriesId": "1776227665558674326",
+      "trainingSecondModuleId": "1776228494753104974",
+      "trainingT1ModuleId": "507999385687172797",
+      "trainingT2ModuleId": "507999359799977001",
+      "trainingT3ModuleId": "507999250731259134",
+      "trainingGKModuleId": "514523349993434777",
+      "trainingILTModuleId": "525977373275878562",
+      "certModuleId": "1776227966911083372",
+      "preliveFirstModuleId": "1792504229001094075",
+      "preliveMissionModuleId": "1792504328513597697",
+      "preliveLastModuleId": "1803724563113665823",
+      "apiAuthToken": "Authorization: Bearer bWluZHRpY2tsZS1hcGktYXV0aC10b2tlbg==",
+      "preliveModules": "(ModuleId eq '1792504229001094075' or ModuleId eq '1792504269333449938' or ModuleId eq '518996009834009184' or ModuleId eq '1792504294808783270' or ModuleId eq '1792504310791366905' or ModuleId eq '1792504328513597697' or ModuleId eq '1806617848949287490' or ModuleId eq '1792504342817323697' or ModuleId eq '518996015689257568' or ModuleId eq '1792504358948010948' or ModuleId eq '1806618274250731378' or ModuleId eq '1792504389874212840' or ModuleId eq '518996020420421422' or ModuleId eq '1792504420649540309' or ModuleId eq '1806623594729613505' or ModuleId eq '1803724563113665823')",
+      "FormatAndCounts": "$format=json_compact&$count=true&$inlinecount=allpages",
+      "FormatAndCounts1": "$format=json_compact&$count=true&$inlinecount=allpages&$top=1"
+    },
+    "local": {
+      "hostName": "https://mindtickle.dev-travel.com/api/",
+      "env": "dev"
+    },
+    "stage": {
+      "hostName": "https://mindtickle.stage-travel.com/api/",
+      "env": "stage"
+    },
+    "prod": {
+      "hostName": "https://mindtickle.asaptickets.com/api/",
+      "env": "prod",
+      "tokenMt": "MTE0MV81OTg6azIzaWg0YWk=",
+      "apiAuthToken": "Authorization: Bearer bW50Yy1wcm9kLWFwaS1hdXRoLXRva2Vu",
+      "trainingSeriesId": "1526899855350414157",
+      "trainingSecondModuleId": "1765685388983581230",
+      "trainingT1ModuleId": "1572878489965222314",
+      "trainingT2ModuleId": "1576911454451910803",
+      "trainingT3ModuleId": "1577980015323864486",
+      "trainingGKModuleId": "465245417156660147",
+      "trainingILTModuleId": "525977373275878562",
+      "certModuleId": "1537447296067453233",
+      "preliveFirstModuleId": "1784834644105265048",
+      "preliveMissionModuleId": "1635957078405747906",
+      "preliveLastModuleId": "1795842646743859793",
+      // "copilotModuleId": "1765685388983581230",
+      "preliveModules": "(ModuleId eq '1784834644105265048' or ModuleId eq '1783467441075330027' or ModuleId eq '510895133688896624' or ModuleId eq '1808789777141753825' or ModuleId eq '1550435352463894161' or ModuleId eq '1635957078405747906' or ModuleId eq '1805522333681070293' or ModuleId eq '1783540047957018463' or ModuleId eq '510927192901876301' or ModuleId eq '1809223301371251743' or ModuleId eq '1805530380798732453' or ModuleId eq '1783556503177738540' or ModuleId eq '510933824432010552' or ModuleId eq '1668577760832375353' or ModuleId eq '1805531017988573737' or ModuleId eq '1795842646743859793')"
+    }
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#c4a5cc",
+    "activityBar.background": "#c4a5cc",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#7a6f45",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "commandCenter.border": "#15202b99",
+    "sash.hoverBorder": "#c4a5cc",
+    "statusBar.background": "#ae84ba",
+    "statusBar.foreground": "#15202b",
+    "statusBarItem.hoverBackground": "#9863a8",
+    "statusBarItem.remoteBackground": "#ae84ba",
+    "statusBarItem.remoteForeground": "#15202b",
+    "titleBar.activeBackground": "#ae84ba",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveBackground": "#ae84ba99",
+    "titleBar.inactiveForeground": "#15202b99"
+  },
+  "peacock.color": "#ae84ba"
+}

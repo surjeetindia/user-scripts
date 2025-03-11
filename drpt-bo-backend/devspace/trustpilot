@@ -1,0 +1,99 @@
+@hostName = https://api.trustpilot.com
+@Application_name=Dreamport review-invite link 
+@Redirect_URIs=www.dreamport.me 
+@API_key=jR9bKL0xASeoifpfi5zxfG5kCMScXhg9
+@apikey=apikey={{API_key}}
+@Secret=ZxK2mdGT4Y6x4aiR
+@authApi={{authBasic}} alI5YktMMHhBU2VvaWZwZmk1enhmRzVrQ01TY1hoZzk6WnhLMm1kR1Q0WTZ4NGFpUg==
+@contentUrlEnc=Content-Type: application/x-www-form-urlencoded
+@businessUnitId=6630aaa380206613808093ff
+@authInvite={{authBearer}} eyJ0eXBlIjoiUmVzdHJpY3RlZCIsIkJ1c2luZXNzVW5pdHMiOlt7ImJ1IjoiNTkzZmFlYTEwMDAwZmYwMDA1YTQ3NjM5IiwidGllciI6IjVkZDUxMzVjZTc0NzA1MjE5OGEwOGU2YiJ9LHsiYnUiOiI0OGZiZTg5NTAwMDA2NDAwMDUwM2QyY2EiLCJ0aWVyIjoiNWRkNTEzNWNlNzQ3MDUyMTk4YTA4ZTZiIn0seyJidSI6IjY2YTk1MjYyOTQwYTUwMmZhNDYxOTBjZSIsInRpZXIiOiI1ZGQ1MTM1Y2U3NDcwNTIxOThhMDhlNmIifSx7ImJ1IjoiNTNhMDY0YjIwMDAwNjQwMDA1NzhmMTQxIiwidGllciI6IjVkZDUxMzVjZTc0NzA1MjE5OGEwOGU2YiJ9LHsiYnUiOiI2NjMwYWFhMzgwMjA2NjEzODA4MDkzZmYiLCJ0aWVyIjoiNWRkNTEzNWNlNzQ3MDUyMTk4YTA4ZTZiIn1dfQ==
+### check availability
+{{hostName}}/v1/business-signup/domain-availability?domain=dreamport.me
+
+### Search for business units
+{{hostName}}/v1/business-units/search
+  ?{{apikey}}
+  &query=www.dreamport.me
+###
+{{hostName}}/v1/private/business-units/{{businessUnitId}}/reviews
+###
+{{hostName}}/v1/business-units/{{businessUnitId}}/reviews
+
+### Get a business unit's web links
+{{hostName}}/v1/business-units/{{businessUnitId}}/web-links
+  ?{{apikey}}
+  &locale=en-US
+
+###
+POST https://api.trustpilot.com/v1/oauth/oauth-business-users-for-applications/accesstoken
+{{authApi}}
+{{contentUrlEnc}}
+
+grant_type=client_credentials
+###
+###
+POST https://api.trustpilot.com/v1/oauth/oauth-business-users-for-applications/accesstoken
+# {{authApi}}
+{{contentUrlEnc}}
+
+grant_type=client_credentials&client_id={{API_key}}&client_secret={{Secret}}
+###
+{
+  access_token: 'tpa-042c7790ce96636e1cd404cfcfb2',
+  issued_at: '1741347144',
+  expires_in: '360000',
+  token_type: 'BearerToken',
+  access:
+    'eyJ0eXBlIjoiUmVzdHJpY3RlZCIsIkJ1c2luZXNzVW5pdHMiOlt7ImJ1IjoiNTkzZmFlYTEwMDAwZmYwMDA1YTQ3NjM5IiwidGllciI6IjVkZDUxMzVjZTc0NzA1MjE5OGEwOGU2YiJ9LHsiYnUiOiI0OGZiZTg5NTAwMDA2NDAwMDUwM2QyY2EiLCJ0aWVyIjoiNWRkNTEzNWNlNzQ3MDUyMTk4YTA4ZTZiIn0seyJidSI6IjY2YTk1MjYyOTQwYTUwMmZhNDYxOTBjZSIsInRpZXIiOiI1ZGQ1MTM1Y2U3NDcwNTIxOThhMDhlNmIifSx7ImJ1IjoiNTNhMDY0YjIwMDAwNjQwMDA1NzhmMTQxIiwidGllciI6IjVkZDUxMzVjZTc0NzA1MjE5OGEwOGU2YiJ9LHsiYnUiOiI2NjMwYWFhMzgwMjA2NjEzODA4MDkzZmYiLCJ0aWVyIjoiNWRkNTEzNWNlNzQ3MDUyMTk4YTA4ZTZiIn1dfQ==',
+  api_key: 'jR9bKL0xASeoifpfi5zxfG5kCMScXhg9',
+}
+
+###
+https://www.trustpilot.com/api/businessunitprofile/businessunit/6630aaa380206613808093ff/service-reviews/aspects
+
+###
+# POST https://invitations-api.trustpilot.com/v1/private/business-units/{{businessUnitId}}/email-invitations
+POST https://invitations-api.trustpilot.com/v1/private/business-units/{{businessUnitId}}/invitation-links
+# {{authInvite}}
+{{authBearer}} tpa-a6d31d47242f7c7cab38afd02a20
+{{contentJson}}
+
+{
+  "locale":"en-US",
+  "email":"sagarsinghqa.02@gmail.com",
+  "name":"AccMTBT",
+  "redirectUri":"www.dreamport.me",
+  "referenceNumber":"51728"
+}
+###
+
+{
+  # "locationId": "ABC123",
+  "referenceId": "profileId",
+  "email": "surjeetindia@gmail.com",
+  "name": "Surjeet Verma",
+  "locale": "en-US",
+  # "tags": [
+  #   "tag1",
+  #   "tag2"
+  # ],
+  "redirectUri": "https://{{Redirect_URIs}}"
+}
+###
+###
+{
+  "id": "9c1709f0d4dc66e97f58b836f4706b00",
+  "url": "https://www.trustpilot.com/evaluate-link/9c1709f0d4dc66e97f58b836f4706b00"
+}
+{
+  "id": "eec478b73cb741d3ffc01274f26edcf6",
+  "url": "https://www.trustpilot.com/evaluate-link/eec478b73cb741d3ffc01274f26edcf6"
+}
+{
+  "id": "f7dd684ca947a769c1d8da14423212ba",
+  "url": "https://www.trustpilot.com/evaluate-link/f7dd684ca947a769c1d8da14423212ba"
+}
+###
+https://invitations-api.trustpilot.com/v1/private/business-units/{{businessUnitId}}/invitation-links
+  ?{{apikey}}

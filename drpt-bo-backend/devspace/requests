@@ -1,0 +1,3410 @@
+# @reviewEnv = https://dreamport-bo-api-3683-feat-drpt-4304-get-emc-user-in-727.do.stage-travel.com
+# @hostName={{reviewEnv}}/api/
+###
+git checkout master
+git checkout release-mvp-2.0.0
+git pull
+git pull origin master
+git push
+###
+@ActiveStatusAssessment=2,3,4,7
+@ActiveStatusTrainingOnline=17,18,19,20,9,10
+@ActiveStatusTrainingPrelive=21,22,23,24
+@ActiveStatusContracting=31,32,33
+@activeStatusAll={{ActiveStatusAssessment}},{{ActiveStatusTrainingOnline}},{{ActiveStatusTrainingPrelive}},{{ActiveStatusContracting}}
+@inactiveStatus = -3,-2,5,13,25,34
+###
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMTI0NzAiLCJ1c2VyTmFtZSI6IlN1cmplZXQgUHJha2FzaCBWZXJtYSIsInNlc3Npb25LZXkiOiJiYmJkYjg5MjA4NGIwYWExOWE1NDc1ODA5YzlhYzdmNCIsInJvbGVzIjpbInBsYXRmb3JtX2FkbWluIiwiYXBwbGljYW50X2FkbWluIiwiZnJlZWxhbmNlcl9hZG1pbiIsImFwcGxpY2FudF9tYW5hZ2VyIiwiYWxsb3dfY291bnRyeV9hbGwiLCJsb2dpbiJdLCJpYXQiOjE3MzY0MzAwNTEsImV4cCI6MTczNjQ1MTY1MX0.Ewyc_bXOeKQbzAgXlS4fPAKF7Wfq1e7DCU-3TY70T6E
+@appToken = {"userId":"108478","userName":"Ankit Bansal","language":"en","accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMDg0NzgiLCJ1c2VyTmFtZSI6IkFua2l0IEJhbnNhbCIsInNlc3Npb25LZXkiOiJhNWVmZjgxNWRhNTQ4NDJkYjMwN2MwYmZlZjVjODZiZiIsInJvbGVzIjpbInBsYXRmb3JtX2FkbWluIiwiYXBwbGljYW50X2FkbWluIiwibG9naW4iXSwiaWF0IjoxNzA0OTcyMzYyLCJleHAiOjE3MDQ5OTM5NjJ9.FeLVLFyco9LHAoCHe9rie9AHGGI3UcWjxYNsIz03uBY","roles":["platform_admin","applicant_admin","login"],"expires":"2024-01-11T17:26:02.599Z"};
+# drptbo_emc_update_user_id:108478
+@gid = 4{{$localDatetime 'MMDDHHmm'}}
+# uniq`ue for all
+@gidPhone = 4{{$localDatetime 'DDHHmmss'}}
+# gid for phone
+@randInt3 = {{$randomInt 111 999}}
+{{gid}}
+{{gidPhone}}
+{{randInt3}}
+
+###
+{{hostName}}emc/test-emr
+
+###
+{{hostName}}ping
+###
+https://dreamport-bo-api.stage-travel.com/api/ping
+
+
+# LOGIN
+# === === === ===
+### getloginpage
+{{hostName}}emc/getLoginPage
+###
+https://dreamport-bo-api.stage-travel.com/api/emc/getLoginPage?callbackUrl=https://dreamport-bo.stage-travel.com
+###
+# @name authorizeToken
+{{hostName}}emc/authorizeToken
+  ?token=3c511c7791d73640d0c77b1533d69521
+
+
+###
+# @auth = {{authBearer}} {{authorizeToken.response.body.data.authData.accessToken}}
+@auth = {{authBearer}} {{authToken}}
+
+###
+Post {{hostName}}emc/gen-jwt
+  ?{{dev}}
+  # &emcId=112470
+{{contentJson}}
+
+{
+  "userId": "112470",
+  "userName": "Surjeet Prakash Verma",
+  "sessionKey": "bbbdb892084b0aa19a5475809c9ac7f4",
+  "roles": [
+    "platform_admin",
+    "applicant_admin",
+    "freelancer_admin",
+    "applicant_manager",
+    "allow_country_all",
+    "login"
+  ]
+}
+###
+{{hostName}}emc/decode-jwt
+  ?{{dev}}
+  &token={{authToken}}
+###
+{{hostName}}emc/validate-jwt
+  ?{{dev}}
+  &token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMTI0NzAiLCJ1c2VyTmFtZSI6IlN1cmplZXQgUHJha2FzaCBWZXJtYSIsInNlc3Npb25LZXkiOiJiYmJkYjg5MjA4NGIwYWExOWE1NDc1ODA5YzlhYzdmNCIsInJvbGVzIjpbInBsYXRmb3JtX2FkbWluIiwiYXBwbGljYW50X2FkbWluIiwiZnJlZWxhbmNlcl9hZG1pbiIsImFwcGxpY2FudF9tYW5hZ2VyIiwiYWxsb3dfY291bnRyeV9hbGwiLCJsb2dpbiJdLCJpYXQiOjE3MzY0Mjk1NDgsImV4cCI6MTczNjQ1MTE0OH0.6JlssbJf9qLUFVM7KNrYhJZAZYeO5NlI2oowyH3Pk88
+
+###
+{{hostName}}emc/logout
+
+
+###
+{{hostName}}emc/search-user/u100
+  ?{{dev}}
+  # &matchBy=name
+  # &matchBy=id
+  # &match=false
+  &details=false
+###
+{{hostName}}emc/get-users?{{dev}}
+  # &version=19
+  &ids=51626
+  # &ids=295754,379370,379371,379623,379624,392601,392643,389809,392539,392701,391015,391021,391081,392553,392709
+  # &showDeactivated=full
+
+
+###
+{{hostName}}emc/get-user
+  ?version=19
+  &emcId=127683
+###
+{{hostName}}emc/get-user
+  ?version=19
+  &emcId=112226
+
+###
+{{hostName}}emc/incomplete-amrs
+
+###
+{{hostName}}emc/cron-user-update-emr
+
+
+###
+{{hostName}}emc/import-team
+  ?{{dev}}
+
+
+
+
+
+
+###
+{{hostName}}emc/available-nicknames
+  ?{{dev}}
+  &profileId=51675
+  # &search=
+  # &positionId=
+###
+{{hostName}}emc/all-available-nicknames
+  ?{{dev}}
+  &location=drp
+  # &department=sales
+  &department=support
+  # &limit=
+  # reserved=
+###
+{{hostName}}emc/amr-status
+  ?{{dev}}
+  &amrId=1183133
+
+###
+{{hostName}}emc/bloom-filter-add?emcIds=123
+
+###
+{{hostName}}emc/bloom-filter-has?emcIds=310637
+# 289500,289529,289537,289553,289610,289633,289642,289689,289694,289710
+
+
+
+
+
+
+
+
+
+
+### ok
+POST {{hostName}}emc/add-amr-add-user
+  ?{{dev}}
+  # &actor=Dev
+{{contentJson}}
+
+{
+  "profileId":1048,
+  "firstName":"first",
+  "lastName":"last",
+  "emailUid":"EVONLJ25GKO",
+  "phoneUid":"DY0PAJDO0L8",
+  "positionID": 1,
+  # "state":"applicant",
+  "state":"trainee",
+  # "state":"employee",
+  {{devKey}}
+}
+
+###
+POST {{hostName}}emc/quick-add-user
+  ?{{dev}}
+{{contentJson}}
+
+{
+  "profileId":10,
+  "firstName":"first",
+  "lastName":"last",
+  "emailUid":"EVONLJ25GKO",
+  "phoneUid":"DY0PAJDO0L8",
+  "positionID": 1,
+  "state":"applicant",
+  # "state":"trainee",
+  # "state":"employee",
+  {{devKey}}
+}
+###
+POST {{hostName}}emc/add-amr-deactivate-user
+  ?{{dev}}
+  # &actor=Dev
+{{contentJson}}
+
+{
+  "profileId":51304,
+  "emcId":122920,
+  {{devKey}}
+}
+
+###
+POST {{hostName}}emc/deactivate-user
+  ?{{dev}}
+{{contentJson}}
+
+{
+  "profileId":10,
+  "emcId":111,
+  {{devKey}}
+}
+
+###
+POST {{hostName}}emc/quick-deactivate-users?{{dev}}
+{{contentJson}}
+
+{
+  "emcIds": [
+
+  ],
+  # "delayInSec":1,
+  {{devKey}}
+}
+
+###
+POST {{hostName}}emc/add-amr-user-move
+  ?{{dev}}
+  # &actor=Dev
+{{contentJson}}
+
+{
+  # "profileId": 429545,"emcId":378551,
+  "profileId": 430917,"emcId":379166,
+  "teamId":1774,
+  {{devKey}}
+}
+###`
+POST {{hostName}}emc/user-move?{{dev}}
+{{contentJson}}
+
+{
+  "profileId": 429545,"emcId":378550,"teamId":1774,
+  {{devKey}}
+}
+
+###
+POST {{hostName}}emc/quick-users-move?{{dev}}
+{{contentJson}}
+
+{
+  "emcIds":[356551],
+  "teamId":1774,
+  # "delayInSec":1,
+  {{devKey}}
+}
+
+###
+# "id":"1774","name":"DreamPort Pre-live Training",
+# "id":"1214","name":"Pre-Nesting Team",
+# "id":"1182","name":"Dreamport Training 1",
+# "id":"1180","name":"Dreamport Training",
+###
+
+
+###
+POST {{hostName}}emc/add-amr-user-change-position
+  ?{{dev}}
+  # &actor=Dev
+{{contentJson}}
+
+{
+  "profileId":51304,
+  "emcId":122920,
+  # "profileId": 403203,
+  # "emcId": 22196,
+
+  "positionId":1,
+  "personState":"trainee",
+  # "personState":"employee",
+  # "displayName":"spvtu100",
+  # "sendCredentialsEmail":true,
+  # "location":"drp",
+  {{devKey}}
+}
+###
+POST {{hostName}}emc/user-change-position?{{dev}}
+{{contentJson}}
+
+{
+  "profileId":407591,
+  "emcId":368170,
+  "positionId":1,
+  "personState":"trainee",
+  # "personState":"employee",
+  # "displayName":"spvtu100",
+  # "sendCredentialsEmail":true,
+  # "location":"drp",
+  {{devKey}}
+}
+
+###
+POST {{hostName}}emc/quick-users-change-position
+  ?{{dev}}
+{{contentJson}}
+
+{
+  "emcIds":[341389],
+  "personState":"trainee",
+  # "displayName":"TestS3Test",
+  # "teamId":1134,
+  # "sendCredentialsEmail":true
+}
+###
+
+{
+  "emcIds": [1,2],
+  "positionId": 1,
+  "personState":"trainee",
+  # "personState":"employee",
+  # "displayName": "spvtu100",
+  # "sendCredentialsEmail": true,
+  # "teamId": true,
+  # "delayInSec":1,
+  {{devKey}}
+}
+
+
+###
+POST {{hostName}}profile/add-emc-user-by-profile-ids
+  ?{{dev}}
+{{contentJson}}
+
+{
+  "profileIds":[
+  # 286721,347723,347747,347751,347767,347789,347983,348091,348207,348243
+  51304
+  ],
+  # "personState":"applicant",
+  # "personState":"trainee",
+  # "positionId":1,
+  # "actor":"Dev",
+  {{devKey}}
+}
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}emc/get-team-superiors
+  ?teamId=1250
+# {
+#   "superiors": [
+#     {
+#       "userId": "112062",
+#       "teamId": "2407",
+#       "displayName": "Gurmeet",
+#       "type": "Manager Assistant",
+#       "emails": []
+#     }
+#   ]
+# }
+###
+{{hostName}}emc/get-team
+  # ?teamId=2407
+
+
+###
+POST {{hostName}}emc/get-profiles
+{{contentJson}}
+
+{
+  # "ids": [51383],
+  # "firstName":"test",
+  # "lastName":"verma",
+  # "email":"surjeet@gmail.com",
+  # "limit":10,
+  "page":1
+}
+
+
+
+
+
+
+
+
+
+
+### EVENTS
+@mbsr-survey-submit = x-mbsr-event: INST_SURVEY_SUBMITTED
+@mbsr-emc-update = x-mbsr-event: App\\Message\\UserRelationUpdatedMessage
+@mbsr-emr-update = x-mbsr-event: emr_drp_queue
+### emc
+# POST {{hostName}}emc/mbsr-emc-update
+POST {{hostName}}emc/emc-update
+{{contentJson}}
+{{mbsr-emc-update}}
+
+{
+  "userIds": [
+    577817
+  ]
+}
+### emc
+# POST {{hostName}}emc/mbsr-emc-update
+POST {{hostName}}emc/emc-update-dev
+# POST {{hostName}}emc/quick-emc-update
+{{contentJson}}
+
+{
+  "userIds": [
+ 424117,
+424118,
+424119,
+424416,
+426016,
+446724,
+447876,
+448135,
+448138,
+448139,
+448160,
+448193
+  ]
+}
+###
+{{hostName}}emc/cron-emc-update-user
+
+###
+{{hostName}}emc/cron-emr-update
+
+###
+POST {{hostName}}emc/mbsr-emr-update
+{{contentJson}}
+{{mbsr-emr-update}}
+
+{
+  "objectID": "30846e15de77386ccf2f2f6619ed2590",
+  "error": "","amrUUID": "TRAVEL-051124-59","amrID": 52157,
+  # "error": "error from emc","amrUUID": "","amrID": null,
+  # "error": "Agent already in Dreamport Training 1","amrUUID": "","amrID": null,
+  {{devKey}}
+}
+
+###
+POST {{hostName}}emc/cron-execute-amr
+{{contentJson}}
+
+{
+  # PASSED(1),FAILED(2),ADDED(3)default,CANCELED(4),PROCESSING(5),RETRY_EXHAUSTED(6),
+  # "statusToProcess":2,
+  # CREATE_USER(1),CHANGE_POSITION(2,6),DEACTIVATE_USER(3),RETRY_DEACTIVATION(4),MOVE_USER(5),CONTRACT_AUTOMATION(6)
+  # "typeToProcess":3,
+  "profileIds": [
+51653
+  ],
+  "limit":500,
+  "delayInSec":5,
+  # "skipff":true,
+  {{devKey}}
+}
+
+###
+Post {{hostName}}emc/list-amr-requests
+  ?{{dev}}
+{{contentJson}}
+
+{
+  "profileIds":[
+# 577899
+  ],
+  # "type":3,
+  # "status":3,
+  {{devKey}}
+}
+
+###
+{{hostName}}emc/amr-brief?{{dev}}
+  &dateFrom=2025-03-06
+  # &dateTo=2025-02-07
+  # &status=3
+  &type=3
+
+
+
+
+
+
+
+
+###
+Post {{hostName}}common/decrypt
+{{contentJson}}
+
+{
+  "data":[
+    "cec133b1eef0482e1e4fdde9322b278892887f78794fc9cccc0dcf35820e901b"
+  ]
+}
+
+###
+Post {{hostName}}common/encrypt
+{{contentJson}}
+
+{
+  "data":[
+    "shubham.batra17@gmail.com"
+  ]
+}
+
+###
+{{hostName}}common/ff?{{dev}}
+  &name=mbsr_listen_emc_id_cutoff
+  # &name=emc_contract_automation
+  # &name=pause_assessment_crons
+  &op=value
+###
+# !(await this.commonService.flag('noCache', undefined, undefined, false))
+# !(await this.commonService.flagVal('noCache'))
+{{hostName}}common/flag?{{dev}}
+  # &key=pause_execute_amrs
+  # &key=ENABLE_CHECK_BLACKLIST_SAP
+  # &key=MAX_EMC_ID_LISTEN_CUTOFF_MBSR
+  # &key=TEAMS_NOTIFY_EMAIL_TEMPLATE_LAST_USED_INFO
+  # &key=PAUSE_EXECUTE_AMRS_DEACTIVATION
+  &key=ENABLE_HRMEC_DB_OVER_HRM
+  # &val=1
+  # &exp=1
+  # &def=false
+
+###
+{{hostName}}common/missing-mntc-alert?{{dev}}
+
+
+
+
+
+
+
+
+
+
+### masters 
+# @crudtab = experience
+# @crudtab = education
+# @crudtab = language
+# @crudtab = language/language-level
+# @crudtab = reject-reason
+@crudtab = skill
+# @crudtab = contractor
+
+### Sync from HRM
+# @name syncFromHrm
+{{hostName}}{{crudtab}}/sync-from-hrm
+
+
+### list all reasons
+{{hostName}}{{crudtab}}?stageId=3
+
+### get list
+{{hostName}}{{crudtab}}/list
+{{auth}}
+
+### get for crud
+{{hostName}}{{crudtab}}
+  # ?activeOnly=true
+{{auth}}
+
+### get one
+{{hostName}}{{crudtab}}?id=1
+{{auth}}
+
+### create/update
+POST {{hostName}}{{crudtab}}
+{{contentJson}}
+{{auth}}
+
+{
+  # "id": 79,
+  "name": "test value",
+  "status": 1
+}
+
+### create/update language
+POST {{hostName}}{{crudtab}}
+{{contentJson}}
+
+{
+  # "id": 661,
+  "name": "{{crudtab}}",
+  "iso": "iso",
+  "code": "code",
+  "status":1
+}
+
+
+### create/update
+POST {{hostName}}reject-reason
+{{contentJson}}
+
+{
+  "id": 97,
+  "name": "Bad customer experience",
+  "status":1,
+  "stages":[1,3]
+}
+
+###
+{{hostName}}reject-reason/default-reject-reason
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}health/app-status
+###
+{{hostName}}health/app-status?serviceList=1
+###
+{{hostName}}health/app-status?hrmec=1
+###
+{{hostName}}health/app-status?cronSharePayoneerInfoToAcc=1
+###
+{{hostName}}health/app-status?assessmentPassedStatusCumulative=1
+###
+{{hostName}}health/app-status?trainingPassedStatusCumulative=1
+###
+{{hostName}}cron/check-and-rerun-all
+###
+{{hostName}}cron/check-and-rerun
+  # ?name=cronReminders
+  ?name=cronSharePayoneerInfoToAcc
+###
+{{hostName}}health/app-status?cronIncompleteAssessmentRejection=1
+###
+{{hostName}}health/app-status?cronAssessmentEvaluateResult=1
+###
+{{hostName}}health/app-status?redis=1
+###
+{{hostName}}health/app-status?messageBus
+
+
+
+
+
+
+
+
+
+### CRONS
+###
+{{hostName}}cron/add-jobs
+###
+{{hostName}}cron/clean-jobs
+###
+{{hostName}}cron/job-count/user_account_queue
+###
+{{hostName}}cron/job-logs/BOJ008
+  ?queueName=user_account_queue
+###
+{{hostName}}cron/failed-jobs/user_account_queue
+###
+{{hostName}}cron/active-jobs/user_account_queue
+###
+{{hostName}}cron/job-logs/reject_queue
+###
+{{hostName}}cron/next-job/userAccountQueue
+###
+{{hostName}}emc/cron-verify-failed-amrs
+
+
+
+
+
+
+
+
+
+### Util
+# @cacheKey = DreamPort:PROFILE:INFO*
+# @cacheKey = DreamPort:GEO:city_term*
+# @cacheKey = DreamPort:APP:positions
+# @cacheKey = DreamPort:CCS:phone929434343431
+# @cacheKey = DreamPort:CCS:phoneY9JA9WQUNF0
+@cacheKey1 = production
+# @cacheKey = development
+# @cacheKey = DreamPort:CRONS_DETAILS:user_account_queue:update_emc_user_account
+# @cacheKey = DreamPort:BLOOM_FILTER_DATA
+# @cacheKey = DreamPort:COMMON:SETTINGS
+# @cacheKey = DreamPort:TEST_GORILLA:auth_token
+# @cacheKey = DreamPort:PROFILE:DATA:12424
+@cacheKey = DreamPort:alert:TEMPLATE_LAST_USED_INFO
+@cacheKey = DreamPort:CRONS_DETAILS:CHECKED_ON
+@cacheKey = DreamPort:alert:missingMntcId
+@cacheKey =*AMR_PROCESS_ADD_USER:IN_PROGRESS_FLAG**
+@cacheKey = DreamPort:TRAINING_DEACTIVATION_QUEUE:*
+
+# @pattern = DreamPort:PROFILE:DATA:*
+# @pattern = DreamPort:EMAIL_TEMPLATE_USE_STATUS:
+# @pattern = DreamPort:CRONS_DETAILS*
+# @pattern = DreamPort:EMC:UPDATE_USER_ID:*
+# @pattern = DreamPort:flags:*
+# @pattern = DreamPort:EMC:UPDATE_USER_ID:313686
+###
+{{hostName}}util/get-cache?key=DreamPort:REVIEW_INVITE:LAST_RAN_INFO
+
+###
+# {{hostName}}util/del-cache?key={{pattern}}
+  # &r=true
+###
+{{hostName}}util/keys-cache?pattern=*
+
+# javascript:(async (startId, endId) => { for (let id = startId; id <= startId+endId; id++) { fetch('https://dreamport-bo-api.asaptickets.com/api/util/del-cache?key=DreamPort:PROFILE:DATA:' + id); console.log(`hit for ID ${id}`); } })(40000, 40000); 
+# (async (startId, endId) => { for (let id = startId; id <= startId+endId; id++) { const res = await fetch('https://dreamport-bo-api.asaptickets.com/api/util/del-cache?key=DreamPort:PROFILE:DATA:' + id); console.log(`hit for ID ${id}`, res.ok); } })(1000, 1); 
+###
+Post {{hostName}}util/set-cache
+{{contentJson}}
+
+{
+  "key": "DreamPort:TEST_GORILLA:auth_token",
+  "value": "4066fda21e2d4468fc943ce61be0b8a251dd19a3",
+  # "value": {
+  #   "a":1,
+  #   "b":2
+  # },
+  # "ttl": 6000,
+  "dev": true
+}
+
+
+###
+{{hostName}}util/del-cache?key=
+  DRPT_PUB:HRM:experience_list
+  DRPT_PUB:HRM:recruiter_id
+  DRPT_PUB:HRM:language_and_level_list
+  DRPT_PUB:HRM:skill_list
+  DRPT_PUB:HRM:contract_type_id
+  DRPT_PUB:HRM:location_id
+  DRPT_PUB:HRM:education_level_list
+
+
+
+
+###
+{{hostName}}util/clear-cache
+###
+{{hostName}}util/clear-cache
+  # ?key=rejectReason
+  # ?key=positions
+  # ?key=advertisers
+  # ?key=assessment
+  ?key=settings
+  # ?key=geo
+
+
+
+###
+{{hostName}}util/clear-pub-cache/setting
+
+
+
+
+
+
+
+
+###
+{{hostName}}util/env?{{dev}}
+
+###
+{{hostName}}util/set-env
+  ?{{dev}}
+  # &key=CC_EMC_ELASTIC_SEARCH_USER_CACHE_NODE&val=http://elk01sttr.stage-travel.com:80
+  # &key=CC_EMC_ELASTIC_SEARCH_USER_CACHE_USER&val=emc
+  # &key=CC_EMC_ELASTIC_SEARCH_USER_CACHE_PASS&val=JooslocNetvej4
+  &key=NODE_ENV&val=stage
+
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}util/debug?
+  # &a=g
+  &w=kibana
+###
+{{hostName}}util/debug
+
+###
+Post {{hostName}}util/analytics-event-test?dev=1
+{{contentJson}}
+
+{
+  "set":"travel.drpt_user_status1",
+  "data":{
+    "uid": 1432,
+    "user_application_id": 1430,
+    "status": "Contract on-going",
+    "event_name": "Contract on-going",
+    "comment": "test event",
+    "reason": null,
+    "event_date": "2023-05-10 15:35:00"
+  }
+}
+
+###
+{{hostName}}util/emit-mbsr-event-test?dev=1
+###
+{{hostName}}util/emit-mbsr-event
+###
+Post {{hostName}}util/emit-mbsr-status-update-event
+
+###
+Post {{hostName}}profile/emit-event-status-update-by-profile-ids
+{{contentJson}}
+
+{
+  "profileIds": [
+454843
+  ],
+  # "delayInSec": 1,
+  {{devKey}}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}gmail/notify-email-template-used-info
+  ?{{dev}}
+###
+{{hostName}}gmail/get-email-template-used
+###
+{{hostName}}gmail/set-email-template-used
+  ?{{dev}}
+  # &templateName=drpt_reg_bl-2
+
+
+###
+https://mtspa.asaptickets.com/mntc-spa.js
+###
+###
+curl --request GET \
+  --url https://mtspa.asaptickets.com/config.js \
+  --header 'user-agent: user-agent'
+###
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+# TESTGORILLA
+@tgHost = https://app.testgorilla.com/api/
+@tgOrigin = Origin: https://app.testgorilla.com
+# @tgAssessmentId = 608298
+# @tgAssessmentId = 642599
+# @tgAssessmentId = 695297
+# @tgAssessmentId = 802635
+# @tgAssessmentId = 695300
+# @tgAssessmentId = 727752
+# @tgAssessmentId = 727770
+# @tgAssessmentId = 801910
+# @tgAssessmentId = 823346
+@tgAssessmentId = 871725
+
+@tgAuth = Authorization: Token {{tgToken}}
+### LOGIN: 
+# @name tgLoginAuth
+POST {{tgHost}}profiles/login/
+{{contentJson}}
+{{tgOrigin}}
+
+{
+  "username": "ankita.choubey@dyninno.in",
+  "password": "Testinguser123#",
+  # "password": "VGVzdGluZ3VzZXIxMjMj",
+  # "username": "a.bansal@dyninno.in",
+  # "password": "DreamportAssessment@2023",
+  # "username": "surjeet.verma@dyninno.in",
+  # "password": "RHJlYW1wb3J0QXNzZXNzbWVudA@2024",
+  "dev": true
+}
+###
+# {{tgLoginAuth.response.body.token}}
+###
+
+@tgToken = 4066fda21e2d4468fc943ce61be0b8a251dd19a3
+# @tgToken = {{tgLoginAuth.response.body.token}}
+### ASSESSMENT_DETAIL: 
+{{tgHost}}assessments/{{tgAssessmentId}}/
+{{tgAuth}}
+
+### REGISTER_USER: 
+POST {{tgHost}}assessments/{{tgAssessmentId}}/invite_candidate/?no_email=true
+{{contentJson}}
+{{tgAuth}}
+
+{
+  "email": "firstUser1122@gmail.com",
+  "first_name": "firstName",
+  "last_name": "lastName"
+}
+### INVITED_USERS: 
+{{tgHost}}assessments/candidature?assessment={{tgAssessmentId}}&ordering=-created&limit=1000
+{{tgAuth}}
+
+### SUBMITTED_ASSESSMENTS:
+{{tgHost}}assessments/candidature?assessment={{tgAssessmentId}}&status=completed&stage=NYE&ordering=-created&limit=100
+{{tgAuth}}
+
+### UPDATE_STAGE: 
+PATCH {{tgHost}}assessments/candidature/7381129/change_stage/
+{{contentJson}}
+{{tgAuth}}
+
+{
+    "stage":"EVA"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ASSESSMENT
+# === === === ===
+###
+###
+{{hostName}}assessment
+###
+{{hostName}}assessment/repush-result-message-bus
+  ?profileIds=455925
+###
+# POST {{hostName}}assessment/survey-submit-event
+POST {{hostName}}mbsr/mock-receive-assessment
+{{contentJson}}
+
+{
+  "payload":{
+    "requestId": 27431616,
+    "hash": "57ij83zl1g",
+    "ipAddress": "103.178.78.70",
+    "deviceType": "mobile",
+    "os": "Android",
+    "browser": "Chrome",
+    "startedAt": "2024-12-11 10:22:09",
+    "surveyResponseId": 579686,
+    "completedAt": "2024-12-11 10:22:10",
+    "relations": null,
+    "requestLogId": 27431616,
+    "folder": "Dreamport",
+    "project": "dreamport.me",
+    "surveyName": "DRP_Trevolution_English_Q3_2024",
+    "surveyTitle": "English B2 (Upper Intermediate)",
+    "maxPoints": 100,
+    "collectedPoints": 45,
+    "questions": [
+        {
+            "questionSno": 1,
+            "question": "Choose the correct sentence:&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 5,
+                    "hasTriggerEvent": false,
+                    "answerSno": 3,
+                    "answer": "She doesn't like ice cream."
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        },
+        {
+            "questionSno": 2,
+            "question": "Fill in the blank: The cat __________ on the mat.&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 0,
+                    "hasTriggerEvent": false,
+                    "answerSno": 1,
+                    "answer": "sit"
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        },
+        {
+            "questionSno": 3,
+            "question": "Choose the correct form:&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 5,
+                    "hasTriggerEvent": false,
+                    "answerSno": 2,
+                    "answer": " I have gone to the store."
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        },
+        {
+            "questionSno": 5,
+            "question": "Choose the correct sentence:&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 5,
+                    "hasTriggerEvent": false,
+                    "answerSno": 2,
+                    "answer": "They are going to the park."
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        },
+        {
+            "questionSno": 6,
+            "question": "Fill in the blank with the correct verb form: If he __________ harder, he would have passed the exam.&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 0,
+                    "hasTriggerEvent": false,
+                    "answerSno": 2,
+                    "answer": "study"
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        },
+        {
+            "questionSno": 7,
+            "question": "Choose the correct sentence:&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 0,
+                    "hasTriggerEvent": false,
+                    "answerSno": 4,
+                    "answer": "I&nbsp;seeing her at the party last night.&nbsp;"
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        },
+        {
+            "questionSno": 8,
+            "question": "Fill in the blank with the correct preposition: She is very good __________ playing the piano.&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 5,
+                    "hasTriggerEvent": false,
+                    "answerSno": 2,
+                    "answer": "at"
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        },
+        {
+            "questionSno": 9,
+            "question": "Choose the correct sentence:&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 0,
+                    "hasTriggerEvent": false,
+                    "answerSno": 4,
+                    "answer": "He's the man whose won the lottery.&nbsp;"
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        },
+        {
+            "questionSno": 10,
+            "question": "Fill in the blank with the correct form of the word: She always __________ her homework before dinner.&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 0,
+                    "hasTriggerEvent": false,
+                    "answerSno": 3,
+                    "answer": "doing"
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        },
+        {
+            "questionSno": 11,
+            "question": "Choose the correct sentence:&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 0,
+                    "hasTriggerEvent": false,
+                    "answerSno": 2,
+                    "answer": "He has been working&nbsp;here since for three years.&nbsp;"
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        },
+        {
+            "questionSno": 12,
+            "question": "Fill in the blank with the correct word: They decided to go on a __________ after the meeting.&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 5,
+                    "hasTriggerEvent": false,
+                    "answerSno": 2,
+                    "answer": "break"
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        },
+        {
+            "questionSno": 13,
+            "question": "Choose the correct form:&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 0,
+                    "hasTriggerEvent": false,
+                    "answerSno": 4,
+                    "answer": "She told me she will&nbsp;arrived tomorrow.&nbsp;"
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        },
+        {
+            "questionSno": 14,
+            "question": "Identify the misspelled word:&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 0,
+                    "hasTriggerEvent": false,
+                    "answerSno": 2,
+                    "answer": "definitely"
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        },
+        {
+            "questionSno": 15,
+            "question": "Choose the correct sentence:&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 5,
+                    "hasTriggerEvent": false,
+                    "answerSno": 2,
+                    "answer": "The information is very useful."
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        },
+        {
+            "questionSno": 16,
+            "question": "Fill in the blank with the correct preposition: The book is __________ the table.&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 5,
+                    "hasTriggerEvent": false,
+                    "answerSno": 1,
+                    "answer": "on"
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        },
+        {
+            "questionSno": 17,
+            "question": "Choose the correct sentence:&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 5,
+                    "hasTriggerEvent": false,
+                    "answerSno": 2,
+                    "answer": "We have finished our work."
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        },
+        {
+            "questionSno": 18,
+            "question": "Fill in the blank with the correct form of the verb: She __________ to the gym every day.&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 5,
+                    "hasTriggerEvent": false,
+                    "answerSno": 3,
+                    "answer": "goes"
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        },
+        {
+            "questionSno": 19,
+            "question": "Choose the correct sentence:&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 0,
+                    "hasTriggerEvent": false,
+                    "answerSno": 3,
+                    "answer": "She can spoke English fluently."
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        },
+        {
+            "questionSno": 20,
+            "question": "Fill in the blank with the correct word: It is important to __________ your work before submitting it.&nbsp;",
+            "questionType": "Multiple choice",
+            "choices": [
+                {
+                    "points": 0,
+                    "hasTriggerEvent": false,
+                    "answerSno": 2,
+                    "answer": "prove"
+                }
+            ],
+            "hasTriggerEvent": false,
+            "triggerableEventCount": 0,
+            "maxPoints": 5,
+            "tag": null
+        }
+    ],
+    "triggerableEventCount": 0,
+    "reviewUrl": "https://survey.asaptickets.com/review/57ij83zl1g?id=579686"
+}
+}
+###
+{{hostName}}assessment/pass-by-profile-ids
+  ?{{dev}}
+  &profileIds=51643
+  # 127323
+###
+
+{{hostName}}assessment/get-all-assessment-ids
+  ?{{dev}}
+  # ?incLegacyIds=1
+{{auth}}
+###
+POST {{hostName}}assessment/change-tg-asmt-stage?{{dev}}
+{{contentJson}}
+
+{
+  "stage": "NYE",
+  "requestIds": [
+10145628,10285364,10285939,10286199,10286368,10286579,10286687,10287254,10287843,10288260,10288362,10288363,10288418,10288931,10289268,10289426,10289763,10289888,10290134,10290708,10290938,10291652,10291898,10292029,10292265,10292268,10292421,10292544,10292983,10293175,10293413,10293458,10294553,10294634,10294682,10295366,10295562,10295974,10296022,10296025,10296091,10296175,10296340,10296390,10296462,10297067,10297252,10297563,10297804,10297850,10298132,10298413,10298925,10299167,10299349,10299851,10299956,10300542,10300627,10301240,10301282,10301488,10301845,10302346,10302581,10302830,10303736,10303980,10305697,10305992,10306037,10306189,10306202,10306716,10306728,10307194,10307234,10307699,10307985,10308289,10309131,10309299,10309347,10309578,10309956,10309976,10310211,10310373,10310472,10310784,10310921,10312240,10312380,10312813,10312925,10313104,10313158,10314082,10314160,10314417,10314541,10314756,10315195,10315525,10315692,10315825,10316594,10316613,10316617,10316699,10317005,10317034,10317055,10317442,10317620,10317699,10317769,10317843,10317956,10317961,10318544,10318571,10319224,10319748,10320480,10320702,10320784,10320862,10321892,10322081,10323048,10323099,10323584,10324038,10324081,10325428,10326226,10326607,10326758,10326947,10327488,10328120,10328623,10328895,10329064,10329566,10329795,10330312,10330472,10330664,10330849,10331213,10331839,10331930,10331997,10332155,10332227,10332537,10332858  
+  ],
+  "clearScore": true,
+  # "delayInSec": 1,
+  "dev": true
+}
+
+
+###
+{{hostName}}assessment/list
+  # ?limit=20
+###
+{{hostName}}assessment/tag
+{{auth}}
+###
+{{hostName}}assessment/del-assessment-info-cache
+###
+{{hostName}}assessment/get-assessment-name-info?{{dev}}
+  # &assessmentId={{tgAssessmentId}}
+  &assessmentId=802658
+  # &fresh=false
+###
+{{hostName}}assessment/cron-evaluate-results
+###
+{{hostName}}assessment/gen-dev-link
+  ?email=sankeshmishra56@gmail.com
+###
+{{hostName}}assessment/request?{{dev}}
+  &profileId=51643
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# mindtickle.dev-travel.com
+# === === === ===
+###
+{{mntcDevHostName}}ping
+
+# mindtickle-client/service
+# === === === ===
+###
+{{hostName}}mntc/ping
+###
+Post {{hostName}}mntc/get-users?{{skipRole}}
+{{contentJson}}
+
+{
+  "userIds": ["1894397366742073344"],
+  # "remote":false,
+  {{devKey}}
+}
+  # ?profileIds=4
+###
+{{hostName}}mntc/sync-user-training-to-bo
+  # ?profileIds=4
+###
+# only hits the mntc service if the data is not in cache
+{{hostName}}mntc/training-performance-by-mtid
+  ?mntcId=1871854402858295296
+  # &prelive=true
+
+###
+# how a user receive the data on UI
+{{hostName}}mntc/training-performance-by-pid
+  ?{{dev}}
+  &profileId=51643
+  # &uaIds=51643
+  # &mntcIds=51643
+  # &uIds=51643
+
+###
+POST {{hostName}}mntc/get-user-training-data
+{{contentJson}}
+
+{
+  "profileIds":[51643]
+  # "uaIds":[51643]
+  # "mntcIds":["51643"]
+  # "uIds":[51643]
+}
+
+###
+{{hostName}}mntc/series-list
+{{auth}}
+
+
+###
+@sid1 = 1529815527082850731
+@sid2 = 1558013872759061105
+
+###
+{{hostName}}mntc/series-modules
+  ?seriesId={{sid1}}
+{{auth}}
+
+
+###
+POST {{hostName}}mntc/cron-sync-training-performance
+# POST {{hostName}}mntc/cron-sync-training-prelive-performance
+{{contentJson}}
+
+{
+  "mntcIds": [
+    "1886664742525771776"
+  ],
+  # "uids": [],
+  # "uaIds": [],
+  # "config":{
+  #   "syncDateTime": "2024-03-05"
+  # }
+  {{devKey}}
+}
+###
+Post {{hostName}}mntc/cron-sync-training-performance-test
+{{contentJson}}
+
+{
+  # "prelive": true,
+  "mntcIds": [
+"1892933982362337280"
+  ],
+  # "uids": ""
+  {{devKey}}
+}
+
+###
+POST {{hostName}}mntc/cron-sync-training-performance-mntc
+{{contentJson}}
+
+{
+  "userIds": []
+}
+###
+POST {{hostName}}mntc/cron-sync-training-cert
+{{contentJson}}
+
+{
+  "userIds": [
+    # "1805539462103900160",
+    # "1803478355002966016"
+  ],
+  # "syncDateTime": "2023-07-01"
+  {{devKey}}
+}
+
+
+
+
+###
+{{hostName}}mntc/cron-remind-or-mark-milestone-incomplete
+  ?limit=100
+###
+{{hostName}}mntc/cron-reject-users-for-pending-module
+  # ?limit=200
+###
+{{hostName}}mntc/cron-reject-user-mission-module-fail
+  # ?limit=20000
+###
+{{hostName}}mntc/cron-reject-users-for-pending-module-prelive
+  # ?limit=20000
+
+
+
+### XXXXXXXXXXXXX PROCESS DEACTIVATION
+{{hostName}}mntc/cron-process-deactivation-queue?{{dev}}
+  # &checkType=1
+
+###
+# FIRST_MILESTONE: 1,
+# SECOND_MODULE: 2, not using
+# KNOWLEGE_T1: 3,
+# KNOWLEGE_T2: 4,
+# KNOWLEGE_T3: 5,
+# SECOND_MILESTONE: 6,
+# PRELIVE_MISSION: 7,
+# PRELIVE_LAST_MODULE: 8,
+###
+{{hostName}}mntc/get-deact-queue-entries?{{dev}}
+  &check=1
+
+###
+{{hostName}}mntc/clear-deact-queue-by-check-type?{{dev}}
+  &check=5
+###
+{{hostName}}mntc/clear-deact-queue-full?{{dev}}
+###
+POST {{hostName}}mntc/verify-module-progress?{{dev}}
+{{contentJson}}
+
+{
+  "userIds":[
+    "1894397366742073344"
+  ],
+  "moduleIds":[
+    # online training
+    # "{{trainingFirstModuleId}}",
+    # "{{trainingT1ModuleId}}",
+    # "{{trainingT2ModuleId}}",
+    "{{trainingT3ModuleId}}",
+    "{{trainingGKModuleId}}"
+    # prelive training
+    # "{{preliveMissionModuleId}}",
+    # "{{preliveLastModuleId}}"
+  ],
+  {{devKey}}
+}
+
+###
+{{hostName}}mntc/get-deactivated-users?{{dev}}
+  &type=4
+  # &date=2024-01-07
+###
+{{hostName}}mntc/cron-training-prelive-pass
+###
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+# PROFILE APIs
+###
+{{hostName}}profile/ping-sap
+###
+{{hostName}}profile/time-to-reject?{{dev}}
+  &profileId=1052
+###
+{{hostName}}profile/delete-account
+  ?{{dev}}
+  # &email=shubham.batra17@gmail.com
+  &email=surjeetindia@gmail.com
+  # &email=surjeetx@gmail.com
+  # &email=sagarsinghqa.03@gmail.com
+  # &email=ahmedgazar22@yahoo.com
+  # &email=sonusysh04@gmail.com
+  # &email=mayank.gupta@dyninno.in
+  # &email=ravikkaushikk@gmail.com
+  # &email=for.testsrz@gmail.com
+{{checkEligibilityToken}}
+
+###
+https://dreamport-bo-api.stage-travel.com/api/profile/delete-account?dev=1&email=surjeetindia%40gmail.com
+###
+PUT {{hostName}}profile/
+{{contentJson}}
+{{auth}}
+
+{
+  "profileId": 10,
+  "key": "advertiserId",
+  "value": "2",
+  "metaData": {
+    "id": 8
+  }
+}
+
+###
+PUT {{hostName}}profile/
+{{contentJson}}
+{{auth}}
+
+{
+  "profileId": 170,
+  "key": "firstName",
+  "value": "SURJEET"
+  # "metaData": {
+  #   "id":
+  # },
+}
+
+###
+PUT {{hostName}}profile/
+{{contentJson}}
+{{auth}}
+
+{
+  "profileId": 153,
+  "key": "primaryEmail",
+  "value": "surjeeta9876987698@gmail.com",
+  "metaData": {
+    "id": 6
+  }
+}
+
+###
+PUT {{hostName}}profile/
+{{contentJson}}
+{{auth}}
+
+{
+  "profileId": 153,
+  "key": "secondaryEmail",
+  "value": "surjeeta9876987698@gmail.com",
+  "metaData": {
+    # "id": 
+  }
+}
+
+###
+PUT {{hostName}}profile/
+{{contentJson}}
+{{auth}}
+
+{
+  "profileId": 167,
+  "key": "primaryPhone",
+  "value": "919876987695",
+  "metaData": {
+    "id": 20
+  }
+}
+
+###
+PUT {{hostName}}profile/
+{{contentJson}}
+{{auth}}
+
+{
+  "profileId": 2,
+  "key": "secondaryPhone",
+  "value": "919876543211",
+  "metaData": {
+    "id": 25
+  }
+}
+
+###
+PUT {{hostName}}profile
+{{contentJson}}
+{{auth}}
+
+{
+  "profileId": 165,
+  "key": "residencyCountry",
+  "value": "40"
+}
+
+###
+PUT {{hostName}}profile/
+{{contentJson}}
+{{auth}}
+
+{
+  "profileId": 170,
+  "key": "residencyCity",
+  "value": "486453"
+}
+
+###
+POST {{hostName}}profile/unreject?id=833
+
+###
+POST {{hostName}}profile/init-reject
+  ?{{dev}}
+  &{{skipRole}}
+{{contentJson}}
+
+{
+  "profileId": 369871,
+  # "appStatusId": 13,
+  # "rejectReasonId": 22,
+  # "reason": "Training failed",
+  # "comment": "Training team request, dev rejection",
+  # "actor": "Dev",
+  {{devKey}}
+}
+
+###
+POST {{hostName}}profile/init-bulk-reject
+  ?{{dev}}
+  &{{skipRole}}
+{{contentJson}}
+
+{
+  "profileIds": [180862],
+  "profileId": 1,
+  # "appStatusId": 13,
+  # "rejectReasonId": 22,
+  "reason": "Training failed",
+  # "comment": "Training team request, dev rejection",
+  "comment": "very old profile, emc already deactivated",
+  {{devKey}}
+}
+
+###
+POST {{hostName}}profile/mark-blacklist
+  ?{{skipRole}}
+{{contentJson}}
+
+{
+  "profileId": 1,
+  "status": true,
+  "comment": "comment"
+}
+
+###
+POST {{hostName}}profile/init-training
+  ?skipRole=1
+{{contentJson}}
+
+{
+  "profileId": 316037
+}
+
+###
+POST {{hostName}}json/init-training-prelive
+  ?skipRole=1
+{{contentJson}}
+
+{
+  "profileId": 316037
+}
+
+###
+{{hostName}}profile/sync-pub-user
+
+###
+Post {{hostName}}profile/sync-assessment-data
+{{contentJson}}
+
+{
+  "profileId": 1051,
+  "data":{
+        "id": 53,
+        "userApplicationId": 3108,
+        "vendorAssessmentId": 823347,
+        "vendorRequestId": 7174567,
+        "hash": "8a56e9f1-f9a0-4800-a707-8941b4ea9e3b",
+        "maxScore": 100,
+        "score": 27,
+        "result": 1,
+        "status": 2,
+        "createdAt": "2024-02-21T08:09:19.000Z",
+        "updatedAt": "2024-02-21T08:13:05.000Z",
+        "assessmentTagScore": [
+            {
+                "id": 11,
+                "assessmentId": 53,
+                "tagId": 807374,
+                "score": 21,
+                "createdAt": "2024-02-21T08:13:05.000Z",
+                "updatedAt": "2024-02-21T08:13:05.000Z",
+                "tag": {
+                    "id": 807374,
+                    "vendorAssessmentId": 823346,
+                    "name": "B2C telesales",
+                    "status": 1,
+                    "createdAt": "2024-02-21T06:37:33.000Z",
+                    "updatedAt": "2024-02-21T06:37:33.000Z"
+                }
+            },
+            {
+                "id": 10,
+                "assessmentId": 53,
+                "tagId": 1311573,
+                "score": 35,
+                "createdAt": "2024-02-21T08:13:05.000Z",
+                "updatedAt": "2024-02-21T08:13:05.000Z",
+                "tag": {
+                    "id": 1311573,
+                    "vendorAssessmentId": 823346,
+                    "name": "English (upper intermediate/B2)",
+                    "status": 1,
+                    "createdAt": "2024-02-21T06:37:33.000Z",
+                    "updatedAt": "2024-02-21T06:37:33.000Z"
+                }
+            },
+            {
+                "id": 12,
+                "assessmentId": 53,
+                "tagId": 1325346,
+                "score": 26,
+                "createdAt": "2024-02-21T08:13:05.000Z",
+                "updatedAt": "2024-02-21T08:13:05.000Z",
+                "tag": {
+                    "id": 1325346,
+                    "vendorAssessmentId": 823346,
+                    "name": "Negotiation",
+                    "status": 1,
+                    "createdAt": "2024-02-21T06:37:33.000Z",
+                    "updatedAt": "2024-02-21T06:37:33.000Z"
+                }
+            }
+        ]
+    }
+}
+
+###
+Post {{hostName}}profile/sync-training-data
+{{contentJson}}
+
+{
+  "profileId": 1048,
+  "emcId": 108478,
+  "data": {
+    "id": 1742450,
+    "userApplicationId": 249200,
+    "mntcUid": null,
+    "mntcId": "1755850843351040000",
+    "mntcCreatedAt": "2024-02-09T07:15:01.000Z",
+    "mntcFailedAt": null,
+    "completedModuleCount": 0,
+    "mandatoryModuleCompletedAt": null,
+    "missionModuleCompletedAt": null,
+    "missionModuleStatus": null,
+    "missionModuleScore": null,
+    "certAwardedAt": null,
+    "initRejectAt": "2024-03-05T13:45:34.000Z",
+    "lastSynchedAt": "2024-02-09T07:15:01.000Z",
+    "createdAt": "2024-02-09T07:15:01.000Z",
+    "updatedAt": "2024-03-05T13:45:34.000Z"
+  }
+}
+###
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}profile/is-applicant
+  ?emailUid=XHJJZ4JKGVU
+  &phoneUid=TQPGMQCL1OI
+
+###
+POST https://dreamport-bo-api-wan.stage-travel.com/api/profile/check-existance
+Authorization: Bearer dXNlcm5hbWU6c2FwI3Bhc3N3b3JkOnF3ZXJ0eQ==
+{{contentJson}}
+
+{
+  "email": "black.b@gmail.com",
+  "phone": "919302164441"
+  # "firstName": "Surjeet",
+  # "lastName": "Verma"
+}
+
+###
+POST {{hostName}}profile/check-existance
+# Authorization: Bearer dXNlcm5hbWU6c2FwI3Bhc3N3b3JkOnF3ZXJ0eQ==
+Authorization: Bearer dXNlcm5hbWU6c2FwI3Bhc3N3b3JkOmRyZWFtcG9ydA==
+{{contentJson}}
+
+{
+  "email": "test307172154@yopmail.com",
+  "phone": "919302164441"
+  # "firstName": "Surjeet",
+  # "lastName": "Verma"
+}
+
+
+
+
+###
+{{hostName}}profile/pub-check-eligibility
+  ?{{devKey}}
+  # &emailUid= dontu.eugen@gmail.com
+  &emailUid=1MKXK6Q9PAA
+  # &phoneUid=918909630099
+  &phoneUid=PZXGFTX3UEE
+###
+{{hostName}}profile/check-eligibility
+  ?{{devKey}}
+  # &email=bunciuc.tatiana@gmail.com
+  # &email=dontu.eugen@gmail.com
+  # &email=surjeetindia@gmail.com
+  # hrmec blacklisted
+  # &email=sukatiusa.1996@mail.ru
+  # hrmec ex-employee
+  &email=ahmedgazar22@yahoo.com
+  # &email=thakur.shikha3005@gmail.com
+  # &email=j.smirnovs@dynatech.lv
+  # &phone=+37369582082
+  &phone=918949452160
+  # &phone=+91%2098989-89898
+  # &email=armaansharma4567@gmail.com
+  # &phone=+917483888605
+  # &email=surjeet310142123@gmail.com
+  # &phone=919310142121
+  # &actor=HR
+  # &actor=User
+  # &servicesToInclude=DRPT,HRM,SAP
+  # &servicesToInclude=SAP
+  # &servicesToInclude=HRM
+
+
+
+###
+{{hostName}}profile/emc-linked-info?
+  # &dev=1
+  &term=6106
+  # &term=u100
+  &emcId=6106
+{{checkEligibilityToken}}
+
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}user-application/get-status-list
+###
+{{hostName}}user-application/nsm-assessment-passed-status
+  ?{{dev}}
+  # &refresh=true
+  # &getInfo=true
+###
+{{hostName}}user-application/nsm-assessment-passed-status-cumulative
+  ?{{dev}}
+  # &refresh=true
+  &getInfo=true
+###
+{{hostName}}user-application/nsm-training-passed-status-cumulative
+  ?{{dev}}
+  # &refresh=true
+  &getInfo=true
+
+###
+{{hostName}}profile/get-status?term=SURVEY_PENDING
+###
+{{hostName}}profile/get-status?term=21
+
+
+
+
+
+
+
+
+
+
+
+### create profile`
+{{gidPhone}}
+###
+# @uid = 414000545
+@uid = {{gidPhone}}
+POST {{hostName}}profile/create-profile
+  ?skipRole=1
+{{auth}}
+{{contentJson}}
+
+{
+  "firstName": "testfname",
+  "lastName": "testlname",
+  "positionId": 1,
+  "educationLevelId": 2,
+  "experienceLevelId": 2,
+  # std
+  # "emails": [{ "name": "test{{uid}}@gmail.com", "typeId": 1 }],
+  # "phones": [{ "name": "+91 9{{uid}}", "typeId": 1 }],
+  # blk
+  # "emails": [{ "name": "black.b@gmail.com", "typeId": 1 }],
+  # spl
+  # "emails": [{ "name": "ahmedgazar22@yahoo.com", "typeId": 1 }],
+  "emails": [{ "name": "sonusysh04@gmail.com", "typeId": 1 }],
+  "phones": [{ "name": "919310142123", "typeId": 1 }],
+
+  # existing emc user
+  # "emcId": 122920,
+
+  "addresses": [
+    {
+      "address": "Delhi, India",
+      "cityId": 119889,
+      "countryId": 105,
+      "cityName": "Delhi",
+      "countryName": "India"
+    }
+  ],
+  "skills": [2,4,6],
+  "languages": [
+    { "languageId": 3, "languageLevelId": 2 },
+    { "languageId": 5, "languageLevelId": 2 }
+  ]
+}
+
+
+
+
+
+
+
+###
+POST {{hostName}}profile/skip-assessment
+{{contentJson}}
+{{auth}}
+
+{
+  "profileId": 541
+}
+
+###
+POST {{hostName}}profile/skip-training
+{{contentJson}}
+{{auth}}
+
+{
+  "profileId": 541
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}profile/get-profile-by-emailUid/3FZKO1BHO2A
+
+###
+POST {{hostName}}profile/search/get-profiles?{{skipRole}}
+# POST {{hostName}}profile/search/get-freelancer-profiles?{{skipRole}}
+{{contentJson}}
+# {{auth}}
+
+{
+  # "profileIds":[51440],
+  # "profileState": [3,4],
+  # "teamIds": [1046],
+  "profileState": [2],
+  "blacklist": false,
+  "missingLogin": false,
+  "payoneerConsentPending": false,
+  # "query": "surjeet",
+  # "query": "wanjiariella@gmail.com",
+  # "query": "kp136",
+  # "blacklist":false, 
+  # "positionId": 1,
+  # "firstName": "firstName",
+  # "lastName": "lastName",
+  # "cityId": 11,
+  "statusIds": [2],
+  # "dateFrom": "2023-02-01",
+  # "dateTo": "2023-02-24",
+  # "page": 1,
+  "limit": 1,
+  # "orderBy": "firstName",
+  {{devKey}}
+}
+
+###
+{{hostName}}profile/search/engaged-teams?{{skipRole}}
+
+###
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+POST {{hostName}}user-application/profile/reset-photo
+{{contentJson}}
+
+{
+  "profileId":1
+}
+
+###
+@filePath = ./spv/
+@fileName = test.png
+POST {{hostName}}user-application/profile/upload-photo
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="profilePhoto"; filename="{{fileName}}"
+Content-Type: image/png
+
+< {{filePath}}{{fileName}}`
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="profileId"
+
+1
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+###
+@filePath = /home/spv/Downloads/
+@filePath = /home/spv/Pictures/
+@fileName = Dreamport_Data_Policy.pdf
+@fileName = test-image-1.png
+POST {{hostName}}common/upload-asset
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="asset"; filename="{{fileName}}"
+Content-Type: image/png
+
+< {{filePath}}{{fileName}}
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="dynamicName"
+
+false
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="cdn"
+
+true
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}dashboard/get-applicant-brief
+###
+{{hostName}}dashboard/get-freelancer-brief
+###
+{{hostName}}dashboard/brief-applicants
+###  
+{{hostName}}dashboard/brief-freelancers
+###  
+{{hostName}}dashboard/brief-expiring-contracts
+###  
+{{hostName}}dashboard/brief-expiring-id
+###
+{{hostName}}dashboard/brief-payoneer-status
+###
+
+###  
+{{hostName}}profile/get-profile?{{dev}}
+  &{{skipRole}}
+  # &fresh=true
+  &profileId=584593
+
+
+
+###
+{{hostName}}profile/rem-profile-cache?profileId=50624
+
+###
+POST {{hostName}}profile/get-profile-events?{{skipRole}}
+  &fresh=true
+{{contentJson}}
+
+{
+  "profileId": 51366,
+  # "page": 1,
+  # "limit": 2000
+  # "dateFrom": string,
+  # "dateTo": string,
+  "dev": true
+}
+
+###
+Post {{hostName}}profile/index-profiles
+{{contentJson}}
+
+{
+  "profileIds": [
+    577817
+  ],
+  "delayInSec":1
+}
+
+###
+Post {{hostName}}profile/index-profiles-event
+{{contentJson}}
+
+{
+  "profileIds": [
+417443
+  ],
+  "delayInSec": 1
+}
+
+###
+{{hostName}}profile/index-profiles-event/50014
+###
+{{hostName}}profile/get-freelancer-data
+  ?profileId=14
+  # &fresh=true
+
+###
+{{hostName}}profile/get-account-history
+  ?profileId=14
+  # &fresh=true
+
+###
+{{hostName}}profile/get-current-account
+  ?profileId=14
+  # &fresh=true
+
+###
+{{hostName}}profile/getProfileAppById
+  ?profileId=1
+
+
+
+###
+POST {{hostName}}profile/change-app-status
+{{contentJson}}
+
+{
+  "profileIds": [
+    51643
+  ],
+  "status": 18,
+  # "emitEvent": true,
+  # "emcId": 125195,
+  # "comment": "status synced to contract pending",
+  # "comment": "status updated to pre-live pending",
+  # "reason": "",
+  {{devKey}}
+}
+
+
+
+
+
+###
+POST {{hostName}}profile/sync-data
+{{contentJson}}
+
+{
+  "profileId": 31,
+  "type": 1,
+  "data":{
+    "id": 2,
+    "userApplicationId": 31,
+    "vendorAssessmentId": 802635,
+    "vendorRequestId": 5257323,
+    "hash": "f0b44c54-86d5-4ef1-8bb6-772361de2b57",
+    "maxScore": 100,
+    "score": 80,
+    "result": 2,
+    "status": 2,
+    "createdAt": "2024-02-09T06:30:50.000Z",
+    "updatedAt": "2024-02-11T17:51:07.000Z",
+    "assessmentTagScore": [
+      {
+        "id": 86,
+        "assessmentId": 2,
+        "tagId": 807374,
+        "score": 31,
+        "createdAt": "2024-02-11T17:51:07.000Z",
+        "updatedAt": "2024-02-11T17:51:07.000Z",
+        "tag": {
+          "id": 807374,
+          "vendorAssessmentId": 695297,
+          "name": "test tag 807374",
+          "status": 1,
+          "createdAt": "2024-02-11T16:51:07.000Z",
+          "updatedAt": "2024-02-11T16:51:07.000Z"
+        }
+      },
+      {
+        "id": 87,
+        "assessmentId": 2,
+        "tagId": 957724,
+        "score": 15,
+        "createdAt": "2024-02-11T17:51:07.000Z",
+        "updatedAt": "2024-02-11T17:51:07.000Z",
+        "tag": {
+          "id": 957724,
+          "vendorAssessmentId": 695297,
+          "name": "test tag 957724",
+          "status": 1,
+          "createdAt": "2024-02-11T16:51:07.000Z",
+          "updatedAt": "2024-02-11T16:51:07.000Z"
+        }
+      }
+    ]
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+Post {{hostName}}script/reveal-emails
+{{contentJson}}
+
+{
+  "uids":[
+    "R13HV9P9R1K"
+  ],
+  "limit":10
+}
+
+###
+{{hostName}}ccs/reveal-email
+  ?emailUid=M3UYR3G4CKK
+  &profileId=51516
+{{auth}}
+
+###
+{{hostName}}ccs/reveal-phone
+  ?phoneUid=URNM5CJEI53
+
+###
+{{hostName}}profile/suggest-fname
+  ?term=rstn
+
+###
+{{hostName}}profile/suggest-lname
+  ?term=stn
+
+
+###
+{{hostName}}profile/positions
+
+###
+{{hostName}}position
+  ?{{skipRole}}
+###
+{{hostName}}position/hr-contractable
+
+###
+{{hostName}}profile/get-position-history
+  ?profileId=3
+  # &incFormerApps=true
+
+###
+{{hostName}}profile/get-locations
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}advertiser/advertiser/all
+###
+POST {{hostName}}advertiser/get-or-create
+{{contentJson}}
+
+{
+  # "name": "Twitter12"
+  # "id": 2
+}
+###
+{{hostName}}advertiser?name=e
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}profile/searchProfileById?term=3
+
+###
+{{hostName}}profile/searchProfileByEmailUid?term=
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}geo/map-state?{{dev}}&countryId=125
+###
+{{hostName}}geo/city/IN,bhopal
+  # &positionId=1
+###
+{{hostName}}geo/city-by-id/119889
+
+###
+{{hostName}}geo/search/city/Riverstate
+
+###
+{{hostName}}geo/countries?{{dev}}
+  &positionId=2
+
+###
+{{hostName}}geo/state
+  ?countryCode=IN
+  &name=delhi
+  # &details=full
+###
+{{hostName}}geo/import-cities?dev=1&countryId=77
+
+
+
+
+
+
+
+
+
+
+
+
+
+### CCS
+###
+# @name saveEmail
+{{hostName}}ccs/save-email
+  # ?email=rtestingravi@gmail.com
+  # ?email=rtesting{{uid}}@gmail.com
+  # ?email=for.testsrz@gmail.com
+  # ?email=mayank.sachan@dyninno.in
+
+###
+{{saveEmail.response.body.uid}}
+###
+{{hostName}}ccs/valid-email
+  ?email=yogeshbisht59@gmail.com
+
+
+### CSV
+{{hostName}}ccs/get-email
+  ?email=1MKXK6Q9PAA
+  
+###
+{{hostName}}ccs/get-phone
+  ?phone=PZXGFTX3UEE
+
+
+###
+{{hostName}}ccs/save-phone
+  # ?phone=923194543338
+  ?phone=918909630099
+  # ?phone=918909630093 TOML8FDCP5P
+  # ?phone=918909630094 Y9UOBIXWGI9
+  # ?phone=918909630095 M4RKLK4ZKMX
+# 8909630095
+# 8909630094
+###
+{{hostName}}ccs/valid-phone
+  ?phone=919898989898
+  
+
+
+
+
+
+
+### es
+{{hostName}}es/reset
+
+###
+{{hostName}}es/sync?{{dev}}
+  # ?limit=2
+  # &skip=1
+
+###
+{{hostName}}es/status
+
+###
+{{hostName}}es/get-by-id
+
+###
+POST {{hostName}}es/delete-profiles
+{{contentJson}}
+
+{
+  "profileIds": [51225]
+}
+
+
+
+
+
+
+
+
+### contract
+###
+{{hostName}}contract/1
+
+###
+POST `{{hostName}}contract/init-contract
+  ?{{skipRole}}
+{{contentJson}}
+
+{
+  "profileId": 4,
+  "positionId": 1
+}
+
+###
+Post {{hostName}}contract/terminate/51602
+  ?{{skipRole}}
+{{contentJson}}
+
+{
+  "reasonId":40,
+  "toBeTerminatedAt":"2025-02-12",
+  "comment":"",
+  {{devKey}}
+}
+
+###
+POST {{hostName}}contract
+{{contentJson}}
+
+{
+  "profileId": 1,
+  "contractId": 1,
+  "startDate": "2023-01-01",
+  "endDate": "2023-03-31",
+  "documents": [
+    {
+      "type": "type",
+      "size": 1200,
+      "url": "url",
+      "originalName": "originalName"
+    }
+  ]
+
+}
+
+###
+{{hostName}}itm/427767
+  ?{{skipRole}}
+
+###
+{{hostName}}itm/csv?{{dev}}
+  &payoneerActive=1
+  # &sendEmail=true
+{{checkEligibilityToken}}
+
+
+
+###
+POST {{hostName}}sap/is-employee?{{dev}}
+  # &email=j.derums@dyninno.com
+  # &email=katjuha.petrova@gmail.com
+  # &email=s.thakur@dyninno.in
+  # &email=surjeet.verma@dyninno.in
+  # &email=thakur.shikha3005@gmail.com
+  &email=mayank.gupta@dyninno.in
+  # &email=armaansharma4567@gmail.com
+  # &email=salmakhabiry@yahoo.com
+  # &email=dontu.eugen@gmail.com
+
+###
+POST {{hostName}}sap/is-blacklisted
+{{contentJson}}
+
+{
+  "email": "kristaps.klavinskis@gmail.com",
+  "phone": "+37376545576",
+  {{devKey}}
+}
+
+
+
+
+
+
+
+
+###
+{{hostName}}hrmec/ping
+###
+{{hostName}}hrmec/get-profile-by-id
+  ?profileId=200372
+###
+POST {{hostName}}hrmec/check-blacklisted-by-creds
+{{contentJson}}
+
+{
+  # "email": "sukatiusa.1996@mail.ru",
+  "email": "sonusysh04@gmail.com",
+  "phone": "+37376545576"
+}
+###
+POST {{hostName}}hrmec/check-blacklisted-by-uids
+{{contentJson}}
+
+{
+  "emailUid": "ahmedgazar22@yahoo.com",
+  "phoneUid": "+37376545576"
+}
+###
+POST {{hostName}}hrmec/check-employment-by-creds
+{{contentJson}}
+
+{
+  # "email": "ahmedgazar22@yahoo.com",
+  "email":"thakur.shikha3005@gmail.com",
+  "phone": "918949452160"
+}
+###
+POST {{hostName}}hrmec/search-profile
+{{contentJson}}
+
+{
+  # "email":"idm.test@gmail.com",
+  # "email": "surjeetindia@gmail.com",
+  # "email": "katjuha.petrova@gmail.com",
+  # "email": "kristaps.klavinskis@gmail.com",
+  "email":"ahmedgazar22@yahoo.com",
+  # "email": "surjeet.verma@dyninno.in",
+  # "email": "black.yes@gmail.com",
+  # "email":"dontu.eugen@gmail.com",
+  # "email":"bunciuc.tatiana@gmail.com",
+  # "email": "yara48323@gmail.com",
+  # "email": "Ahmed.diaaeldin@msa.edu.eg",
+  "phone": "+37376545576",
+  "prod": true,
+  {{devKey}}
+}
+
+
+
+
+
+
+
+###
+POST {{hostName}}util/emit-mbsr-event
+{{contentJson}}
+
+{
+  "type": "DRP_PROFILE_STATE_UPDATED",
+  "payload": {
+    "profileId": , 
+    "state": 2, 
+    "appStatusId": 5,
+    "comment": "assessment not completed in 30 days"
+  }
+}
+
+
+###
+POST {{hostName}}common/emitEventStatusUpdate
+{{contentJson}}
+
+{
+  "profileIds": [
+    1240
+  ],
+  "stateId": 1,
+  "statusId": 5,
+  "comment": "assessment not completed in 30 days"
+}
+
+
+
+
+
+
+
+
+
+
+
+###
+# curl -X GET --location "https://emc.dev-travel.com/jsonService.php?serviceName=drp&functionName=userChangePosition&credentials=%7B%22project%22%3A%22DRPT%22%2C%22login%22%3A%22drpt%22%2C%22passwd%22%3A%22qwerty%22%7D&params=%7B%22emcUserID%22%3A123968%2C%22positionID%22%3A1%2C%22personState%22%3A%22applicant%22%2C%22location%22%3A%22DRP%22%2C%22date%22%3A%222030-12-31%22%7D"
+
+GET https://emc.dev-travel.com/jsonService.php
+    ?serviceName=drp
+    &functionName=userChangePosition
+    &credentials={"project":"DRPT","login":"drpt","passwd":"qwerty"}
+    &params={
+    "emcUserID":123968,
+    "positionID":1,
+    "personState":"applicant",
+    "location":"DRP",
+    "date":"2030-12-31"
+    }
+
+###
+# curl -X GET --location "https://emc.dev-travel.com/jsonService.php?serviceName=drp&functionName=userDeactivate&credentials=%7B%22project%22%3A%22DRPT%22%2C%22login%22%3A%22drpt%22%2C%22passwd%22%3A%22qwerty%22%7D&params=%7B%22emcUserID%22%3A123968%2C%22date%22%3A%222030-12-31%22%7D"
+
+GET https://emc.dev-travel.com/jsonService.php
+    ?serviceName=drp
+    &functionName=userDeactivate
+    &credentials={"project":"DRPT","login":"drpt","passwd":"qwerty"}
+    &params={
+    "emcUserID":123968,
+    "date":"2030-12-31"
+    }
+
+###
+{{hostName}}script/test-deactivation
+###
+{{hostName}}script/test-init-training
+
+###
+POST {{hostName}}script/import
+{{contentJson}}
+
+{
+  # "hrmIds": [113388],
+  "status": 1,
+  "limit": 10,
+  "chunk": 100
+}
+
+
+###
+POST {{hostName}}script/update-status
+{{contentJson}}
+
+{
+  # "profileIds": [5],
+  "limit": 1000,
+  "chunk": 100
+}
+
+###
+POST {{hostName}}script/import-freelancer
+{{contentJson}}
+
+{
+  # "hrmIds": [113472,113634,113748,113924,114338,115116,115660,117046,117856,117992],
+  "status": 1,
+  "limit": 100,
+  "chunk": 100
+}
+
+###
+POST {{hostName}}script/update-status-to-pub
+{{contentJson}}
+
+{
+  "profileIds": [454843],
+  "limit": 100,
+  "chunk": 100
+}
+
+###
+{{hostName}}script/index-updated-profiles?limit=100
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}reminder/trigger
+###
+{{hostName}}reminder/get-active-notifications
+###
+{{hostName}}reminder
+###
+Post {{hostName}}reminder
+{{contentJson}}
+
+{
+  name: string;
+  template: string;
+ locations: string;
+ frequency: number;
+ type: number;
+ status: number;
+ statusIds: string;
+ fromDate?: string;
+ toDate?: string;
+ fromDays?: number;
+ toDays?: number;
+ minModules?: number;
+ maxModules?: number;
+ fromField?: string;
+ sort?: number;
+ newsLetter?: number;
+}
+###
+{{hostName}}reminder/get-active
+###
+{{hostName}}reminder/get-appl-for-reminder?id=2
+###
+{{hostName}}reminder/get-sent-reminders
+  ?dev=1
+  &profileId=406933
+
+###
+# @hostName=https://dreamport-bo-api-3683-feat-drpt-4519-trustpilot-inte-799.do.stage-travel.com/api/
+###
+{{hostName}}reminder/cron-invite-for-review
+  ?dev=1
+
+###
+{{hostName}}reminder/get-review-invitation
+  ?puid=eyJpZCI6NTE3MjgsInIiOjJ9
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}newsletter/ping
+
+###
+{{hostName}}newsletter/get-project
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}json/ping
+
+###
+{{hostName}}json/all-settings
+
+###
+{{hostName}}json/settings
+  # ?profileId=1
+###
+{{hostName}}json/settings-by-position
+  # ?positionId=1
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}setting?{{skipRole}}
+###
+{{hostName}}setting/get-boss-agent-positions
+  ?{{dev}}
+###
+{{hostName}}setting/get-by-position/1?{{skipRole}}
+###
+{{hostName}}setting/assessment-config
+  ?positionId=1
+
+###
+{{hostName}}setting/registration-config
+  # ?positionId=1
+
+###
+{{hostName}}setting/training-config
+  # ?positionId=1
+
+
+
+
+
+###
+Post {{hostName}}setting/save
+{{contentJson}}
+
+{
+  "id":3,
+  # "status":1,
+  "name": "Independent Travel Manager2",
+  "positionIds": [1,58],
+  # "positionIds": [1],
+  "area":2,
+  "settings": {
+    "cities": [12,3],
+    "states": [12312,213,123,123,13],
+    "countries": [12312,213,123,123,13],
+    "this": 3,
+    "that": 4,
+    "other": 5
+  },  
+  {{devKey}}
+}
+###
+Post {{hostName}}setting/get?{{dev}}
+{{contentJson}}
+
+{
+  # "settingId":3,
+  # "positionId":1,
+  # "area":2,
+  "details":"short",
+  {{devKey}}
+}
+###
+{{hostName}}setting/get-by-position?{{dev}}
+  &positionId=2
+  &area=1
+
+###
+{{hostName}}setting/get-by-id?{{dev}}
+  &settingId=1
+###
+
+
+
+
+
+
+
+
+
+
+
+###sql
+POST {{hostName}}common/process?
+{{checkEligibilityToken}}
+{{contentJson}}
+
+{
+  # "s":"us.emcId, ua.profileId, ua.appId, ua.statusId, us.mntcId",
+  # "f":"userApplication ua inner join users us on ua.profileId = us.profileId left join userTraining ut on ua.profileId = ut.profileId",
+  # "w":"us.emcId in (378548, 378547,378762, 378761,379370, 379371,379623, 379624,379947, 379946)",
+
+  # if there are assessmentPassed users still in assessment
+  # "s":"uas.profileId, uas.vendorAssessmentId, uas.vendorRequestId, uas.score, ua.statusId, uas.updatedAt, us.emcId",
+  # "f":"userAssessment uas inner join userApplication ua on uas.profileId = ua.profileId left join users us on ua.profileId = us.profileId",
+  # "w":"ua.profileId = 468285",
+  # "w":"ua.statusId in (3,4,6,7) and score >= 40 and uas.updatedAt > '2024-06-01' and uas.updatedAt < current_date",
+
+  # "s":"ua.profileId, uas.profileId, uas.vendorAssessmentId, uas.vendorRequestId, uas.score, ua.statusId, uas.updatedAt, us.emcId",
+  # "f":"userApplication ua left join userAssessment uas on uas.profileId = ua.profileId left join users us on ua.profileId = us.profileId",
+  # "w":"ua.statusId in (6) and uas.updatedAt < current_date",
+
+  # get profiles which are created with emcIds and stuck due to mntcId
+  # "s":"ua.profileId, emcId, ua.statusId, (select positionId from userPosition where appId = ua.appId and endedAt is null) posi",
+
+  # get profiles stuck in assessment passed due to emc updates
+  # "s":"up.id, ua.profileId, uas.profileId, ua.appId, ua.statusId, uas.emcId, uas.mntcId, up.createdAt",
+  # "f":"userProfile up left join userApplication ua on up.id = ua.profileId left join users uas on ua.profileId = uas.profileId",
+  # "w":"up.existingEmcId is null and uas.mntcId is null and ua.statusId in (6)",
+  # "w":"up.existingEmcId is null and ua.statusId in (11)",
+  # "w":"up.existingEmcId is null and ua.createdAt > '2025-02-25 21:30:00'",
+
+  # "r":"select count(0) from userProfile where stateId in (2,4)",
+  # "r":"select * from users where emcId = 22718",
+  # "r":"select count(0) from reminderLog_20250124 where createdAt < date_sub(current_timestamp(), interval 6 month)",
+  # "r":"create table reminderLog_20250124 select * from reminderLog",
+
+  # "r":"select ua.statusId, us.id from userProfile up inner join userApplication ua on up.id = ua.profileId inner join itmDetails us on ua.profileId = us.profileId where up.stateId in (1,3)",
+
+  # "r":"select ua.statusId, ut.* from userTraining ut inner join userApplication ua using (profileId) where ut.mntcCreatedAt is null and ua.statusId in (9,10,17,18,19,20) order by ua.createdAt desc limit 1",
+  
+  # "r":"select ua.* from userPosition up inner join userApplication ua on up.appId = ua.appId where positionId in (3,5) and statusId not in (-3,-2,5) and endedAt is null order by up.id desc limit 10",
+
+  # "r":"select  id.country, id.taxCountry, id.residenceCountry, id.physicalCountry, count(0) from itmDetails id group by id.country, id.taxCountry, id.residenceCountry, id.physicalCountry",
+  # "r":"update userTraining set failedModuleInfo=null where mntcId in ()",
+  # "r":"select count(0), group_concat(id) from userProfile up where id in (577249,577411,577545,577347,577509,577343,577479,577355,577607,577421,577475,576121,577371,577609,577369,577527,577655,577451,577551,577467,577567,577533,577415,577639,577569,577465,577393,577521,577631,577557,577341,577473,577447,577615,577339,577493,577489,577671,577435,577593,577337,577505,577477,577439,577531,577623,577417,577651,577673,577459,577653,577401,577553,577469) and up.stateId = 1",
+
+  # "r":"update userApplication set statusId = 13 where profileId = 286721",
+  
+  # "r":"update userProfile up inner join userApplication ua on up.id=ua.profileId inner join userTraining ut on ua.profileId = ut.profileId set ua.statusId=23, ut.initRejectAt=null where ua.updatedAt > '2025-02-20' and ua.statusId in (25) and up.stateId = 1  and ua.profileId in ()",
+  # "r":"select up.stateId, ua.profileId, ua.statusId, ut.initRejectAt from userProfile up inner join userApplication ua on up.id=ua.profileId inner join userTraining ut on ua.profileId = ut.profileId where ua.updatedAt > '2025-02-20' and ua.statusId in (25) and up.stateId = 1 and ua.profileId in ()",
+
+  {{devKey}}
+}
+
+
+### prelive training
+513627,540189,543047,543141,544853,544913,544929,545857,546041,546771,547531,547873,548887,549447,549509,549595,549625,549629,549749,549819,549853,549973,549979,550225,550471,550725,550743,550933,550955,551005,551415,551571,551611,551621,551831,551857,552157,552449,552623,552681,552845,552865,552917,552951,552995,553153,553177,553189,553365,553409,553571,553581,553615,553757,553759,553847,553925,554077,554095,554345,554431,554487,554491,554557,554683,554963,554981,555079,555097,555193,555285,555341,555459,555721,556035,556189,556261,556297,556379,556405,556627,556701,557157,557349,557867,557923,558133,558195,558553,558593,558645,558661,558681,558859,559219,559537,559565,559609,559653,559977,562271,563319,564469,567737,568837
+### online training
+    "count(0)": "671",
+    "group_concat(profileId)": "521087,522023,525919,527691,530667,532097,534079,534329,534337,535113,535265,536531,536819,537611,539419,544191,544363,547607,549099,550345,550825,551055,551433,551717,552653,552791,552813,553385,553499,553961,554315,555057,555223,555313,555901,556069,556087,556205,556289,556523,556697,556793,557067,557557,557715,557789,557807,558693,558715,559033,559125,559197,559267,559333,559369,559455,559707,559837,560029,560057,560169,560217,560319,560351,560407,560431,560573,560669,560971,561309,561321,561335,561363,561371,561375,561397,561431,561445,561447,561455,561463,561467,561491,561493,561497,561515,561521,561523,561537,561543,561545,561561,561567,561573,561589,561591,561593,561605,561609,561613,561617,561621,561629,561633,561641,561645,561653,561659,561667,561679,561687,561689,561701,561713,561723,561743,561747,561749,561771,561775,561779,561783,561797,561807,561813,561819,561843,561851,561853,561863,561865,561873,561897,561899,561901,561907,561917,561919,561921,561935,561943,561947,561951,561955,561957,561959,561967,561983,561995,562003,562019,562025,562049,562051,562069,562073,562083,562089,562101,562107,562113,562115,562117,562125,562133,562139,562149,562153,562171,562173,562175,562181,562187,562201,562207,562221,562231,562237,562243,562247,562259,562301,562333,562345,562347,562355,562359,562361,562387,562429,562433,562439,562441,562449,562469,562479,562543,562563,562575,562591,562595,562601,562623,562629,562639,562641,562645,562657,562661,562667,562677,562685,562693,562701,562703,562711,562727,562745,562765,562773,562787,562805,562813,562817,562823,562825,562829,562831,562833,562841,562851,562867,562871,562875,562887,562893,562895,562903,562907,562925,562929,562945,562959,562987,562999,563003,563023,563025,563033,563035,563039,563043,563045,563049,563061,563083,563087,563107,563113,563115,563119,563121,563123,563131,563137,563143,563155,563169,563179,563181,563205,563211,563227,563239,563257,563259,563265,563269,563271,563285,563287,563297,563307,563309,563315,563327,563335,563341,563343,563353,563355,563359,563371,563379,563389,563393,563399,563405,563407,563409,563411,563413,563415,563421,563435,563449,563453,563459,563463,563487,563495,563499,563511,563523,563525,563527,563529,563543,563547,563565,563571,563575,563597,563615,563619,563625,563631,563687,563689,563691,563701,563737,563745,563747,563765,563769,563781,563791,563797,563809,563819,563831,563833,563835,563841,563843,563851,563865,563871,563875,563887,563901,563921,563923,563941,563945,563947,563953,563957,563961,563965,563967,563969,563979,563987,563995,563997,564009,564011,564021,564027,564029,564031,564043,564045,564053,564083,564087,564119,564125,564135,564147,564157,564171,564173,564181,564191,564203,564205,564227,564229,564233,564241,564249,564251,564261,564277,564289,564295,564299,564305,564325,564327,564329,564331,564339,564341,564347,564357,564359,564361,564387,564395,564401,564405,564411,564425,564437,564455,564459,564467,564471,564513,564515,564519,564521,564533,564547,564555,564567,564569,564583,564593,564599,564623,564631,564645,564649,564663,564665,564691,564693,564705,564713,564715,564741,564761,564763,564779,564783,564787,564791,564799,564813,564823,564853,564865,564875,564907,564923,564931,564945,564961,564963,564967,564969,564975,564977,564981,564983,564985,565009,565025,565037,565053,565055,565063,565067,565077,565081,565093,565095,565097,565103,565121,565123,565143,565147,565149,565155,565157,565163,565167,565179,565181,565183,565185,565193,565195,565199,565205,565213,565215,565221,565233,565259,565261,565263,565265,565271,565295,565297,565321,565355,565363,565369,565371,565375,565385,565389,565399,565407,565417,565421,565423,565429,565437,565441,565445,565471,565483,565487,565493,565517,565523,565527,565535,565541,565545,565553,565557,565581,565583,565591,565605,565625,565627,565649,565651,565663,565677,565681,565697,565699,565703,565717,565719,565723,565737,565741,565745,565753,565763,565769,565775,565779,565783,565789,565795,565805,565837,565859,565861,565877,565885,565913,565931,565941,565951,565955,565963,565973,565977,565979,565987,566001,566041,566059,566061,566069,566073,566081,566093,566109,566117,566121,566149,566155,566161,566165,566171,566177,566183,566193,566217,566219,566229,566231,566237,566251,566285,566297,566301,566307,566313,566321,566327,566329,566331,566365,566373,566383,566389,566393,566405,566411,566413,566415,566417,566423,566427,566429,566431,566443,566447,566455,566475,566477,566479,566493,566505,566511,566515,566517,566527,566531,566539,566541,566545,566549,566569,566577,566581,566587,566589,566591,566593,566607,566609,566611,566613,566617,566633,566639,566641,566661,566665,566677,566683,571325,574313"
+
+### 
+POST {{hostName}}common/process
+{{checkEligibilityToken}}
+{{contentJson}}
+
+{
+  # "r": "select id, profileId, vendorAssessmentId, vendorRequestId FROM userAssessment WHERE id IN ( SELECT id FROM ( SELECT id, ROW_NUMBER() OVER (PARTITION BY profileId, vendorAssessmentId ORDER BY id) AS rn FROM userAssessment ua) AS subquery WHERE rn > 1 )",
+  # "r": "select count(0) FROM userAssessment WHERE id IN (select id from (SELECT id, profileId, vendorAssessmentId, vendorRequestId, ROW_NUMBER() OVER (PARTITION BY profileId, vendorAssessmentId, vendorRequestId ORDER BY id) AS rn FROM userAssessment ua) tab1 where rn > 1) and createdAt < '2024-09-01'",
+  # "r": "select count(0) FROM userAssessmentTagScore WHERE userAssessmentId IN (select id from (SELECT id, profileId, vendorAssessmentId, vendorRequestId, ROW_NUMBER() OVER (PARTITION BY profileId, vendorAssessmentId, vendorRequestId ORDER BY id) AS rn FROM userAssessment ua) tab1 where rn > 1) and createdAt < '2024-09-01'",
+
+  # "r":"SELECT a.*  FROM amrRequests AS a INNER JOIN ( SELECT type, max(id) AS max_id FROM amrRequests WHERE status=1 GROUP BY type ) AS b ON a.id = b.max_id",
+
+  # "r":"SELECT  CASE WHEN isBlacklisted = 0 OR isBlacklisted IS NULL THEN 0 ELSE isBlacklisted END AS blacklisted, statusId, COUNT(0) AS cnt FROM  userProfile up INNER JOIN  userApplication ua ON up.id = ua.profileId WHERE  statusId IN (31, 32, 33, 34) GROUP BY  blacklisted, statusId",
+
+  # "r":"select * from (select id profileId, stateId, statusId, firstName, lastName, Length(concat(firstName, ' ', lastName)) llen from userProfile up inner join userApplication ua on up.id = ua.profileId where statusId > 6) t where llen < 8",
+  # "r":"SELECT statusId, CASE WHEN isBlacklisted = 0 OR isBlacklisted IS NULL THEN 0 ELSE isBlacklisted END AS blacklisted, COUNT(1) AS cnt FROM userProfile up INNER JOIN userApplication ua ON up.id = ua.profileId WHERE stateId IN (3,4) GROUP BY statusId, blacklisted ",
+
+  # "r":"select ua.statusId, ua.profileId, count(0) cnt, group_concat(concat(emcId,'|',login)) emcId, us.createdAt from userApplication ua inner join users us on ua.profileId = us.profileId where us.createdAt >= '2024-11-01' group by ua.profileId having cnt > 1",
+  # "r":"select ua.statusId, group_concat(ua.profileId) pids, count(0) cnt, group_concat(emcId) emcIds from userApplication ua inner join users us using (profileId) where ua.statusId = 6 group by ua.statusId",
+
+  # "r":"select us.profileId, emcId, login, ua.statusId, us.createdAt from users us inner join userApplication ua using (profileId) where profileId in (select profileId from userApplication ua inner join users us using (profileId) where ua.createdAt >= '2024-11-01' and ua.statusId not in (-2,-3,5,13,25,34) group by ua.profileId having count(1) > 1)",
+
+  # getting the last created user for every profile if multiple emcId linked to it
+  # "r":"SELECT profileId, emcId, login, createdAt, ROW_NUMBER() OVER (PARTITION BY profileId ORDER BY createdAt asc) AS rn FROM ( select * from users where profileId in (select profileId from userApplication ua inner join users us using (profileId) where ua.createdAt >= '2024-11-01' and ua.statusId not in (-2,-3,5,13,25,34) group by ua.profileId having count(1) > 1) ) AS subquery",
+
+  # "r":"select profileId from userProfile up inner join eventLogs el on up.id = el.profileId WHERE el.name like 'profile created%' and el.actor <> 'user'",
+  # "r":"select ua.profileId, as2.name statusIdText from userApplication ua inner join applicationStatus as2 on ua.statusId = as2.id inner join eventLogs el on ua.profileId = el.profileId and el.name like 'profile created%' and el.actor <> 'user' where ua.statusId not in (-3,-2,5,13,25,31,32,33,34)",
+
+  # make the new user older to pop the actual user on top
+  # "r":"update users set createdAt = date_sub(createdAt, interval 5 day) where emcId in (378764)",
+
+  # "r":"select * from userEmails where uid = '4TZUX5I74CB'",
+
+  "r":"select count(*) from users where emcId in (186048,183659,119703,238321,186785,137196,120576,182107,148297,325904,172192,150334,185775,197953,123941,119052,197946,198098,308557,164541,121672,180754,174084,196174,196710,150330,165944,175426,196256,137911,198097,178135,172282,195717,308446,323766,197260,185146,172434,191623,172564,173026,344963,313024,110963,198464,449148,308484,327674,182087,162328,179195,101575,180496,174471,308682,167251,196575,150546,341489,144983,179410,196113,191412,308673,194491,346156,174276,162080,293957,150286,196057,177068,166232,174172,193634,194626,187730,197697,287621,347050,174378,168799,174231,147213,148657,197657,182123,179906,279718,196215,117335,308416,449152,197101,189250,344954,316402,296251,380257,341485,157484,334948,308612,181702,142369,197418,156054,163529,158136,293777,188405,293387,150180,195688,137618,184042,154977,198215,150530,172296,197067,344976,150562,196934,196269,306371,308717,314176,187257,344975,174346,195836,150343,183677,190482,120839,197395,196574,197154,335352,150317,174225,195444,196179,184697,150519,236642,238081,175156,197407,150426,352717,346656,174356,283251,195605,147571,196367,192552,178257,293958,190364,351334,135411,174152,177388,143669,174300,150260,169852,196802,290520,150003,165775,239642,158638,130728,196355,190968,144261,293215,186033,175126,303452,110957,174082,150057,192486,197654,194851,187055,187747,196009,196607,196564,334927,197129,303227,122289,198055,341041,197467,189223,165402,188759,196803,150033,198071,158624,187110,188980,183645,192481,175101,175429,169483,163708,341464,158195,188763,171835,197907,308525,190586,174115,187237,328011,197685,353284,197516,356468,149599,157970,178151,149804,197521,197656,196507,308705,180282,293931,327658,174174,195923,180504,167670,318082,174408,308672,196536,308477,196576,195623,328013,233930,150042,174345,171116,345529,197334,150161,155300,174334,192578,177504,189288,174327,158280,196155,327988,197507,279206,150140,167820,150431,135520,184145,236596,185948,125033,164204,172287,295944,172959,196247,184132,195692,155912,182454,175108,174133,195725,171967,152777,120577,320296,175223,182537,346006,308684,166233,184324,174100,286844,186974,189572,308488,150406,188309,170640,189041,142166,162973,188312,196188,196597,191810,196400,150623,386003,150705,170254,158776,150023,158783,314181,151050,197990,186870,124897,345003,370483,174310,173452,134921,150687,177971,334822,167821,198031,181221,174189,138765,191938,150205,174325,159262,158318,184003,149917,292910,335802,162823,167611,297175,174268,152817,124900,175125,174287,279093,174224,308647,148659,192885,189266,308700,174291,197133,168704,353040,308512,156313,190095,189772,185088,303503,195897,195731,151593,192520,150174,170060,181577,174226,193733,174330,197993,158275,150142,214872,147545,174380,196231,196153,174187,170446,150280,177831,130727,150153,150427,163243,341141,195902,193218,246393,214800,197170,308550,175772,225851,185415,129153,303230,140795,150685,190338,308385,171542,195522,174381,346662,195829,161670,149704,193217,174179,308582,164528,150482,279723,186189,333386,165397,148119,195741,174101,176962,194365,175213,159129,189032,196876,195743,308651,227644,175102,198164,295954,198420,118622,198035,175460,328866,197338,293720,175261,340537,150031,197690,159492,185149,170923,193691,189037,195636,196205,293763,196527,150087,317570,181728,188468,150244,174147,135516,174333,159244,148262,174245,150365,174114,159177,143984,197379,197928,174161,197825,188323,224861,197392,193626,169958,308456,197331,150093,195797,150085,174242,137691,122110,149931,181421,195999,140018,284060,150225,308698,181597,102750,287622,303451,197789,237051,198374,191552,322791,171017,302526,174464,175492,198133,165680,144345,196277,112015,157431,197212,325902,308411,308678,177173,172231,185962,165842,197102,180425,147225,197916,185465,327678,309638,195540,154969,175076,190374,188509,345371,303240,195683,197151,175474,320299,157972,166700,192060,163763,150464,154209,196335,327507,164894,176627,341576,341144,183694,158418,196240,196449,197567,292907,174096,196947,145597,183313,308513,308449,141714,156453,147944,196031,196076,196111,167201,150351,150544,323759,150068,238306,198151,162989,286840,198358,150686,195308,197063,174154,165370,195765,308707,197987,308638,164236,188189,158149,134917,184134,182456,339102,224824,295284,308595,188940,278658,308453,124563,189588,197384,150796,134372,173846,175211,192883,160970,157943,174168,174412,186081,150246,308409,278660,174315,138908,323723,149976,196141,174132,174319,137210,192613,160898,174219,293955,308649,177162,192459,141122,188758,174176,175962,155486,186976,319647,165815,102823,312815,164903,318057,232647,138659,281189,193854,174399,303453,308652,163046,191407,231997,190970,181642,236683,236700,143547,175059,189656,184463,184142,175714,167645,334933,237019,303252,137620,186689,177872,175451,346660,174228,179881,164534,195908,196403,178810,163457,197931,191683,168612,198359,178154,169481,173937,170635,370486,179871,166250,196888,320297,180771,316406,150148,197258,190120,125773,182384,183662,319644,172435,182036,189178,308713,158419,185975,190214,188714,150637,196657,448375,181726,324130,174284,195325,146706,122462,325814,189019,308699,184405,150596,196753,303829,198041,165743,197568,346621,188419,179412,379203,308586,172279,190484,158146,169364,353557,196218,198349,170510,227512,224900,157479,166159,197355,189424,161635,177507,165637,295285,174267,194507,308458,195781,362480,164840,303519,174112,181979,251276,171737,128362,196756,154779,174320,195726,118097,198851,150702,137916,139311,174360,174292,179436,154702,197265,167535,175291,196896,188403,175287,196448,192709,278960,188235,174083,157952,162739,193711,308591,195697,150082,173492,424416,197696,172134,197375,149871,158261,158174,295788,150481,198153,384451,318083,182460,188863,196331,157967,174285,156106,191934,150447,196275,198620,353283,197753,195373,170025,182068,195780,165717,174326,194647,308503,165226,352719,182044,195593,197149,196958,295966,163052,308508,190388,185980,174251,190210,188374,147986,190104,182538,134229,133369,189227,181595,293007,174088,165847,189057,256560,189432,195292,199265,193274,334818,198296,183844,157806,156609,196740,150651,198839,188358,136894,171046,266161,150495,302524,190124,171015,293776,149691,162337,175482,308643,150162,177212,122279,198037,189802,175278,194251,198271,184459,192121,139309,239376,196345,295951,308578,358148,187946,196251,196406,150178,195785,193898,195856,150051,327647,147502,188237,195641,191401,145978,150008,149983,127754,195630,171119,341570,308562,157128,197031,183484,188129,195977,195389,195773,349460,127569,150748,194280,110304,197055,114179,149986,278957,308581,181033,341566,167636,188474,190113,124404,181973,147209,143809,346289,423216,177976,119502,308536,308560,144938,198345,157454,174423,152590,197846,177665,308408,118464,197028,325772,174246,174253,198198,174321,334943,188391,158183,174142,122180,181929,159289,195452,174274,177499,290515,308535,157318,174290,193856,197995,135480,164880,143935,319643,308680,327685,187013,189240,237150,118070,196724,195587,194920,198084,250723,118932,196763,303509,174195,308415,177851,332493,128497,123587,140046,150483,150772,335362,191612,224860,181202,188551,121961,179200,164884,183778,197739,323764,150283,170560,155563,159256,343269,196330,172523,150442,308697,307008,198276,196262,200734,195787,152387,158141,179646,308481,308417,123622,195633,175699,122117,157355,197793,230026,303243,254305,148124,150635,220023,188748,157965,163862,184773,174252,158338,172772,177978,174207,175494,353554,351977,174442,156499,158015,121625,196615,107569,165751,172289,150264,196073,256559,335823,193969,155084,351358,195860,164207,149926,164602,346004,153487,145586,352942,124188,197201,195453,188354,198417,152349,196765,147742,163696,181707,236630,196917,224823,196318,347043,174341,293217,185461,183740,150151,181853,190403,146626,195740,174296,179450,122853,193689,188524,198013,195644,189056,140187,175727,164187,352938,177426,174433,174123,179434,155854,166227,294048,150965,120671,140291,188878,170342,193933,181488,177987,152342,124622,308679,197328,196955,303448,308580,172451,150117,175505,117084,181930,158147,341460,308549,188366,174234,224850,353164,163027,150627,196602,144647,181028,174129,175470,119068,353042,229041,158145,189042,239377,151015,158225,150250,170627,308432,168054,177781,143851,175713,303236,177868,150490,190387,198178,106448,305414,174098,195847,292423,327986,195694,195474,174361,327712,193990,286841,189035,195500,333353,150263,147157,196682,167616,177616,308435,196627,188284,183845,165769,155841,198396,150169,186954,353637,150075,174370,308404,179507,197143,293756,195566,331970,196848,188477,449267,162729,174107,168547,290519,178859,196099,181684,188471,237304,195975,185405,237209,193581,355562,197918,303278,188546,333379,157611,187004,195270,172524,188352,174308,335361,308407,171087,192397,197770,309017,356188,308377,356463,308655,177862,356467,327987,197128,197103,195707,196916,198137,195576,308517,196675,150229,150517,351667,182105,198389,163748,150609,174080,281208,201742,184115,195824,335339,200750,117087,187567,158266,196846,355564,196502,195651,308674,133314,122182,158270,327700,198070,165668,196142,446724,200247,138900,193354,190667,171073,189190,174238,449005,155759,265452,175745,334919,196690,198900,355800,158209,174314,175222,150576,175469,196063,197372,188746,149275,174150,150298,308553,335357,174264,132621,295958,254378,344991,196208,196808,174342,347332,194025,196004,164168,174323,198347,156178,161660,150328,150341,141335,171736,175511,353354,157382,188910,149946,195814,174241,192522,327649,159588,340532,174201,227603,198443,308479,186213,174214,174280,188927,224848,196052,161126,196843,196988,155437,378381,192527,113409,331711,188369,166249,166164,198422,310468,174210,328004,174409,196372,188378,195732,152886,352943,308626,335354,175286,154195,149991,182216,150695,177912,196447,188451,181832,197259,150640,176595,178660,341486,193398,150196,327689,308468,188463,152820,196775,174192,308661,171209,290510,201711,308597,147435,193588,175700,195635,165210,190663,150526,168723,290371,165685,174475,197607,150494,150605,167748,169479,189385,197139,308514,175053,152265,140966,225033,307010,293954,184176,308414,308736,308480,196299,180923,181713,241117,187465,150067,187354,196669,174413,124477,174113,131696,149975,177093,149257,250517,196156,173075,341472,196596,190088,225849,186955,306331,162910,149938,308735,150550,158505,194062,150195,192471,175135,195950,134250,195301,174428,188172,163769,196370,184696,174135,150587,198329,196956,149696,335348,167659,174369,286832,143366,150680,162486,279208,170933,174171,146455,195449,130992,165533,161099,159437,333384,190504,155493,122075,157480,198078,156103,174249,165460,151005,308379,167865,308483,177390,181603,183518,308494,196805,156330,165738,148250,177991,175481,194259,157350,186163,189732,186221,147368,110960,150693,197205,179831,308390,199732,175103,181035,193083,346009,349714,183577,148505,174329,147214,197340,197190,309957,196616,346161,190666,308730,174139,149827,356462,145964,172307,196306,308425,384442,251250,124655,188390,312807,193219,196193,295947,308726,186692,286836,195398,157373,347019,308509,346103,174232,355563,175087,156009,158175,278667,333368,196823,149249,149906,150352,197046,335349,196152,308565,112662,303226,186574,198236,197483,346101,303425,327713,290346,190305,177931,174076,149542,196125,152386,197187,225837,171074,188472,341568,303235,174421,195358,139688,204428,308396,174487,178793,195565,165233,351979,161642,167592,227439,176503,150315,189403,196048,177923,150394,164174,150053,164855,236608,175205,196289,308666,177879,167452,197978,196118,150579,180511,142121,169808,340527,308420,198017,167171,339116,193282,198413,167652,196360,198126,172950,343268,195742,170932,195939,306512,175106,174288,188438,177715,195766,118621,190209,149965,124554,188306,196844,163755,150510,196389,189175,198036,308405,175726,308537,204561,193901,340530,171066,316404,308501,196666,308403,176279,308604,181037,148516,293161,318078,150547,169517,195914,327606,149829,193949,203317,308701,318242,204555,195881,164194,157389,149928,168914,356200,150566,308532,177833,119402,308413,170066,175872,197444,180297,292420,177159,163236,149918,175689,308603,309010,355561,173498,195305,186220,175696,174306,162508,197743,174144,197155,123621,232693,177951,325793,167191,198616,308734,320291,175477,197341,291736,184133,308633,186357,159927,151731,174479,177922,192891,172747,179197,197324,172288,195657,192457,308546,198429,172947,302945,196547,155770,195861,181576,150214,335366,307068,172773,195329,196140,192054,122179,196107,198418,197105,168715,170293,353549,164150,308663,197887,196533,195921,121296,308624,297808,150238,197883,318080,140682,154391,188928,195960,172298,174469,173077,175290,117565,196086,184213,327460,195433,174122,196007,308566,196566,196420,311181,140751,158159,195387,308422,175137,102812,130924,133315,173076,194069,174209,237208,143847,150206,197209,174343,150633,163466,174485,237152,309959,186232,349712,188355,175468,158618,196704,303457,197198,327531,125779,188901,167250,162273,295968,150571,186884,163091,308611,185094,384879,120698,174159,195620,196784,320293,190584,150274,303247,195702,186111,140180,182064,308389,195468,188754,193037,191807,174263,197761,147560,134922,224829,322937,188753,174353,197164,157876,149841,197484,197353,159136,186956,174331,162994,159150,198191,296245,308608,193864,179363,120615,159493,327671,165954,186042,163235,351337,122288,149260,198223,197630,179628,188365,145960,176660,197515,308692,197899,351975,339112,150672,303828,201225,149903,169959,197684,194107,134231,353537,334920,198203,185973,171838,163080,308428,347048,131567,195530,140967,196809,188487,327997,164847,170968,149964,163509,135417,174247,157360,196209,335804,194868,200241,180497,150022,150266,150629,148293,189381,341487,174099,174221,193928,197368,187630,150665,185417,308518,196987,188868,191570,195734,162748,308397,317572,198021,308526,335350,320298,150455,195915,175448,308583,167802,134254,341578,150396,139315,189642,139631,308486,308642,162509,341471,164008,279721,152779,195300,149902,147360,150595,303521,308614,308545,308712,168041,147238,187075,188755,192490,189176,328523,190334,147145,188990,162529,143976,174038,163697,353351,150614,187888,185960,195515,157186,150600,189255,179439,175186,167514,339106,196984,324133,308470,303827,179202,198232,150487,181379,174185,165119,169524,181121,157944,195878,327676,153078,192683,193746,146176,175062,180501,169519,195723,191642,187060,310258,286877,175072,196181,308714,177484,156053,188503,292426,331967,308438,148039,150489,197766,149490,138916,181213,308719,174193,449160,265949,308630,187749,308572,165232,195989,197884,196633,158172,169681,134913,157951,146634,179488,179443,181643,177407,174316,198381,333402,174183,155483,197818,188373,307009,344994,174497,197969,351359,341431,196439,334944,146463,197147,150638,325522,175467,188544,344974,166160,180253,138339,126186,173080,150610,197222,335341,346284,347049,150423,185436,174196,185989,186494,164569,175509,188450,150378,188476,159020,148526,286838,147208,194880,140012,174494,172295,188713,163704,333376,196648,183640,341475,198008,177441,308531,175191,325932,135203,308430,174411,188978,173065,148287,140268,198963,192542,175052,143859,165168,198309,198809,167608,196649,176558,308394,332497,198391,351994,196234,170945,144318,140827,177920,185407,156649,187498,316401,167127,174339,195976,158292,161122,149984,290514,179445,123633,179141,183769,198039,181223,193358,124153,196027,197500,146464,186229,175455,140739,124386,165628,333327,197325,299331,177962,126071,188401,292428,412697,186461,196092,172336,200068,195945,326528,181792,308555,423217,325525,254071,190393,286868,162448,348355,110959,308660,193430,164409,159353,169502,197192,174158,163712,186137,158800,186181,195761,153256,192932,170417,149967,177845,341470,334937,155301,177969,169868,195460,198058,164653,149997,293179,295806,140153,158215,136720,177871,308476,183481,184100,180500,195668,132592,120575,174265,154778,308615,196910,150094,293768,143968,147229,167663,197175,118985,198218,237151,150626,197838,198061,128609,157443,174217,265924,195627,160963,150193,177997,189045,140276,196587,174117,183477,174258,163305,195388,308640,150699,198692,148546,177953,308441,196806,195403,195390,178137,178803,325775,150538,225819,150026,166235,308573,113906,192528,317061,121623,161718,152742,201228,167754,322795,155355,351346,196761,237128,308739,297165,197505,195254,192700,150249,198257,153490,192207,124608,225015,191499,195326,178276,169966,196134,150173,219745,309005,196879,146615,145607,182468,185966,168556,193562,150198,189224,168202,150527,175406,194532,194364,344517,195715,159323,296240,132702,172149,196203,308704,155479,172741,189053,150357,175167,196567,181724,195443,341488,145953,150588,344979,181209,198337,188866,174335,195477,196219,197310,175111,177929,171006,286874,287620,157368,154831,281192,175152,236782,158329,177214,157311,322585,189004,308485,149932,150653,174136,121960,174297,179684,149415,323756,154985,155509,198231,162299,333375,198109,174283,341575,186987,174151,147162,150691,182049,148251,308676,384877,331777,197752,264181,308504,169612,308587,197207,195988,341478,182635,186215,308579,129043,124555,353352,174190,193220,156893,347014,237267,308439,327998,196168,187764,194450,309014,181337,172817,103689,150346,194246,187112,175417,345369,293006,165113,175227,195442,175056,183657,158310,174351,327707,172954,192063,197354,195357,166238,171830,138852,279716,189253,150091,333390,196206,164594,196252,183393,198305,195952,198073,175515,194202,196248,188782,196585,197177,157299,196039,191577,122019,150096,196865,164907,175281,132589,195317,150338,143190,197461,192402,237268,195622,156650,308688,323720,182042,290370,175428,197598,178020,191306,335359,179895,195784,327698,174106,188322,290350,175122,147489,180346,190904,154324,184881,175432,145956,150251,308711,174120,172738,302944,121891,157953,294250,196013,196105,149488,196899,177952,174127,174357,121959,150236,333388,198222,182530,174119,197584,188428,194118,308686,351682,121894,178861,197358,196300,179098,157918,123277,196944,198113,297805,189236,292853,200239,308482,174317,313315,179424,272769,158154,127760,197373,190333,292417,163419,185411,328873,196589,155396,156834,196631,162463,180769,346438,139307,189641,196195,188371,198040,192688,198666,265747,137602,196769,196075,192968,196563,149937,174186,197659,325955,176348,278597,173496,163034,133104,200720,293162,177982,289002,150177,110962,150060,175292,196670,292892,175202,176356,335360,181050,174200,143998,198986,297882,174085,189265,152263,325937,174116,175194,117086,174270,167177,196529,141494,185950,303450,198114,193350,196622,143230,197771,150347,148405,227423,175055,174240,197833,132412,197924,147521,420349,172302,179687,308639,195788,157279,308667,155294,186565,191614,180291,195378,181717,197350,187109,174155,121222,165956,192202,197295,149954,197744,125429,178871,196129,167746,175105,134237,197816,198099,198010,174130,279769,292418,198570,198111,188712,193852,150324,226074,174295,174266,305418,175188,316424,144215,195930,309639,150419,184775,185841,140272,150572,190401,175301,192470,192184,164597,196858,177974,196137,150058,160967,168919,196583,198154,157950,196906,197369,140264,184230,192889,192909,196162,196239,378586,303512,177930,177505,306330,138772,164885,145609,323762,174148,310465,170944,175226,117467,166236,174173,198138,188906,327677,196278,187042,158336,168705,196845,164166,234038,186117,158313,191663,308621,118796,180958,150137,188999,161652,197306,121272,147750,122848,196065,150405,196976,128302,254293,351338,351978,303238,295969,159836,165795,293953,144172,196788,167517,124602,166370,158631,149785,176661,308576,197957,308540,174275,165794,294249,198210,195588,150302,153920,196332,153507,159139,189264,197342,308544,147672,327646,149958,197146,158184,196160,308529,196954,162749,152359,437809,174358,165766,169024,174311,171959,174352,150446,125835,185237,150159,174445,196147,353532,173500,172187,158226,308541,197351,167296,308609,179644,186682,132675,184688,199789,278600,197449,158299,189230,115739,152366,150219,174289,197178,165396,356273,181593,167480,200729,198364,163028,168696,308650,278598,174278,172286,187005,142342,147534,187088,308469,197715,196426,325523,177615,174035,195517,196473,164781,192692,170447,191667,133110,178787,195770,188756,143884,308554,186166,308558,197264,308710,351340,157449,236652,181711,166247,174294,197421,182111,292903,167668,172216,186062,163879,338429,148000,186188,354255,177945,189194,196028,121165,149828,149934,303234,308564,196090,121671,153081,115382,191566,122130,192373,123490,197014,127421,182048,308490,166165,197614,123787,193179,149887,226560,197035,197532,200647,308460,308570,197094,163630,193860,178808,187045,293765,157964,144313,195330,195979,197042,308496,196814,143814,167189,197048,189341,227086,165666,174293,158239,150254,195907,194225,174764,170273,138762,186454,353046,198563,174255,195658,308400,192178,149253,278609,170999,157581,150619,293163,169891,196776,144171,150010,195496,308498,193127,150584,193283,188981,149980,193418,334940,189423,174040,178147,154337,197311,166503,308618,174260,195689,139303,181269,184146,174338,199221,310464,149813,278666,308447,192879,158269,175081,195446,188367,188259,196874,179890,195893,308451,150114,157348,308683,179448,196638,190906,308675,308427,331390,237146,152956,182034,150505,173945,174279,167182,197141,168382,174336,175453,178313,198127,308634,197161,174164,195924,327688,157274,174304,186182,308433,195418,140803,177508,229060,174163,296246,121254,124612,212729,181708,122392,175513,224851,195356,144634,145612,132699,198668,239636,180286,174203,190465,125725,195279,197632,279205,196471,169227,178964,135918,308695,308625,198272,165184,341469,150465,198657,308620,156451,188938,188507,174406,191645,197162,327687,164890,198424,174095,346439,181718,328012,197370,308392,197206,134251,227649,197294,195513,354251,157866,228975,201712,192183,303456,164167,177829,303511,187944,159157,138939,182645,159194,155874,175707,150071,138894,150643,196415,308450,155478,195445,308538,183684,150134,196122,308495,127021,303006,150477,187050,189027,187627,175444,180918,186982,353280,369694,152586,149889,142371,164574,177856,174286,196043,174169,308585,346661,150354,187047,165709,161413,320295,136300,239420,197913,326088,162728,424117,124553,303447,196481,158162,308593,175438,159497,353037,175434,199369,158107,321421,177780,237034,346155,158143,197915,196695,128066,308605,347047,196841,189050,125847,198011,346659,138562,189017,339118,308559,188911,174188,150310,177203,195376,168373,181014,192458,308388,186723,143623,161647,196434,196719,194544,150518,341479,308722,295286,174424,138776,195527,176670,196279,308424,165697,308619,175512,174091,134375,135943,290361,327716,175228,186180,156898,197660,140047,167176,188541,308454,166272,346010,179425,174367,170630,224962,149787,194852,162826,303229,174425,308724,124616,192037,174007,198116,139684,149867,323727,197443,325939,167155,165963,178790,174081,196604,150497,197612,220059,283884,154157,174269,136892,161678,195431,192590,352587,198186,141132,174077,133112,308386,197655,195404,322792,180107,308548,308727,162341,158273,177089,196521,308437,197280,225850,175419,181123,197398,119550,174349,143402,150578,150048,189187,381691,171079,175136,197961,379202,196911,351355,149970,127495,149784,150062,181568,190207,175905,174243,174324,191957,149814,308709,345532,122078,198136,264899,308574,378410,190590,156096,147312,295953,196826,177911,178002,229054,186859,150006,341153,176597,176127,191562,188760,174218,196791,272774,150563,189023,196810,353044,195700,162916,189660,188716,174236,308716,339120,293786,187106,175090,175134,198128,197555,308423,197600,196429,149709,175143,189841,174377,159672,150108,164206,153497,225049,194533,165851,193094,189428,141709,351972,196018,197414,168920,160961,195275,124552,303331,196508,237001,331714,150296,197191,177844,186794,177981,174239,149901,189840,197452,189040,124550,183698,150677,174126,135412,294225,196186,186702,198275,197910,196830,160643,149905,197286,308528,175471,118331,148536,197210,175148,147937,200243,150667,150166,195865,308491,171576,308656,150055,266245,334917,174348,197186,175896,308502,308617,150187,197290,308598,150631,184113,177988,198009,177967,384452,229065,150407,179093,196608,197244,190091,196506,155850,168543,174194,194942,189001,227632,188955,333382,196681,327672,308741,308693,128484,327990,174094,333391,219795,309637,162998,198121,174307,195922,308594,308455,148883,308644,174131,327710,195395,308613,333372,308703,357926,195738,336414,308670,150007,162824,296274,197480,165921,182214,177948,172147,150612,196915,156341,196326,150408,245313,177963,196035,194849,178303,196151,193211,150564,196431,196863,186155,190386,190365,334946,327996,278662,180280,201257,327317,353291,190909,293343,139261,157889,147538,308645,308478,191900,308733,198613,187582,168008,293220,198254,194328,186726,174229,179493,232674,174480,308627,308500,154992,186142,314180,133312,197558,192472,155911,186973,352004,171131,308380,150533,308659,181922,174468,188822,158344,308445,173930,174087,188934,295356,174227,184118,195617,197439,171817,158650,281191,181331,164225,201652,198120,196067,189013,192521,360333,165790,196833,165691,188557,170455,184451,308426,141393,187044,168930,189183,181407,191676,186179,174350,196586,196054,197173,306257,152120,187087,154059,161120,344985,197528,333387,165702,191561,189719,351345,196553,289006,190479,197952,152172,196946,162743,165217,308507,188752,171742,174337,150592,160981,150590,195476,136725,142174,197772,285435,302011,152346,191411,175121,193869,198898,180844,155820,198560,196145,318240,150152,379239,168772,156497,185845,165663,196038,150670,308442,150603,196385,192463,254440,189256,165953,225022,189891,186819,163428,195410,308664,175264,318081,308718,150101,308600,293787,328700,288994,188922,188357,339114,196165,197002,199920,175107,191567,237069,181452,186171,157266,159190,198051,123809,293757,196880,150663,197642,250728,196258,174426,175461,197072,308429,308431,195645,197804,149908,266183,196249,127658,174175,143375,189186,224906,186443,174090,195423,194627,349711,171012,195716,124609,188877,308646,159837,186167,156913,122178,140744,158229,177860,195912,187890,169173,158268,314174,165667,194918,162094,174178,352789,150227,196614,327721,196887,339103,154331,175449,115385,195282,187895,119551,183639,174328,188872,192182,188538,197276,159144,344990,152805,158158,171001,174182,318079,174233,173489,308671,196975,188512,449101,196062,165703,197450,167167,123929,162404,198794,308657,196789,147875,323712,196637,150015,352005,184781,122852,147543,150613,244379,334947,292901,162449,141600,197360,171642,150154,163848,334921,196296,152356,448975,142477,182755,175165,294224,167532,150599,171962,195441,149601,191630,150496,308511,174248,185985,170644,189717,196222,225050,150381,183437,181171,188257,125951,106112,325900,186733,184078,162515,175285,198032,186581,174184,196110,344967,158151,149961,151003,195582,196735,249297,174118,152118,308662,347018,198338,163750,178031,157303,308387,264893,308410,196855,176293,196121,187086,153498,196905,167617,175169,161403,159248,333355,308406,194877,189226,171762,169526,177957,174440,196494,156900,308412,190022,186508,145603,195892,308399,197691,158291,167621,135566,196500,150013,197462,150065,117936,124601,299330,308691,147673,197889,150554,174202,327530,264185,150646,228988,165684,174166,184425,188879,160954,186170,174223,181712,174128,196795,149919,303245,181429,174134,179430,167458,195757,175237,163764,197781,174086,353347,197397,195412,168099,197514,195735,150384,308677,174271,305419,190367,196728,150123,185852,163774,194011,167098,189430,153494,197316,197095,205371,308466,198313,308543,141062,162902,195870,158334,195739,328014,198843,167190,194404,296244,197378,166710,180499,155028,236973,308515,404455,195322,190920,347020,197093,175744,197333,174143,149974,190554,150342,150309,310253,189864,205387,173781,149936,154326,150514,200214,188482,123025,152806,308725,334934,195703,195879,181333,143861,150090,308464,196021,195906,174451,197153,308689,303843,157167,236688,150594,169971,177996,176546,186086,192211,192536,197464,134915,197469,165761,170072,303455,149929,295965,308381,190100,123026,150276,140624,312809,183509,168915,165118,168276,181046,174763,197330,198087,187048,339104,340535,167609,149701,173043,181619,115363,194261,187622,157091,313313,147936,197038,372926,143993,335810,353536,150520,181748,181005,170276,128550,195533,158339,150200,308721,150316,195550,191360,196966,308471,196030,150070,194611,196936,174153,167644,197299,134382,196325,175459,163525,148882,195980,378414,158272,182110,169894,173932,308497,196618,140037,326230,196435,194869,149868,130923,236681,197204,164950,166252,157926,197923,185404,172568,151008,198431,182043,165686,350409,150654,190925,150018,170317,144339,149955,195599,333351,192502,346437,197152,449151,236598,150682,309013,189779,356464,197482,188508,176220,174359,119168,138608,157172,150304,188000,195971,152374,308461,196530,177264,193222,163752,167181,196290,150422,147670,126233,196176,352945,174079,196169,150024,322939,200210,150404,227500,198148,173497,150636,347046,200212,197985,177270,132584,197728,198130,141484,152954,195359,150213,341142,187635,179673,174213,302947,181424,308395,170645,188764,196383,188127,175497,350411,174430,198361,150190,182484,186141,120101,174407,177956,187580,122123,168242,141392,188970,192435,237094,197428,331393,140213,152960,176667,224835,174222,197692,197448,188751,167950,188997,158314,164856,155861,236600,195491,186799,181650,197698,167747,195461,149826,336412,121673,112659,171065,195302,122850,197719,165708,186489,334820,142492,196310,308731,198330,197927,174949,149978,145961,181570,174262,150386,308524,181705,303454,196996,174340,113489,158200,150363,177934,186173,172285,233910,190475,190125,197079,150066,174303,139888,175706,150658,153481,351347,160719,188495,177947,139977,174212,308571,197700,158118,308622,195752,183315,186231,174125,196981,181205,163446,177667,198449,196126,308436,185764,195919,196630,153475,195699,186952,184689,176066,196974,164200,308577,197070,174417,195676,195568,187056,187256,174444,172202,308444,327694,175418,424118,150473,155958,197323,196878,158207,167752,172233,239635,175964,173842,292424,197586,190086,171570,186131,169873,181981,170532,150226,174140,196161,150632,184044,123762,179873,196273,153803,188123,198023,187748,174946,150476,165744,172294,171637,308463,198194,308732,161643,150353,175445,149973,229062,325942,150103,188279,308419,124611,178862,163054,308530,308465,265451,183608,195656,173051,195634,121903,197592,150486,100230,308418,169504,188992,309011,165781,150176,166069,308623,197712,193328,191954,283881,186077,150028,150191,150676,123019,196854,195681,293771,195459,189404,165222,174180,178023,188905,178142,184104,158640,229046,224854,156835,196636,196314,143357,159249,174373,193276,308459,162893,188531,150604,171000,188511,197027,168538,308492,195331,159430,150421,169359,327610,167761,199217,177211,150559,197193,352946,181977,196582,196045,150261,197339,308588,146460,195762,188969,122647,179365,195964,179426,196819,236776,291705,308519,163251,162511,163229,186350,236985,150504,278607,117751,180926,308708,345523,134077,174298,159601,198373,197892,196130,186961,195314,196317,182085,239641,160362,156325,177903,192561,177942,173841,160718,195673,188757,171730,265484,196623,177990,193861,149820,197104,150601,173772,195578,198812,194860,174313,175410,170522,156175,308658,148810,119384,308568,192346,174220,140275,189402,224849,175086,162963,155846,174156,149959,187214,196718,150551,172868,150156,195572,196183,176272,308729,165724,255349,165635,164254,179196,302949,175179,155898,198219,188937,157940,103778,148263,237305,198024,198195,198300,254191,150454,174305,174205,303515,382955,175485,146280,196012,175499,194156,337901,150245,191389,150211,195551,297156,322943,195029,141126,347016,150574,351353,126588,150416,172526,198436,198206,327679,194958,197651,144932,191631,174141,196211,186888,110933,174301,195661,195835,194613,308489,352944,150630,188325,110956,189008,189363,378379,122285,331716,176718,175138,195931,188869,252794,195654,132895,165655,193771,150435,157354,175232,197836,308474,189575,156331,181626,150335,184050,186233,378411,170639,308448,149890,167449,334945,190589,308629,191624,325935,183635,174208,186908,293775,152730,178968,279719,185974,197787,188496,135780,180959,192888,167941,140260,189025,177935,184656,294051,181365,245010,197996,164887,323714,140676,176216,170693,182395,196635,175354,175093,124714,197492,171106,157920,189401,195291,175770,189725,193209,448475,150641,290359,236666,195736,196689,174162,191705,159842,174121,331969,184096,163023,284058,195801,185150,157381,294247,142306,175071,308715,310256,295796,188976,115954,297163,197960,150649,308452,188518,264186,195901,163083,237110,308382,186957,343267,285444,323729,196056,295001,303449,168184,132899,322788,175123,290356,177503,308440,161648,196792,308383,117858,197309,326021,308401,308384,171295,189049,174354,195402,174379,197367,165692,121896,196909,158260,346436,326231,327693,195480,166245,197440,149815,308610,340529,370770,305410,351348,308602,187469,197803,187847,308443,158168,174244,197525,196180,179359,195820,195828,166156,272768,174230,154783,195951,155474,174272,198076,149818,150438,196390,150020,294999,174470,196526,157420,323767,174181,308654,188383,333405,336410,172399,197740,196883,251267,309952,121877,169506,196281,144208,179680,197650,387094,195261,323763,150485,197292,164413,303249,177201,167207,192170,168194,171427,197211,328872,150690,140792,174177,308376,135301,308493,303254,186140,236654,173061,126811,143989,214880,198038,196019,198049,163407,177024,190078,147657,173982,171101,177022,180138,164251,254377,195286,150005,175443,308592,191621,323768,161823,254073,327715,171844,308506,345001,174429,175916,174318,254190,174302,187254,176498,183676,308487,197664,145973,334836,302946,123679,195313,115887,236599,175225,178966,124740,286872,327994,123024,150001,173067,173453,150656,351357,229043,174031,346159,322797,197427,197239,195837,296250,179891,181023,181734,188516,174145,197225,186161,123667,169499,188231,157177,189566,175458,175176,320636,174434,188747,336416,192503,308641,303514,195763,196555,200245,308690,175163,308551,308378,167174,186704,168207,157910,150580,191993,198165,149819,314178,308631,185953,195621,149846,197071,322591,326019,183058,335346,197663,195882,294046,327648,187052,293779,168931,193752,173777,173807,308520,198180,151544,195816,220010,303007,154374,310260,189528,174463,186205,308685,195746,308472,196781,200732,176346,158196,173766,189685,158153,190112,157429,308457,195786,175486,189410,174455,169371,197349,353545,163248,186730,351350,150086,149429,154393,196357,198388,171008,104013,134301,163036,156896,176601,188004,308601,196123,249298,141492,179889,155297,174146,195637,352713,156012,328867,177852,131927,171003,150412,160809,164943,155766,195927,196455,152604,150395,156094,152114,180110,177090,303513,302566,234708,335813,179829,197921,150362,197797,197359,147149,196513,150474,165796,174441,166192,158182,185090,265750,178874,346157,185968,196396,158263,449132,188749,184151,150388,143961,174102,172441,162965,197593,174452,344959,426016,191413,293773,163867,290521,186224,132698,308575,140211,130696,150541,310466,140250,154329,255214,163541,352247,150524,224897,197136,196951,308563,191406,117085,175192,175162,178973,180258,174465,186217,177913,149953,177117,196982,186960,188765,175302,195415,308547,152167,197591,164657,186235,189000,327690,197053,198005,170649,150143,175091,197708,191679,179480,182074,169303,161977,267344,167444,192951,159425,150621,309015,100099,150488,191629,150064,153251,149925,308706,150548,128610,115383,117405,177167,160112,188762,162980,165698,161832,174157,197723,182403,197873,198062,183480,322590,198322,334935,196703,192570,308499,308391,124606,179101,181020,188933,185988,171645,196744,308728,150484,195674,254299,174273,196138,327461,145204,308523,174446,189589,196395,138559,177873,197738,344973,228986,159431,195677,192549,177989,126278,167803,167183,237176,122020,139967,308616,138936,198043,195940,180507,195470,309018,132588,181044,188427,308393,125699,308462,110008,197629,295948,127418,303516,303237,167653,153026,308628,188377,125846,196646,195090,197098,141726,195670,147555,174281,337118,137194,196243,164898,295956,152361,163420,227053,106910,188761,180428,150122,353547,322789,188216,150141,174124,198214,168191,297271,254300,290352,165952,196668,102602,154706,155343,181644,142224,308742,308421,174204,196626,159851,196171,158199,197145,125832,346435,159241,195397,201253,237041,179884,174257,189003,174400,166509,197336,196570,196437,196307,174355,187761,175233,198439,174386,196182,120403,117301,188547,197182,154151,303518,196040,308402,331384,194460,194634,254502,334932,384878,149499,148565,196336,175130,114135,198414,174197,178809,168549,341567,378846,175190,195473,197724,168274,181200,137612,174206,237227,137603,174199,344998,150104,342559,303233,171170,174215,174478,183682,149425,167804,308637,149914,193121,198001,175075,124604,318247,175119,170650,205197,325477,186959,150502,158267,174312,192272,173488,174254,150692,327508,177858,198662,161835,165230,196629,198953,264180,175506,146175,346008,196786,196202,197729,181476,188939,296273,121849,293389,197604,173073,195484,123203,196058,117662,297241,153476,121264,175175,303232,150776,149999,196371,294047,175493,201741,124087,174167,160726,198100,308534,252789,345527,190114,165839,236749,174160,150327,153474,197165,195596,196745,183643,195868,195437,195973,154530,191405,169601,308589,158173,196881,149888,308584,308569,177917,138928,190397,150322,189232,341461,150666,378408,308467,188475,152370,181855,152809,174105,308561,352246,140173,170919,179669,173079,174332,194914,187945,175273,320125,162753,168047,191397,308665,196755,176062,174191,305169,118607,171960,198241,123326,198617,144202,198425,159140,162344,174138,197003,181714,153370,197768,187326,150500,163637,192403,133319,157949,196598,196989,174111,117345,145305,197236,177268,236766,180433,173983,182396,174259,195698,196642,188991,195687,174109,319642,308653,328869,308669,171572,188277,124458,162073,197477,346658,145598,308590,195854,196200,185866,190551,153250,198471,152205,150642,188535,181453,198301,192056,198600,155758,168530,180495,175719,335808,117090,147991,144637,193744,133103,196571,308542,327680,224951,163415,197571,170634,303241,341484,183636,178870,192543,191026,150118,184150,150586,198208,141117,196676,190110,180284,308636,163524,308635,197054,150339,195850,278664,353035,174093,327681,124403,195345,197489,308552,297424,165957,308723,331779,254439,158138,295804,152485,195920,200230,199773,333347,351980,150349,149788,124028,136454,191869,121670,196486,133318,162886,190953,122280,195352,424119,303510,172226,194258,163770,198249,150084,190118,195475,305417,198285,314172,174104,176353,351676,150186,378413,198096,193582,195802,157865,115738,175224,144307,183693,150660,346007,308607,157359,158142,308606,167294,163252,150215,278603,174078,174137,174448,172503,229052,132325,174108,195512,188364,308522,179830,306370,195701,175720,197460,177937,188520,150041,175074,197668,325492,159135,174235,143635,196659,308434,175104,196201,158188,195296,120243,180112,168210,197096,197689,324131,146624,197869,153921,173046,193870,167767,198287,150628,198981,174250,197374,196625,174282,197176,182051,196298,308648,196683,198317,185413,187022,291735,186510,225820,183513,196679,174170,175725,178021,102760,196066,237266,144221,308596,197474,192706,138920,308473,379198,183791,168372,157927,181651,123204,297158,115791,174344,197266,196159,308687,167635,150560,196354,187079,187054,147989,193063,197863,189078,172452,291737,308702,196882,186869,156326,197580,142294,193286,308694,164910,198063,170907,323761,198150,127035,186690,174443,188465,143403,195575,150679,140816,347744,175206,194856,196216,341490,174322,158163,174256,158502,188464,334931,188766,185462,198110,172525,188783,341572,308567,232702,308668,198302,154755,196840,254296,166226,150543,150019,188299,308556,198217,150573,237310,292415,290377,197956,308398,177905,150466,192201,150284,189048,327993,181015,171169,196463,175161,327608,308696,150537,188800,140217,174389,149907,125848,327984,196973,192189,181364,195462,189290,442046,123804,152603,296247,150049,193620,193863,168548,129465,174149,181716,155890,121613,188418,197157,237175,174216,227026,294251,287973,174416,139313,328015,197688,195877,196824,198080,185972,296248,449009,195454,161090,123796,157917,175083,174211,191549,150150,174376,162471,185850,350467,197589,197199,150557,237228,174261,139527,198233,229061,149495,193734,149943,167864,140285,177855,196191,150507,178805,308505,174110,198462,135225,137797,125950,185986,174103,318245,179828,174309,187053,175903,150265,197999,325474,197882,193613,174165,176318,333340,309956,150344,174097,331391,132632,123928,139302,323722,152180,163996,196079,170910,346657,175269,175203,186909,192462,173042,199348,165689,169514,174277,303248,302527,182248,107568,165997,166237,278606,150458,184852,176542,174198,198292,176959,196512,308681,251277,189029,327989,279771,169617,124544,197832,123945,124635,195764,159860,120592,302525,326020,323717,189678,165624,199340,188399,156906,177973,197581,197767,174092,122849,196796,196590,188966,177602,134925,198163,308599,327529,293721,236995,308475,325771,174371,334816,116964,308737,326087,174089,181978,148291,308632,195718,150432,251249,310255,177501,162513,327788,138922,177877,194206,237050,197778,175305,176284,167771,189923,325944,174299,179678,196158,177830,145739,340928,294039,174237,378407,175155,143855,154397,197763,149966,185961,200726,196655,196485,138506,295950,150462,174347,176676,198550,167469,177854,30541) ",
+
+  {{devKey}}
+}
+
+### 
+POST {{hostName}}common/process
+{{checkEligibilityToken}}
+{{contentJson}}
+
+{
+
+  {{devKey}}
+}
+
+### PAYONEER SQL
+POST {{hostName}}common/process
+{{checkEligibilityToken}}
+{{contentJson}}
+
+{
+  # "u": "accStatus=1, payoneerStatus=3,submissionStatus=3", "f":"itmDetails", "w":"profileId=427767",
+
+  {{devKey}}
+}
+
+### SYSTEM related
+POST {{hostName}}common/process
+{{checkEligibilityToken}}
+{{contentJson}}
+
+{
+
+  # "r":"select * from _prisma_migrations order by started_at desc limit 3",
+  # "r":"delete from _prisma_migrations where id='f2269e31-4580-4987-9d32-1a48ee35daa8' limit 1",
+  # "r":"select * from _prisma_migrations where started_at > '2024-11-01'",
+
+  # "r":"explain SELECT `users`.`id`, `users`.`emcId`, `users`.`profileId` FROM `users` WHERE `users`.`status` = 1",
+  # "r":"explain SELECT `id` FROM `userProfile` WHERE `stateId` IN (1,3);",
+  # "r":"ANALYZE TABLE userProfile",
+  # "r":"show index from userProfile",
+  # "r":"CREATE INDEX advertiser_status_idx ON advertiser (status)",
+  # "r":"drop INDEX advertiser_status_idx ON advertiser",
+
+  # "r":"deletee from amrRequests where id in (846969,846967)",
+  # "r":"SHOW VARIABLES LIKE 'wait_timeout'",
+  # "r":"SHOW VARIABLES LIKE 'interactive_timeout'",
+  # "r":"SET GLOBAL wait_timeout = 1800;SET GLOBAL interactive_timeout = 1800;",
+  # "r":"SET FOREIGN_KEY_CHECKS=1",
+  "dev": true
+}
+
+
+
+
+
+###
+# @name sentryCheckIn
+{{hostName}}common/sentry-checkin
+  # ?monitorId=bo-reject-user-incomplete-assessment
+  ?monitorId=bo-execute-amr-init-training
+  # &status=in_progresss
+  # &status=ok&checkinId=test
+  &status=error&checkinId=test
+  # &checkinId={{sentryCheckIn.response.body.data}}
+  # &duration=1
+  &envCheck=0
+
+###
+# @name sentryCheckInTest
+{{hostName}}common/sentry-checkin-test
+  ?monitorId=bo-execute-amr-init-training
+  # &envCheck=0
+
+
+
+###
+# https://sentry.io/api/0/organizations/acme/projects/
+
+
+### working
+POST https://sentry.asaptickets.com/api/107/cron/bo-execute-amr-init-training/04af240440be49cda8efbad026bc33e2/
+Content-Type: application/json
+
+{
+    # "monitor_config": {
+    #     "schedule": {"type": "crontab", "value": "0 * * * *"},
+    #     "checkin_margin": 1,
+    #     "max_runtime": 20,
+    #     "timezone": "America/Los_Angeles"
+    #     "failure_issue_threshold": 1,
+    #     "recovery_threshold": 1,
+    # },
+    "status": "in_progress"
+}
+
+### working
+# POST https://sentry.asaptickets.com/api/0/monitors/${monitorId}/checkins/
+@CHECK_IN_ID={{$timestamp}}
+https://sentry.asaptickets.com/api/107/cron/bo-execute-amr-init-training/04af240440be49cda8efbad026bc33e2?status=in_progress
+###
+https://sentry.asaptickets.com/api/107/cron/bo-execute-amr-init-training/04af240440be49cda8efbad026bc33e2?status=ok
+# &check_in_id={{CHECK_IN_ID}}
+
+###
+CHECK_IN_ID="$(uuidgen)"
+
+SENTRY_INGEST="https://o0.ingest.sentry.io"
+SENTRY_CRONS="${SENTRY_INGEST}/api/0/cron/<monitor_slug>/examplePublicKey/"
+
+# 🟡 Notify Sentry your job is running with a check-in ID:
+curl "${SENTRY_CRONS}?check_in_id=${CHECK_IN_ID}&status=in_progress"
+
+# Execute your scheduled task here...
+
+# 🟢 Notify Sentry your job has completed successfully with a check-in ID:
+curl "${SENTRY_CRONS}?check_in_id=${CHECK_IN_ID}&status=ok"
+
+###
+# POST https://sentry.asaptickets.com/api/0/monitors/${monitorId}/checkins/
+POST https://sentry.asaptickets.com/api/107/cron/bo-execute-amr-init-training/04af240440be49cda8efbad026bc33e2/
+Authorization: DSN http://04af240440be49cda8efbad026bc33e2@sentry-lan.asaptickets.com/107
+{{contentJson}}
+
+{
+  "status": "in_progress"
+}
+
+###
+https://sentry.asaptickets.com/api/0/projects/travel/dreamport-bo-backend/monitors/bo-execute-amr-init-training/checkins/?environment=production&environment=development&expand=groups&per_page=10&project=107&statsPeriod=1h
+# https://sentry.asaptickets.com/api/0/crons/bo-execute-amr-init-training/checkins/
+# https://sentry.asaptickets.com/api/0/projects/travel/dreamport-bo-backend/monitors/bo-execute-amr-init-training/
+Authorization: DSN http://04af240440be49cda8efbad026bc33e2@sentry-lan.asaptickets.com/107
+# Authorization: Basic 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
+
+###
+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
+
+###
+https://emc.asaptickets.com/vue/user/detailsinfo/112470
+# Cookie: EMC_authCookie2=e6cfb783d1c5149a24ffba11a9ed0457
+# Cookie: PHPSESSIONID=3363424a687425e34227b7cd090881c3
+Cookie: PHPSESSIONID=3363424a687425e34227b7cd090881c3; 
+Cookie: EMC_authCookie2=e6cfb783d1c5149a24ffba11a9ed0457
+Cookie: __cf_bm=5xZoWxf.tM3crffXV8Y6yDjmmMkkLf.L2rIF_nXNuNk-1719535757-1.0.1.1-M7dQH07p0dkal1WceHvqtxqFqAySOYPhsIYoJ_2aUjRl6E8VbIKu5rSC1awYniS_iViUttQ5UhFkv8DhKOHmBQ
+Cookie: cf_clearance=udhgSxmaaf0ImJxpoTHfSE4qbvEZ.u2sPY6T5LJ9pls-1719535758-1.0.1.1-Scj2Yj0CO_SWEJzPki2cJJf8gp1BtBfPaq9YO6zJYdHbeuenhON0jwZ.60k3utICA9c8GakXdYo9Bv2VDt04tA; 
+
+###
+Post https://emc.asaptickets.com/user/queuecache/108478
+Cookie: EMC_authCookie2=98ce3ec24621ae9b0fc2542c07b6459a
+Cookie: PHPSESSIONID=b1e7ddf13be4e1e3bdadf371b0cad373
+###
+https://emr.dyninno.net/amr/requests/737636
+# https://emr.dyninno.net/amr/tasks/814374/8182240
+Cookie: PHPSESSIONID=8c10e03cea8c0ede9e8c6e4d39b48499; fmt_session=1dd11d3a305f4057d68301275fdef9db
+
+###
+https://emc.stage-travel.com/user/queuecache/126668
+
+
+
+###
+{{hostName}}emc/link-profile
+  ?{{dev}}
+  &profileId=51117
+  &emcId=123758
+
+###
+{{hostName}}hrm/ping
+###
+{{hostName}}hrm/profile?id=249854
+###
+POST {{hostName}}hrm/find
+{{contentJson}}
+
+{
+  "whereObj":{"id": 12345},
+  # "returnVal":"",
+  # "page":"",
+  {{devKey}}
+}
+###
+{{hostName}}hrm/unlink-emcId
+  ?hrmId=38909
+  &emcId=123758
+
+###
+POST {{hostName}}hrm/is-employee
+  # ?email=surjeetindia@gmail.com
+  # ?email=katjuha.petrova@gmail.com
+  # ?email=mostafayousry7796@gmail.com
+  # ?email=ahmedgazar22@yahoo.com
+  # ?email=vipinvin@gmail.com
+  ?email=salmakhabiry@yahoo.com
+  # ?email=kristaps.klavinskis@gmail.com
+
+###
+POST {{hostName}}hrm/is-blacklisted
+{{contentJson}}
+
+{
+  "email":"salmakhabiry@yahoo.com",
+  "phone":"918909630096"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+# @name sentryCheckIn
+{{hostName}}common/sentry-checkin
+  # ?monitorId=bo-reject-user-incomplete-assessment
+  ?monitorId=bo-execute-amr-init-training
+  # &status=in_progresss
+  &status=ok&checkinId=52168a2e8a7f412da74cd6f42b5bb5d1
+  # &checkinId={{sentryCheckIn.response.body.data}}
+  &envCheck=0
+
+
+###
+https://sentry.asaptickets.com/api/0/organizations/04af240440be49cda8efbad026bc33e2/monitors/bo-execute-amr-init-training/checkins/
+Authorization: Bearer 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
+{{contentJson}}
+
+{
+  "status": "in_progress"
+  # "status": "ok"
+}

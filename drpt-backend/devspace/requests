@@ -1,0 +1,1966 @@
+### PUB
+# @hostName = https://drpt-backend-3451-feat-nicknamereserve-drpt-4222-1117.do.stage-travel.com/api/
+# @hostName = https://dreamport-api.dev-travel.com/api/
+@gid = 3{{$localDatetime 'MMDDHHmm'}}
+@mbsr_survey_submit = x-mbsr-event: INST_SURVEY_SUBMITTED
+@mbsr_emc_update_event = x-mbsr-event: App\\Message\\UserRelationUpdatedMessage
+@mbsr_mntc_user_performance_updates = x-mbsr-event: MNTC_USER_PERFORMANCE_UPDATES
+@mbsr_mntc_user_training_certified = x-mbsr-event: MNTC_USER_TRAINING_CERTIFIED
+@mbsr_drp_profile_state_updated = x-mbsr-event: DRP_PROFILE_STATE_UPDATED
+
+
+
+
+### === === === ===
+# LOGIN
+# === === === ===
+### getLoginPage
+{{hostName}}emc/getLoginPage
+  ?callbackUrl={{hostName}}
+
+###
+# @name authorizeToken
+{{hostName}}emc/authorizeToken
+  ?token=4a87f9525812e5c0f69c582e5d304a19
+
+###
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOjUxNTE4LCJ1YUlkIjozODQ5LCJpYXQiOjE3MzY0MDY4NzMsImV4cCI6MTczNjQyODQ3M30.NFuzo8bP_tUVqKrzIgOFg1RjVm-ekGIllsUXXQIez3s
+@token = {{directAuthToken}}
+# @token = {{authorizeToken.response.body.data.authUser.accessToken}}
+@auth = {{authType}} {{token}}
+@apiAuth = {{authType}} {{apiAuthToken}}
+
+###
+# @name doAuth
+{{hostName}}emc/doAuth
+{{auth}}
+
+###
+{{hostName}}emc/get-user-application?emcId=127247
+###
+{{hostName}}emc/get-user-application-by-name?emcName=sm1990
+
+###
+GET https://admin.mindtickle.com/Odata.svc/Users?$format=json_compact&$filter=UserId eq '1691913266765627392'
+Authorization: Basic MTE0MV81OTg6azIzaWg0YWk=
+
+###
+{{hostName}}emc/logout
+{{auth}}
+
+
+###
+# @name tokenByKey
+{{hostName}}emc/app-login-url
+  ?appName=CMS
+  # ?appName=Gamification
+{{auth}}
+
+###
+http://cms.stage-travel.com/login
+  ?token=
+  &data={"redirect":"http://cms.stage-travel.com"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### === === ===
+# USER
+# === === === ===
+###
+{{hostName}}user-application/ua-by-profile?{{dev}}&profileId=1053
+###
+{{hostName}}user-application/get-remaining-time?{{dev}}
+  &profileId=51600
+###
+{{hostName}}user-application
+{{auth}}
+
+###
+{{hostName}}user-application/training-awaited
+Authorization: Bearer dXNlcm5hbWU6ZHJlYW1wb3J0I3Bhc3N3b3JkOlh3ak9xY3lsdHByMmtScw==
+
+
+
+###
+{{hostName}}user-application/profile
+{{auth}}
+
+
+
+###
+{{hostName}}user-application/available-nickname
+  # ?search=s
+{{auth}}
+
+###
+{{hostName}}user-application/reserve-nick-name
+{{auth}}
+
+
+
+
+
+###
+POST {{hostName}}user-application/log-action
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36x
+{{contentTypeJson}}
+
+{
+  "action": "reg_step_1_fake",
+  "data": {
+    "key1": "val1",
+    "key2": "val2"
+  }
+}
+
+
+###
+@filePath = /home/spv/Downloads/
+@fileName = new_Dreamport_Data_Policy.pdf
+POST {{hostName}}user-application/upload-asset
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="asset"; filename="{{fileName}}"
+Content-Type: image/png
+
+< {{filePath}}{{fileName}}
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="dynamicName"
+
+false
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+
+
+
+
+
+
+###
+{{hostName}}user-application/change-request
+{{contentTypeJson}}
+{{auth}}
+
+{
+  "comment": "this is change request"
+}
+
+
+###
+{{hostName}}user-application/change-request
+{{auth}}
+Content-Type: multipart/form-data; boundary=---WebKitFormBoundary7MA4YWxkTrZu0gW
+
+-----WebKitFormBoundary7MA4YWxkTrZu0gW
+{{contentTypeJson}}
+
+{
+  "comment": "this is change request"
+}
+-----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+###
+https://dreamport-api.stage-travel.com/api/user-application/update-status?%22dev%22%3A1=&profileId=51168&status=11
+###
+{{hostName}}user-application/update-status?
+  &{{dev}}
+  &profileId=500953
+  &status=24
+
+###
+
+###
+# @hostName1 = http://dreamport-api.dev-travel.com/api/
+###
+# {{
+#   exports.hrmIds = [78059,78955,77926,77927,78980,78981];
+# }}
+# @loop for hrmId of hrmIds
+# {{hostName1}}user-application/update-status?hrmId={{hrmId}}&status=2
+
+###
+{{hostName}}hrm/init-reject?{{dev}}&reasonId=40&hrmId=*****
+
+###
+{{hostName}}hrm/profile?{{dev}}&hrmId=102834  
+# 79749
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}user-application/user-types
+{{auth}}
+
+###
+{{hostName}}user-application/user-status
+{{auth}}
+
+
+
+###
+{{hostName}}user-application/clear-profile-cache?{{dev}}&profileId=541
+
+
+
+
+### 
+{{hostName}}user-application/search-user/al416
+
+### PUB BO EMC HRM
+{{hostName}}user-application/search-user-by-param/loginName/mf482
+###
+{{hostName}}user-application/search-user-by-param/mntcId/1758184000204181504
+###
+{{hostName}}user-application/search-user-by-param/profileId/50956
+
+
+
+###
+Post {{hostName}}user-application/get-app-by-profileIds
+{{contentJson}}
+
+{
+  "profileIds":[
+3976
+  ]
+}
+
+
+###
+{{hostName}}emc/search-user/j.petrova
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}eligibility-test
+###
+{{hostName}}eligibility-test/sync?{{dev}}
+
+
+
+
+
+
+
+### GOOGLE reg/login
+https://accounts.google.com/o/oauth2/v2/auth?client_id=970641131126-j95sfc87pja2pnu7kbek4t364no0mq0m.apps.googleusercontent.com&redirect_uri=https://dreamport.dev-travel.com&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile&response_type=code&access_type=offline&prompt=consent
+###
+@gCode=4%2F0ASVgi3KXO3fEDMj45QVf3sAzO7ZeqZ54jSapPCI9U_V6F6WCO9qwufn50XFtigaqjjW35Q
+###
+# @name authorizeCode
+{{hostName}}register/authorize-code?{{dev}}
+  &provider=1
+  # &code={{gCode}}
+  &code=surjeetindia{{uid}}@gmail.com
+  # &code=uytuyutt@gmail.com
+
+###
+# @gFirstName = {{authorizeCode.response.body.data.firstName}}
+# @gLastName = {{authorizeCode.response.body.data.lastName}}
+@gEmail = {{authorizeCode.response.body.data.email}}
+# @gEmail = surjeet1234@gmail.com
+@gAccessToken = {{authorizeCode.response.body.data.accessToken}}
+# @gAccessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOjUxMDI2LCJ1YUlkIjozMzU2LCJpYXQiOjE3MTk4NDc3NTgsImV4cCI6MTcxOTg2OTM1OH0.YL6q7TQR-Q22A4tSWF8k2FYE8MROkjIpoXmj0mcrmWk
+
+# GOOGLE = 1
+# FACEBOOK = 2
+@regProvider = 1
+###
+
+
+
+
+### Social LOGIN
+@lCode = {{gAccessToken}}
+POST {{hostName}}login
+{{contentJson}}
+
+{
+  "code": "{{lCode}}",
+  "provider": 1,
+  # "dev": 1,
+  "t": 1
+}
+
+
+
+
+
+
+
+
+
+
+###
+console.log(btoa('{"email":"mayank.gupta@dyninno.in","accessToken":"77959abaf8e72d07ebfcf09875c1e120ae19d4807f8a0eacb6e9e2faf2c462fc","firstName":"mayank test","lastName":"gupta","provider":"google"}'))
+###
+@socialRegAccessToken=eyJlbWFpbCI6Im1heWFuay5ndXB0YUBkeW5pbm5vLmluIiwiYWNjZXNzVG9rZW4iOiI3Nzk1OWFiYWY4ZTcyZDA3ZWJmY2YwOTg3NWMxZTEyMGFlMTlkNDgwN2Y4YTBlYWNiNmU5ZTJmYWYyYzQ2MmZjIiwiZmlyc3ROYW1lIjoibWF5YW5rIHRlc3QiLCJsYXN0TmFtZSI6Imd1cHRhIiwicHJvdmlkZXIiOiJnb29nbGUifQ==
+###
+@socialRegUrlWithAccessToken=https://apply.dreamport.me/registration?social_code={{socialRegAccessToken}}
+###
+{{socialRegUrlWithAccessToken}}
+###
+
+
+
+###
+# @name accessToken
+{{hostName}}login/get-access-token
+  ?{{dev}}
+  &profileId={{directAuthProfileId}}&uaId={{directAuthUaId}}
+  # &uaId=4004
+  # &profileId=51675
+###
+@directAuthToken = {{accessToken.response.body.data}}
+# @directAuthToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiI0NDg4NjMiLCJ1YUlkIjoiNTY1ODczIiwiaWF0IjoxNzMzNDU1MDU5LCJleHAiOjE3MzM0NzY2NTl9.7QkCVWiuJO1SgcVe08UyNYGUQ_bRPTO0c7YbzyPmkUg
+@directAuth = Authorization: Bearer {{directAuthToken}}
+###
+@directAuthUaId=3972
+@directAuthProfileId=51643
+@directAuthStatusId=18
+@DRPTAuthData={%22firstName%22:%22Surjeet%22%2C%22lastName%22:%22Soni%22%2C%22email%22:%22surjeetindia@gmail.com%22%2C%22accessToken%22:%22{{directAuthToken}}%22%2C%22uaId%22:{{directAuthUaId}}%2C%22profileId%22:{{directAuthProfileId}}%2C%22status%22:{{directAuthStatusId}%2C%22statusCode%22:200%2C%22provider%22:%22google%22%2C%22expires%22:%22{{$localDatetime 'YYYY-MM-DDT23:59:59.530'}}Z%22}
+{{DRPTAuthData}}
+###
+
+
+
+###
+# @name mntcRedirectToken
+{{hostName}}login/get-mntc-redirect-token
+{{directAuth}}
+###
+@mntcOnetimeRedirectToken = {{mntcRedirectToken.response.body.data.token}}
+@mntcSpaAppUrl = {{mntcSpaApp}}?token={{mntcOnetimeRedirectToken}}
+{{mntcSpaAppUrl}}
+###
+# @name getAuthTokenOnSpa
+POST {{hostName}}login/get-auth-token
+{{contentJson}}
+
+{
+  "token":"{{mntcOnetimeRedirectToken}}"
+}
+###
+{{hostName}}login/get-auth-token-test
+  ?{{dev}}&profileId=51222
+  
+###
+Post {{hostName}}login/validate-auth-token
+{{contentJson}}
+{{apiAuth}}
+
+{
+  "token": "{{getAuthTokenOnSpa.response.body.data.token}}"
+}
+###
+{{hostName}}util/decode-jwt-token?{{dev}}
+  # &token={{mntcOnetimeRedirectToken}}
+  &token={{directAuthToken}}
+  # &token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiI0NDg4NjMiLCJ1YUlkIjoiNTY1ODczIiwiaWF0IjoxNzMzNDU1MDU5LCJleHAiOjE3MzM0NzY2NTl9.7QkCVWiuJO1SgcVe08UyNYGUQ_bRPTO0c7YbzyPmkUg
+
+
+
+
+###
+{{hostName}}util/validate-jwt-token?{{dev}}
+  # &token={{mntcOnetimeRedirectToken}}
+  &token={{directAuthToken}}
+  # &token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiI0NDg4NjMiLCJ1YUlkIjoiNTY1ODczIiwiaWF0IjoxNzMzNDU1MDU5LCJleHAiOjE3MzM0NzY2NTl9.7QkCVWiuJO1SgcVe08UyNYGUQ_bRPTO0c7YbzyPmkUg
+
+
+
+
+
+###
+{{hostName}}util/mock-social-login
+  ?{{dev}}
+  # &devId=ravikkaushikk@gmail.com
+  # &devId=testingravi4@gmail.com
+  # &devId=sagar09528@gmail.com
+  &devId=surjeetindia@gmail.com
+  # &devId=sagarsinghqa.03@gmail.com
+  # &devId=shubham.batra17@gmail.com
+  &profileId=51646
+  &clear=1
+
+###
+
+
+
+
+
+
+
+
+
+
+
+
+
+# REGISTER
+# === === === ===
+###
+{{gid}}
+@uid = 302171502
+# @uid = {{gid}}
+
+
+### CREATE ACCOUNT
+# @name createAccount
+POST {{hostName}}register/account
+{{contentTypeJson}}
+
+{
+  "fname": "surjeet",
+  "lname": "pubUser",
+  "cityId": 131,
+  "cityName": "Hakupu",
+  # "cityId": 118409,
+  # "cityName": "Gurgaon",
+  "countryId": 171,
+  "countryName": "Niue",
+  "provider": {{regProvider}},
+  # google
+  "accessToken": "{{gAccessToken}}",
+  # "email": "{{gEmail}}",
+  # "phone": "+91 9{{uid}}",
+  # std
+    # "accessToken": "96fc34a9d4f2ff9d2a75b251252a51162f6ebad13f8660604a44837ca5a19b99",
+    # "email": "surjeet{{uid}}@gmail.com",
+    # "phone": "+91 9{{uid}}",
+  # spl
+    # "email": "userintesting63357@yopmail.com",
+    # "email": "surjeet309161740@gmail.com",
+    # "phone": "919309161740",
+  # specific
+    "email": "uytuyutt@gmail.com",
+    "phone": "917325725723",
+  # "source": "local-dev",
+  # "medium": "medium",
+  # "campaign": "campaign",
+  "userUniqueId": "userUniqueId",
+  "userSessionId": "userSessionId",
+  "exp": 2,
+  "skills": [1,3,2,4],
+  "education": 2,
+  "languages": [{"id": 5,"levelId": 2},{"id": 37,"levelId": 4}],
+  "eligibilityTestResponse": [
+    {"questionId": 1, "answerId": 1},
+    {"questionId": 2, "answerId": 3},
+    {"questionId": 3, "answerId": 5},
+    {"questionId": 4, "answerId": 7},
+    {"questionId": 5, "answerId": 9},
+    {"questionId": 6, "answerId": 11},
+    {"questionId": 7, "answerId": 13},
+    {"questionId": 8, "answerId": 15},
+    {"questionId": 9, "answerId": 17},
+    {"questionId": 10, "answerId": 19}
+  ]
+}
+
+### create profile resp
+# {
+#   "statusCode": 201,
+#   "message": "OK",
+#   "data": {
+#     "profileId": 1051,
+#     "firstName": "surjeet",
+#     "lastName": "pubUser",
+#     "fullName": "surjeet  pubUser",
+#     "statusText": "APPLICATION_REGISTERED",
+#     "email": "8YHB046PJ80",
+#     "phone": "Y7GKEJNSYEL",
+#     "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOjEwNTEsInVhSWQiOjMyLCJpYXQiOjE3MDkwMjk4NzQsImV4cCI6MTcwOTA1MTQ3NH0.wpR717ffvjL-kKCbRu58ZiQ3SctlktUfgk-Hpm3uCyI"
+#   }
+# }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+POST {{hostName}}register/cancel-post-registation
+{{contentTypeJson}}
+{{auth}}
+
+{
+  "cancelReasonId": 89
+}
+
+###
+{{hostName}}register/check-eligiblity?
+  # &email=surjeetindia@gmail.com
+  # &email=thakur.shikha3005@gmail.com
+  # &email=s.thakur@dyninno.in
+  # &phone=+91%2067876-56787
+  # &email=ankita.choubey@dyninno.in&phone=+91%2098765-98798
+  # &email=uytuyutt@gmail.com
+  &phone=917325725723
+  # &email=batta.raghav@gmail.com
+  # &phone=915218629816
+
+
+
+
+###
+{{hostName}}register/is-employed?
+  &emailuid=GW0K6B68WBD
+
+###
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# COMMON controller
+# === === === ===
+###
+{{hostName}}geo/countries
+###
+{{hostName}}geo/country/import
+###
+{{hostName}}geo/city/search?term=del
+###
+{{hostName}}geo/country-by-id
+###
+{{hostName}}v1/geo/city/search-raw?term=san fran
+###
+{{hostName}}common/display-message
+
+###
+Post {{hostName}}common/decrypt
+{{contentJson}}
+
+{
+  "data":[
+    "cec133b1eef0482e1e4fdde9322b278892887f78794fc9cccc0dcf35820e901b"
+  ]
+}
+
+###
+Post {{hostName}}common/encrypt?{{dev}}
+{{contentJson}}
+
+{
+  "data":[
+    # "surjeet{{uid}}@gmail.com"
+    "mayank.gupta@dyninno.in"
+  ]
+}
+###
+{{hostName}}common/config
+  ?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiI0NDg4NjMiLCJ1YUlkIjoiNTY1ODczIiwiaWF0IjoxNzMzNDU1MDU5LCJleHAiOjE3MzM0NzY2NTl9.7QkCVWiuJO1SgcVe08UyNYGUQ_bRPTO0c7YbzyPmkUg
+
+###
+{{hostName}}common/ff?{{dev}}
+  &name=mbsr_listen_emc_id_cutoff
+  # &name=emc_contract_automation
+  # &name=pause_assessment_crons
+  # &op=value
+  # &name=spa_token_expiry
+  # &op=value
+
+
+###
+# @name sentryCheckIn
+{{hostName}}common/sentryCheckIn
+  ?monitorSlug=e3a7aea8-a2f3-431a-a5ea-537b094dace3
+  # &status=in_progresss
+  &status=ok&checkinId=c531c25f06094edbb2e6d3fa5d587450
+  &duration=1
+  &envCheck=0
+###
+{{sentryCheckIn}}
+
+###
+{{hostName}}ping11
+# {{hostName}}survey/ping
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ASSESSMENT
+# === === === ===
+###
+###
+{{hostName}}assessment/get-assessment-name?{{dev}}&assessmentId={{tgAssessmentId}}
+###
+{{hostName}}assessment/evaluate-results-dev
+###
+{{hostName}}assessment/gen-dev-link?email=sankeshmishra56@gmail.com
+###
+{{hostName}}assessment/get-assessent-result
+{{auth}}
+
+###
+{{hostName}}assessment/request
+{{auth}}
+
+###
+POST {{hostName}}assessment/process-result?{{dev}}
+{{contentJson}}
+
+{
+  "assessmentResult": {
+      "id": 11,
+      "email": "pushpendra9956@gmail.com",
+      "full_name": "PUSHPENDRA YADAV",
+      "invitation_uuid": "71d881d9-5776-494f-9482-8eb3a0fa5677",
+      "created": "2024-02-15T12:00:36.778186+02:00",
+      "modified": "2024-02-22T09:34:34.354711+02:00",
+      "last_activity": "2024-02-22T07:34:04.250472Z",
+      "testtaker_id": 5067926,
+      "average": 43,
+      "rating": null,
+      "is_with_feedback_about_hired": false,
+      "content_type_name": "test_taker.assessmentcandidature",
+      "is_hired": false,
+      "personality": null,
+      "status": "completed",
+      "has_consumed_credit": true,
+      "personality_algorithm": null,
+      "review": null,
+      "reminder_sent": false,
+      "last_reminder_sent": "2024-02-17T12:02:07.180183+02:00",
+      "results_sent": false,
+      "stage": "NYE",
+      "invitation_link": "https://assessment.testgorilla.com/testtaker/takeinvitation/71d881d9-5776-494f-9482-8eb3a0fa5677",
+      "role": "external",
+      "status_notification": "click",
+      "average_without_benchmark": 43,
+      "average_with_weight": 40,
+      "test_scores": [
+          {
+              "test_id": 1311573,
+              "score": 30,
+              "wpm": null
+          },
+          {
+              "test_id": 807374,
+              "score": 49,
+              "wpm": null
+          },
+          {
+              "test_id": 1325346,
+              "score": 51,
+              "wpm": null
+          }
+      ],
+      "next_notification_reminder_time": 0
+    },
+  "assessmentId": 823346
+}
+
+
+###
+{{hostName}}assessment/sync-assessment-data
+  ?profileIds=50974
+
+
+
+
+
+
+
+
+
+
+# mindtickle-client/service
+# === === === ===
+###
+{{hostName}}mntc/ping
+
+###
+# from TRAINING_READY (17) to TRAINING_INITIATED (9)
+# new from TRAINING_READY (17) to TRAINING_INITIATED (18)
+{{hostName}}mntc/init-training
+{{auth}}
+###
+# to TRAINING_INITIATED_BY_USER (18)
+{{hostName}}mntc/user-init-training
+{{auth}}
+
+###
+{{hostName}}mntc/user-init-training-pre-live
+{{auth}}
+
+###
+{{hostName}}mntc/initiate-training-prelive
+  ?profileIds=316921
+
+
+###
+{{hostName}}mntc/sync-user-training-to-bo
+  ?profileIds=4
+###
+{{hostName}}mntc/training-performance
+{{auth}}
+
+###
+# only hits the mntc service if the data is not in cache
+{{hostName}}mntc/training-performance-mtid
+  ?mntcId=1871854402858295296
+  # &prelive=true
+
+###
+# how a user receive the data on UI
+POST {{hostName}}mntc/training-performance-uaid
+{{contentTypeJson}}
+
+{
+  "uaIds":[
+    11
+  ]
+}
+
+###
+{{hostName}}mntc/series-list
+{{auth}}
+
+
+###
+@sid1 = 1529815527082850731
+@sid2 = 1558013872759061105
+
+###
+{{hostName}}mntc/series-modules
+  ?seriesId={{sid1}}
+{{auth}}
+
+
+
+
+
+
+
+
+
+
+###
+PUT {{hostName}}user-application/mark-photo-private
+{{contentTypeJson}}
+{{auth}}
+
+{
+  "status":1
+}
+###
+PUT {{hostName}}user-application/mark-photo-private-dev
+  ?{{dev}}
+{{contentTypeJson}}
+
+{
+  "profileId":51222,
+  "status":true
+}
+###
+POST {{hostName}}user-application/profile-state-update
+{{contentTypeJson}}
+{{mbsr_drp_profile_state_updated}}
+
+{
+  "profileId": 51632,
+  "state": 1,
+  "appStatusId": 17,
+  # "comment": "Assessment Passed",
+  # "data": {
+  #   "mntcId": "1234567687"
+  # },
+  {{devKey}}
+}
+# {
+#   "profileId":31,
+#   "state":1,
+#   "appStatusId":6,
+#   "comment":"Assessment skipped by HR: Ankit Bansal"
+# }
+# {
+#   "profileId":1,
+#   "state":4,
+#   "appStatusId":34,
+#   "comment":"test event"
+# }
+
+###
+POST {{hostName}}user-application/sync-profile-state-update
+{{contentTypeJson}}
+
+{
+    "profileId": 51643,
+    "state": 1,
+    "appStatusId": 21,
+    # "data": {
+    #     "emcId": null
+    # },
+    {{devKey}}
+}
+
+
+
+
+
+
+
+
+
+
+
+# CRONS
+# === === === ===
+###
+{{hostName}}emc/cron-update-missing-mntc
+###
+{{hostName}}emc/cron-emc-update-user-mock
+  ?profileId=51435
+  &emcId=127323
+  &mntcId=1864755194157703000
+
+# 387175 dk1271 1864755194157703168 team: 1182
+###
+{{hostName}}user-application/itm
+###
+POST {{hostName}}user-application/bo-event-init-contract
+{{contentJson}}
+
+{
+  "profileId":51026,
+  "comment":"contract init by hr test",
+  # "userPosition":{},
+  {{devKey}}
+}
+
+
+###
+POST {{hostName}}emc/emc-update
+  ?skipff=true
+{{contentTypeJson}}
+{{mbsr_emc_update_event}}
+
+{
+  "userIds": [
+    265222
+  ]
+}
+
+###
+{{hostName}}emc/cron-emc-update-user
+
+###
+POST {{hostName}}emc/trigger-emc-update-users
+{{contentJson}}
+
+{
+  "emcIds":[
+419611
+  ]
+}
+
+###
+{{hostName}}emc/cron-db-cleanup
+
+###
+# ankit 108478 77927 1552310223140413440
+# aditya 111510
+# surjeet 112470
+# ankita 117447 78059 1588154554226823168
+# mayank 116736 78020 1572230764648554496
+{{hostName}}emc/get-user?id=265222
+
+###
+{{hostName}}emc/get-users
+  ?ids=295754,379370,379371,379623,379624
+###
+# {{hostName}}emc/bloom-filter-add?emcIds=123
+
+###
+{{hostName}}emc/bloom-filter-has?emcIds=341370
+
+###
+Post {{hostName}}emc/add
+{{contentJson}}
+
+{
+  "ids":[4,1,2,3,4,5,6,7]
+  # "ids":[4]
+}
+
+
+
+
+
+
+
+
+
+
+
+###
+POST http://127.0.0.1:3002/api/jsonService?serviceName=mntc&functionName=getTrainingPerformance&mantis_id=0
+  &userIds=1588154554226823168,1575114618347413504,1572230764648554496,1552310223140413440
+
+###
+POST http://dreamport-bo-api.dev-travel.com:3001/api/jsonService?serviceName=drpt&functionName=getSkill&mantis_id=0
+POST http://dreamport-bo-api.stage-travel.com:3001/api/jsonService?serviceName=drpt&functionName=ping&mantis_id=0
+
+
+
+
+
+
+
+### BO
+# === === === ===
+###
+{{hostName}}bo/ping
+###
+{{hostName}}bo/profile?{{dev}}
+  &profileId=51643
+
+
+
+
+
+
+### workprofile
+###
+{{hostName}}work-profile/languages
+###
+{{hostName}}work-profile/skills
+###
+{{hostName}}work-profile/experiences
+###
+{{hostName}}work-profile/education-levels
+###
+{{hostName}}work-profile/cancel-reasons-before-training
+###
+{{hostName}}work-profile/cancel-reasons-before-contract
+###
+{{hostName}}work-profile/termination-reasons
+###
+{{hostName}}work-profile/default-reason
+###
+{{hostName}}work-profile/reject-reason-by-id?id=137
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}register/youtube-videos
+###
+
+
+
+
+
+
+###
+# util
+@pattern = drpt_emc_update_user_id:*
+# @pattern = DRPT_PUB:BO:language_and_level_list
+# @pattern = DRPT_PUB:ANALYTICS:*
+# @pattern = DRPT_PUB:PROFILE_INFO:PROFILE_DETAILS_BO:*
+# @pattern = DRPT_PUB:TRAINING_DEACTIVATION_QUEUE:*
+@cacheKey = DRPT_PUB:TRAINING_DEACTIVATION_QUEUE:*
+# @cacheKey = DRPT_PUB:TRAINING_DEACTIVATION_QUEUE:TRAINING_FAILED_PRELIVE_LAST_MODULE*
+# @pattern = DRPT_PUB:ELIGIBILITY*
+# @pattern = DRPT_PUB:*
+# @pattern = DRPT_PUB:SETTING*
+# @pattern = DRPT_PUB:PERFORMANCE:USER_TRAINING_PERFORMANCE:*
+# @pattern = DRPT_PUB:PERFORMANCE:USER_TRAINING_PERFORMANCE:1803312398454784000true
+# @cacheKey = DRPT_PUB:PERFORMANCE:USER_TRAINING_PERFORMANCE:false:1830565244033040384
+
+# @cacheKey = DRPT_PUB:DASHBOARD:system_links
+# @cacheKey = DRPT_PUB:SETTING:training
+# @cacheKey = DRPT_PUB:MOCK_LOGIN:PROFILEID
+# @cacheKey = DRPT_PUB:APP:user_status
+# @cacheKey = DRPT_PUB:BO:position_list
+# @cacheKey = DRPT_PUB:PROFILE_ALREADY_ENGANGED_CHECK:7
+# @cacheKey = DRPT_PUB:PERFORMANCE:USER_TRAINING_PERFORMANCE:1759904839156379648
+# @cacheKey = DRPT_PUB::PROFILE_BO:1484
+# @cacheKey = {{cacheKeyPattern.response.body.0}}
+# @cacheKey = DRPT_PUB::language_and_level_list
+# @cacheKey = production
+# @cacheKey = development
+# @cacheKey = DRPT_PUB:ASSESSMENT:assessment_name:695300
+# @cacheKey = DRPT_PUB:ELIGIBILITY:eligibility_questions
+# @cacheKey = DRPT_PUB:TEST_GORILLA:auth_token
+# @cacheKey = DRPT_PUB:BLOOM_FILTER_DATA
+# @cacheKey = drpt:user_account_queue:repeat:2a9da430d7d88e597aefa2c70b3f081d:*
+###
+# {{hostName}}util/get-cache?key=drpt:user_account_queue:repeat:2a9da430d7d88e597aefa2c70b3f081d:1736640000000
+{{hostName}}util/get-cache?key={{cacheKey}}
+###
+{{hostName}}util/get-cache-detail?key=update_emc_user_account:IN_PROGRESS_FLAG
+
+###
+# @name cacheKeyPattern
+{{hostName}}util/keys-cache?pattern={{cacheKey}}
+###
+{{hostName}}util/del-cache?key={{cacheKey}}
+  &recursive=true
+
+###
+{{hostName}}util/get-z?key=dreamport-api.dev-travel.com:user_account_queue:repeat
+###
+{{hostName}}util/rem-z
+  ?key=dreamport-api.dev-travel.com:user_account_queue:repeat
+  &member=update_emc_user_account:CJ003::
+  &recursive=true
+
+
+###
+{{hostName}}util/gitlab-feature-flags
+###
+{{hostName}}util/is-feature-enabled?name=
+###
+Post {{hostName}}util/set-cache
+{{contentJson}}
+
+{
+  # "key": "DRPT_PUB:SPA:REDIRECT_ONE_TIME_TOKEN_EXPIRY", "value": "286400",
+  # "key": "DRPT_PUB:SPA:REDIRECT_ONE_TIME_TOKEN_ONLY", "value": "false",
+  # "key": "DRPT_PUB:SPA:AUTH_TOKEN_EXPIRY", "value": "21600",
+  "key": "DRPT_PUB:TRAINING_DEACTIVATION_QUEUE:TRAINING_FAILED_KNOWLEGE_T3:3929",
+
+  # "value": {"check": 5,"userApplication": {"trainingDays": 8,"id": 3929,"uid": null,"profileId": 528053,"hrmId": null,"status": 10,"photo": null,"emcId": 424596,"userTypeId": 1,"cancelReason": null,"mntcId": "1881980917288460288","mntcCreatedAt": "2025-01-27T07:15:40.000Z","mntcFailedAt": null,"verifyToken": null,"verifiedAt": null,"createdAt": "2025-01-27T07:00:16.000Z","updatedAt": "2025-01-30T01:20:14.000Z","verifyAttemptCount": null,"loginName": "el272","source": "facebookScala","emcActive": 1,"campaign": "120215051260310758","medium": "EGY","mntcUid": 345279,"provider": 1,"utmCampaignId": null,"completedModuleCount": 2,"mandatoryModuleCompletedAt": null,"certAwardedAt": null,"failedModuleInfo": "1577980015323864486"}},
+  # "key": "DRPT_PUB:MOCK_LOGIN:PROFILEID",
+  # "key": "DRPT_PUB:TEST_GORILLA:auth_token",
+  # "value": "{{tgToken}}",
+  # "key": "DRPT_PUB:MOCK_SOCIAL_LOGIN:DEV_ID:",
+  # "value": "surjeetindia@gmail.com",
+  # "key": "DRPT_PUB:MOCK_SOCIAL_LOGIN:PROFILE_ID:",
+  # "value": "2",
+  # "value": {
+  #   "a":1,
+  #   "b":2
+  # },
+  # "ttl": 6000,
+  # "ttl": 1,
+  {{devKey}}
+}
+
+
+
+
+
+
+###
+{{hostName}}util/rebuild-cache
+###
+{{hostName}}util/test-version
+###
+{{hostName}}util/test-cache
+###
+{{hostName}}util/env?{{dev}}
+###
+# @hostName = https://drpt-backend-3451-chore-logger-util-fn-added-331.do.stage-travel.com/api/
+{{hostName}}util/test-log-user-action
+###
+{{hostName}}util/test-log?index=PUB
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+# CCS
+
+###
+{{hostName}}ccs/valid-email
+  # ?email=gmail{{uid}}@gmail.com
+  ?email=surjeet.verma@dyninno.in
+  # ?email=j.derums@airconcierge.com
+
+###
+{{hostName}}ccs/valid-phone
+  ?phone=919{{uid}}
+
+###
+@anotherUid = 3{{$localDatetime 'MMDDHHmm'}}
+# @loop for 100
+
+###
+{{hostName}}ccs/save-email
+  # ?email=test{{anotherUid}}@testdrpt.com
+  # ?email=batta.raghav@gmail.com
+  # ?email=work.kundra@gmail.com
+  ?email=surjeetindia@gmail.com
+
+###
+{{hostName}}ccs/get-email
+  ?email=EXDRARYGZRL
+
+###
+{{hostName}}ccs/get-emails
+  ?emails=B2K9QQJ353M,UNLO1TKUOSG,ZLAPGQYGI46
+
+###
+{{hostName}}ccs/get-phone
+  ?phone=PZXGFTX3UEE
+###
+{{hostName}}ccs/get-phones
+  ?phones=TW5EYSWDNN5,EPY2RJJQ39Y,EPY2RJJQ39Y
+
+###
+{{hostName}}ccs/save-phone
+  ?phone=+919898989898
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+#Dashboard
+
+###
+{{hostName}}dashboard/system-links
+
+###
+{{hostName}}dashboard/team
+{{auth}}
+
+###
+{{hostName}}dashboard/documents
+
+
+
+### contact us
+POST {{hostName}}register/contact-us-email
+{{contentTypeJson}}
+
+{
+  "name": "Surjeet234234",
+  "email": "surjeet.o.{{uid}}@yopmail.com",
+  "phone": "+9198{{uid}}",
+  "text": "this is random text from contact us."
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+# JOBS
+@queueName = user_account_queue
+###
+{{hostName}}task-queue/clean-jobs
+
+###
+{{hostName}}task-queue/add-jobs
+
+###
+{{hostName}}task-queue/job-count/{{queueName}}
+
+###
+{{hostName}}task-queue/job-logs/CJ010?queueName={{queueName}}
+
+###
+{{hostName}}task-queue/next-job/{{queueName}}
+
+###
+{{hostName}}task-queue/completed-count/{{queueName}}
+
+###
+{{hostName}}task-queue/waiting-jobs/{{queueName}}
+
+###
+{{hostName}}task-queue/failed-jobs/{{queueName}}
+
+###
+{{hostName}}task-queue/repeatable-jobs/{{queueName}}
+
+###
+{{hostName}}task-queue/active-jobs/{{queueName}}
+###
+{{hostName}}task-queue/jobs/{{queueName}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}health/app-status
+###
+{{hostName}}health/app-status?serviceList=1
+###
+{{hostName}}health/app-status?registrationLast4Hours=1
+###
+{{hostName}}health/app-status?mindtickle=1
+###
+{{hostName}}health/app-status?drptbo=1
+###
+{{hostName}}health/app-status?mntc=1
+
+###
+post https://contact-storage.do.stage-travel.com/jsonService?serviceName=ccs&functionName=ping&mantis_id=0
+
+
+###
+post http://dreamport-bo-api.dev-travel.com:3001/api/jsonService?serviceName=drpt&functionName=ping&mantis_id=0
+# post http://dreamport-bo-api.dev-travel.com:3001/api/jsonService?serviceName=drpt&functionName=getExceptionMessages&mantis_id=0
+# post http://dreamport-bo-api.stage-travel.com/api/jsonService?serviceName=drpt&functionName=getExceptionMessages&mantis_id=0
+# post http://dreamport-bo-api.asaptickets.com/api/jsonService?serviceName=drpt&functionName=getExceptionMessages&mantis_id=0
+
+
+
+
+
+
+
+
+###
+# SETTING
+###
+{{hostName}}setting/exception-messages
+###
+{{hostName}}setting/get-all-config
+###
+{{hostName}}setting/clear-cache?dev
+  # &module=work-profile
+  # &module=registration
+  # &module=assessment
+  # &module=setting
+  &module=geo
+
+
+###
+getDocuments()
+getSystemLinks()
+getPerformanceRules()
+getAssessmentConfig()
+getTrainingConfig()
+getRegistrationConfig()
+getCategories()
+getExceptionMessages()
+getSkill()
+getSkillById(id: number)
+getEducationLevel()
+getEducationLevelById(id: number)
+getExperienceLevel()
+getExperienceLevelById(id: number)
+getRejectReason(stageId: number, activeOnly?: boolean)
+getRejectReasonById(id: number)
+isEmployee(email: string)
+getLanguage()
+getLanguageById(id: number)
+getLanguageLevel()
+
+###
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+# ANALYTICS
+###
+# POST {{hostName}}analytics/send-event
+POST {{hostName}}analytics/send-event
+{{contentTypeJson}}
+
+{
+  "eventStep": "Unsuccessful validation",
+  "eventCategory": "Application form",
+  "eventName": "Form submission",
+  "pageUrl": "/registration",
+  "pageType": "Application form Create Account",
+  "eventDate": "Mon Jan 30 2023 16:37:33 GMT+0530 (India Standard Time)",
+  "userSessionId": "0abc75da-1713-4642-89c4-9bdc3afacc14",
+  "userUniqueId": "b056e51c-a28c-4389-aa3f-0fef105b0d95",
+  "deviceType": "desktop",
+  "deviceBrowser": "chrome",
+  "deviceBrowserVersion": "Chrome 109",
+  "deviceOs": "Linux",
+  "deviceSize": "1920 * 549"
+}
+
+
+###
+POST {{hostName}}analytics/confirm-events
+{{contentTypeJson}}
+
+{
+  "source":"surjeet",
+  "type": "query",
+  "scheduled_plan": {
+    "scheduled_plan_id": "21654",
+    "title": "recent_drpt_user_status",
+    "type": "Look",
+    "url": "https://stats.dyninno.net/looks/8550?qid=5YtvA0B5oHTwMsZsnZzNH0",
+    "query_id": "6725085",
+    "query": {
+      "id": "6725085",
+      "view": "drpt_user_info",
+      "fields": [
+        "drpt_user_status.event_date_time",
+        "drpt_user_status.user_application_id"
+      ],
+      "pivots": null,
+      "fill_fields": null,
+      "filters": { "drpt_user_status.event_date_time": "3 hours" },
+      "filter_expression": null,
+      "sorts": [],
+      "limit": "500",
+      "column_limit": null,
+      "total": null,
+      "row_total": null,
+      "subtotals": null,
+      "vis_config": {
+        "show_view_names": false,
+        "show_row_numbers": true,
+        "transpose": false,
+        "truncate_text": true,
+        "hide_totals": false,
+        "hide_row_totals": false,
+        "size_to_fit": true,
+        "table_theme": "white",
+        "limit_displayed_rows": false,
+        "enable_conditional_formatting": false,
+        "header_text_alignment": "left",
+        "header_font_size": 12,
+        "rows_font_size": 12,
+        "conditional_formatting_include_totals": false,
+        "conditional_formatting_include_nulls": false,
+        "type": "looker_grid",
+        "defaults_version": 1
+      },
+      "filter_config": null,
+      "visible_ui_sections": null,
+      "slug": "VZdHCRt",
+      "client_id": "5YtvA0B5oHTwMsZsnZzNH0",
+      "share_url": "https://stats.dyninno.net/x/5YtvA0B5oHTwMsZsnZzNH0",
+      "expanded_share_url": "https://stats.dyninno.net/explore/DRPT/drpt_user_info?fields=drpt_user_status.event_date_time,drpt_user_status.user_application_id&f[drpt_user_status.event_date_time]=3+hours&limit=500&vis=%7B%22show_view_names%22%3Afalse%2C%22show_row_numbers%22%3Atrue%2C%22transpose%22%3Afalse%2C%22truncate_text%22%3Atrue%2C%22hide_totals%22%3Afalse%2C%22hide_row_totals%22%3Afalse%2C%22size_to_fit%22%3Atrue%2C%22table_theme%22%3A%22white%22%2C%22limit_displayed_rows%22%3Afalse%2C%22enable_conditional_formatting%22%3Afalse%2C%22header_text_alignment%22%3A%22left%22%2C%22header_font_size%22%3A12%2C%22rows_font_size%22%3A12%2C%22conditional_formatting_include_totals%22%3Afalse%2C%22conditional_formatting_include_nulls%22%3Afalse%2C%22type%22%3A%22looker_grid%22%2C%22defaults_version%22%3A1%7D&origin=share-expanded",
+      "url": "/explore/DRPT/drpt_user_info?fields=drpt_user_status.event_date_time,drpt_user_status.user_application_id&f[drpt_user_status.event_date_time]=3+hours&limit=500&vis=%7B%22show_view_names%22%3Afalse%2C%22show_row_numbers%22%3Atrue%2C%22transpose%22%3Afalse%2C%22truncate_text%22%3Atrue%2C%22hide_totals%22%3Afalse%2C%22hide_row_totals%22%3Afalse%2C%22size_to_fit%22%3Atrue%2C%22table_theme%22%3A%22white%22%2C%22limit_displayed_rows%22%3Afalse%2C%22enable_conditional_formatting%22%3Afalse%2C%22header_text_alignment%22%3A%22left%22%2C%22header_font_size%22%3A12%2C%22rows_font_size%22%3A12%2C%22conditional_formatting_include_totals%22%3Afalse%2C%22conditional_formatting_include_nulls%22%3Afalse%2C%22type%22%3A%22looker_grid%22%2C%22defaults_version%22%3A1%7D",
+      "has_table_calculations": false,
+      "model": "DRPT",
+      "dynamic_fields": null,
+      "query_timezone": null,
+      "quick_calcs": null,
+      "analysis_config": null
+    },
+    "filters_differ_from_look": false,
+    "download_url": null
+  },
+  "attachment": {
+    "mimetype": "application/json",
+    "extension": "json",
+    "data":
+      [
+        {"drpt_user_status.event_date_time":"2023-05-24 06:20:04","drpt_user_status.user_application_id":2986,"drpt_user_status.status":6},
+        {"drpt_user_status.event_date_time":"2023-05-24 04:09:37","drpt_user_status.user_application_id":2988,"drpt_user_status.status":6},
+        {"drpt_user_status.event_date_time":"2023-0 5-24 04:06:12","drpt_user_status.user_application_id":2988,"drpt_user_status.status":6},
+        {"drpt_user_status.event_date_time":"2023-05-24 04:06:12","drpt_user_status.user_application_id":298,"drpt_user_status.status":6},
+        {"drpt_user_status.event_date_time":"2023-05-24 04:06:12","drpt_user_status.user_application_id":299,"drpt_user_status.status":6}
+      ]
+  },
+  "data": null,
+  "form_params": {}
+}
+
+
+###
+POST {{hostName}}analytics/post-events
+{{contentTypeJson}}
+{{apiAuth}}
+
+{
+  "set":"travel.mnta_user_status_log",
+  "data":[{
+    "user_id": "12345671",
+    "status": "testStatus",
+    "created_at": "2024-07-26 00:04:39",
+    "sys_import_date":"2024-07-26 00:04:39"
+  }],
+  # "delete": true
+  {{devKey}}
+}
+
+###
+{
+  "set":"travel.drpt_user_info",
+  "data":[{
+    "user_application_id": 469641,
+    "event_date": "2024-07-26 00:04:39"
+  }],
+  "delete": true
+}
+
+###
+POST {{hostName}}analytics/post-event-for-training
+{{contentTypeJson}}
+{{apiAuth}}
+
+[
+  {
+  "userId": "1649101548306104320",
+  "moduleName": "test module Name",
+  "invitedOn": "2025-02-27T01:01:01.000Z"
+  }
+]
+
+###
+POST {{hostName}}analytics/post-event
+{{contentTypeJson}}
+{{apiAuth}}
+
+{
+  "set":"travel.drpt_user_info",
+  "data":[
+    {
+      "user_application_id": 469535,
+      "event_date": "2024-07-26 07:04:39",
+      "sys_record_status": "deleted"
+    }
+  ]
+}
+
+{{apiAuth}}
+
+{
+  "set":"travel.drpt_user_status1",
+  "data":{
+    "uid": 1432,
+    "user_application_id": 1430,
+    "status": "Contract on-going",
+    "event_name": "Contract on-going",
+    "comment": "test event",
+    "reason": null,
+    "event_date": "2023-05-10 15:35:00"
+  }
+}
+
+###
+{{hostName}}analytics/retry-failed-events
+  # ?limit=100
+
+
+
+
+
+
+###
+{{hostName}}reminder/trigger
+###
+{{hostName}}reminder
+###
+{{hostName}}reminder/get-active
+###
+{{hostName}}reminder/get-appl-for-reminder?id=2
+
+
+
+
+
+
+
+
+
+
+
+###
+POST {{hostName}}gmail/send-mail
+{{contentTypeJson}} 
+
+{
+  "template":"drpt_training_passed",
+  "toEmail":"test1@gmail.com",
+  "fromEmail":"test2@gmail.com"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+### NATIVE CLIENT-COMPONENT CALLS
+###
+POST https://emc.stage-travel.com/jsonService.php
+    ?serviceName=apiv019
+    &functionName=getUserList
+    &credentials={"project":"DRPT","login":"drpt","passwd":"qwerty"}
+    &params={"ids":[123968]}
+    
+###
+GET https://emc.dev-travel.com/jsonService.php
+    ?serviceName=apiv019
+    &functionName=userChangePosition
+    &credentials={"project":"DRPT","login":"drpt","passwd":"qwerty"}
+    &params={
+    "emcUserID":123968,
+    "positionID":1,
+    "personState":"applicant",
+    "location":"DRP",
+    "date":"2030-12-31"
+    }
+
+
+
+
+
+
+
+### drpt bo ping
+POST https://dreamport-bo-api.stage-travel.com/api/jsonService?serviceName=drpt&functionName=ping&mantis_id=0
+###
+POST https://localhost:3002/api/jsonService?serviceName=drpt&functionName=ping&mantis_id=0
+###
+curl -d 'serviceName=drpt&functionName=ping&mantis_id=0' https://drpt-bo-backend:3000/api/jsonService
+
+
+
+###
+https://localhost:3002/api/jsonService?serviceName=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###sql
+POST {{hostName}}common/process?
+{{checkEligibilityToken}}
+{{contentTypeJson}}
+
+{
+  # "s":"datediff(ua.mntcFailedAt, ua.mntcCreatedAt) trainingDays, datediff(current_timestamp, ua.mntcFailedAt) graceDays, ua.status, ua.profileId, ua.mntcFailedAt uamntcFailedAt, ua.loginName, ua.mntcId, ua.emcId, ut.completedModuleCount, ut.*",
+  # "s":"profileId, emcId, mntcId, status",
+  # "s":"status, count(0)",
+  # "u":"emcId=null",
+  # "s":"datediff(current_date, ua.mntcCreatedAt) trainingDays, ua.mntcCreatedAt, ua.id, profileId, emcId, ua.mntcId, status, completedModuleCount, preLiveModuleCount, failedModuleInfo, passedModuleInfo, ut.updatedAt",
+  # "f":"userTraining ut right join userApplication ua on ut.userApplicationId = ua.id",
+  # "f":"userApplication",
+  # "w":"profileId is null and emcId is not null and status in (2,3,11)",
+  # "w":"status in (9,10,11,12,17,18,19,20,21,22,23) group by status",
+  # "w":"failedModuleInfo is not null and status in (10)",
+  # "w":"emcId in (160708,174674,124551,176477,174674,160708,124551,176477,160708,176477,174674,124551,160708,176477,174674,124551,160708,176477,174674,124551,160708,176477,174674,124551,160708,176477,174674,124551,176477,174674,160708,124551,160708,176477,174674,124551,160708,160708,176477,174674,124551,160708,176477,174674,124551,160708,124551,176477,174674,160708,124551,176477,174674,174674,160708,124551,176477,174674,160708,124551,176477,174674,160708,124551,176477,160708,174674,160708,124551,176477,174674,160708,124551,176477,160708,174674,124551,176477,124551,176477,176477,124551,176477,124551,124551,176477,124551)",
+
+  # get the profileIds statuswise
+  # "s":"datediff(current_date, mntcCreatedAt) trainingDays, id, profileId, emcId, mntcId", 
+  # "s":"status, count(1) cnt, group_concat(profileId) PUB_pids, group_concat(emcId) emcIds, group_concat(mntcId) mntcIds",
+  # "f":"userApplication",
+  # "w":"status in (10) and createdAt < current_date group by status",
+  # "w":"status in (22,23) and preLiveStartedAt >= '2024-07-20' group by status",
+
+  # "s":"datediff(initRejectAt, ua.mntcFailedAt) trainingDays, ua.status, count(1) cnt, group_concat(profileId) PUB_pids",
+  # "s":"emcId, loginName, profileId, ua.mntcId, datediff(current_timestamp, ua.mntcCreatedAt) trainingDays, ua.status, failedModuleInfo, passedModuleInfo, lastSynchedAt, completedModuleCount",
+  # "f":"userApplication ua left join userTraining ut on ut.userApplicationId = ua.id",
+  # "w":"status in (9,10,17,18,19,20) and failedModuleInfo is not null and passedModuleInfo is not null",
+  # "w":"status in (10,17,18,19,20) and completedModuleCount > 20 and lastSynchedAt < date_sub(current_date(), interval 2 day)",
+
+  # test prelive rejections
+  # "s":"datediff(current_date, preLiveStartedAt) trainingDays, status, missionModuleStatus, preLiveModuleCount, count(1) counts, group_concat(ua.emcId) emcIds, group_concat(ua.profileId) profileIds, group_concat(ua.mntcId) mntcIds",
+  # "s":"datediff(current_date, ua.mntcCreatedAt) trainingDays, status, missionModuleStatus, completedModuleCount, preLiveModuleCount, ua.emcId, ua.profileId, ua.mntcId",
+  # "f":"userApplication ua left join userTraining ut on ut.userApplicationId = ua.id",
+  # "w":"status in (21,22,23) group by trainingDays, status, missionModuleStatus, preLiveModuleCount having trainingDays >= 10",
+  # "w":"ua.mntcId in () group by trainingDays, status, missionModuleStatus, preLiveModuleCount having trainingDays >= 10",
+  # "w":"ua.mntcId in ('1824873943896162304')",
+
+  # "s":"status, count(0), group_concat(profileId) pids, group_concat(ifnull(emcId, 'na')) eids, group_concat(ifnull(mntcId, 'na')) mntcId",
+  # "w":"status in (9,10,12,14,15,16,17,18,19,20) and (completedModuleCount > 10) /*and lastSynchedAt > '2024-11-20' and lastSynchedAt < '2024-11-29'*/",
+  # "w":"status between 9 and 20 and status <> 13 and lastSynchedAt between date_sub(current_date, interval 5 day) and date_sub(current_date, interval 4 day)",
+  # "w":"status between 21 and 24 and preLiveModuleCount > 0 and lastSynchedAt > '2024-10-26' and lastSynchedAt < '2024-10-31'",
+
+  # "r":"select emcId, status from userApplication ua where status in (3,4,6,9,10,11,17,18,19,20,21,22,23,31,32,33,34) and emcId is not null order by emcId asc",
+
+  # "r":"select counter, date_format(updatedAt, '%y-%m-%d') dd, count(*) from looker where counter > 10 and createdAt > '2025-01-01' group by counter, dd",
+  # "r":"select * from looker where counter > 1 and createdAt > '2025-02-12'",
+  # "r":"delete from lookerEvents where eventAt < '2025-01-01'",
+  # "r":"select id from userApplication where profileId in (521125,522843,522847,522849,522851,522853,522855,522861,522997,523011,523937,531299,532411,532413)",
+  # "r":"select * from userApplication where loginName = 'pk147'",
+  
+  # "l": "10",
+  {{devKey}}
+}
+
+###
+POST {{hostName}}common/process?
+{{checkEligibilityToken}}
+{{contentTypeJson}}
+
+{
+  // #region remove-failedModuleInfo
+  # "u":"failedModuleInfo=null",
+  # "f":"userApplication ua left join userTraining ut on ua.id = ut.userApplicationId",
+  # "w":"ua.profileId in (518603)",
+  # "w":"ua.mntcId in ('1831737435038535680','1830850804251279360')",
+  # "w":"ua.emcId in (160708)",
+  // #endregion remove-failedModuleInfo
+   
+  // #region bulk-deactivation-check
+  # "s":"emcId, ua.id, status, profileId, ua.mntcId, ua.mntcCreatedAt, completedModuleCount, lastSynchedAt, preLiveModuleCount, failedModuleInfo, preLiveStartedAt, datediff(current_timestamp, ua.mntcCreatedAt) ot_days, datediff(current_timestamp, preLiveStartedAt) pt_days",
+  # "f":"userApplication ua left join userTraining ut on ua.id = ut.userApplicationId",
+  # "w":"ua.loginName in ('ms4607','dn572','ob360','au564','dn569','mh1341','mr1847','ks2333','eo629','tm791','el257','so746','ss8867')",
+  // #endregion bulk-deactivation-check
+
+  // #region userapps-deact-queue-entries
+  # "s":"status, profileId, ua.mntcId, failedModuleInfo, completedModuleCount",
+  # "s":"emcId, profileId,loginName,ua.id uaId,ua.status,ua.mntcId, ua.mntcCreatedAt, datediff(current_timestamp(), ua.mntcCreatedAt) ot_days,ut.mntcFailedAt,ut.completedModuleCount,ut.missionModuleStatus,ut.certAwardedAt,ut.lastSynchedAt,ut.preLiveStartedAt, datediff(current_timestamp(), ut.preLiveStartedAt) plt_days,ut.preLiveModuleCount,ut.failedModuleInfo,ut.passedModuleInfo",
+  # "f":"userApplication ua left join userTraining ut on ua.id = ut.userApplicationId",
+  # "w":"ua.profileId in (518603)",
+  # "w":"ut.userApplicationId in (598649,602643,623831,593555)",
+  // #endregion userapps-deact-queue-entries
+  
+  # "s":"datediff(current_date, ua.mntcCreatedAt) trainingDays,emcId,hrmId,ua.status,ua.mntcId, ut.*",
+  # "s":"ua.id,loginName,emcId,profileId,ua.status,ua.mntcId",
+  # "f":"userApplication ua left join userTraining ut on ua.id = ut.userApplicationId",
+  # "w":"ua.status in (9) and loginName in ('cg202','eu119','vg341','fu108','rs1021','md358','ab882','pr338','rs1024','rm528','sa1032','ns1299','ab885','rp483','sp959','as2386','sb934','an584','ma1010','bj173','za173','pp505','ss2857','pv245','ak1653','aa1165','mp438','kp333','sp1068','ms1303','dr359','ak1666','bs461','vu124','mm865','mm897','ap1008','sn503','ss3082','an593','mr561')",
+  # "w":"ua.profileId in (404963)",
+  # "w":"ua.mntcId is null and status in (6,9,10,17,18,19,20)",
+  # "w":"ua.status not in (13, -3) and completedModuleCount = 1 and ut.lastSynchedAt > '2023-10-20'",
+  # "w":"emcId = 184374",
+  # "w":"hrmId = 226414",
+  # "w":"ua.status not in (11) and initRejectAt is null and ua.mntcId in ('1697867251970572288')",
+
+  # "r":"select status, count(1) from userApplication where updatedAt > '2025-02-03' and status in (-3,13,25) group by status",
+  "r":"select status, profileId from userApplication where mntcId is null and emcId is not null and createdAt > '2025-02-01'",
+  {{devKey}}
+}
+
+
+###
+([0-9]{4}-[0-9]{2}-[0-9]{2})(T)([0-9]{2}:[0-9]{2}:[0-9]{2})(.000Z)
+replace with $1(space)$2
+###
+REJECTION_PENDING(1), REJECTION_PASSED(2), REJECTION_FAILED(3), 
+### DEV-BULK-REJECTION
+POST {{hostName}}common/process?
+{{checkEligibilityToken}}
+{{contentTypeJson}}
+
+{
+  # "s":"status, count(*)", "f":"bulkRejection","w":"1=1 group by status",
+
+  # "r":"insert into bulkRejection(userApplicationId)values(564187),(562001)",
+  # "r":"update bulkRejection set status=1 where userApplicationId=594459",
+  # "r":"update bulkRejection set status=1 where status=99 limit 10",
+  # "r":"select ua.status uastatus, br.status brstatus, count(1) from bulkRejection br inner join userApplication ua on br.userApplicationId = ua.id and br.status = 99 group by ua.status",
+  # "r":"update bulkRejection br inner join userApplication ua on br.userApplicationId = ua.id and br.status = 99 and ua.status in (10) set br.status=1 where br.status = 99",
+  # "r":"delete br from bulkRejection br inner join userApplication ua on br.userApplicationId = ua.id and br.status = 99 and ua.status in (21)",
+
+  # "s":"ua.status uaStatus, br.status brStatus, group_concat(ua.profileId) pids, count(*)",
+  # "f":"userApplication ua inner join bulkRejection br on ua.id = br.userApplicationId and br.status = 99",
+  # "w":"1 group by ua.status",
+
+  # "f":"bulkRejection","c":"userApplicationId",
+  # "i":"(542757),(543333),(543301)",
+
+  # "r":"delete from bulkRejection where userApplicationId=483599 ",
+  # "r":"select ua.status, count(0) from userApplication ua inner join bulkRejection br on ua.id = br.userApplicationId and br.status=1 group by ua.status",
+  
+  {{devKey}}
+}
+
+
+### sql deact online training deactivations
+@DAYS_FIRST_MILESTONE=7
+@MODS_FIRST_MILESTONE=2
+@DAYS_SECOND_MILESTONE=12
+@DAYS_PRELIVE=7
+POST {{hostName}}common/process?
+{{checkEligibilityToken}}
+{{contentTypeJson}}
+
+{
+  # "r":"select DATEDIFF(CURRENT_TIMESTAMP, ua.mntcCreatedAt) trainingDays, ua.*, ut.completedModuleCount, ut.mandatoryModuleCompletedAt, ut.certAwardedAt, ut.failedModuleInfo from userApplication ua inner join userTraining ut on ua.id = ut.userApplicationId where ua.status in (9,10,12,17,18,19,20) AND ut.certAwardedAt is null AND (ua.mntcCreatedAt < DATE_SUB(CURRENT_DATE, INTERVAL {{DAYS_SECOND_MILESTONE}} DAY) OR  (ua.mntcCreatedAt < DATE_SUB(CURRENT_DATE, INTERVAL {{DAYS_FIRST_MILESTONE}} DAY) AND ua.mntcCreatedAt >= DATE_SUB(CURRENT_DATE, INTERVAL {{DAYS_SECOND_MILESTONE}} DAY) AND ut.completedModuleCount < {{MODS_FIRST_MILESTONE}}) OR ut.failedModuleInfo is not null) LIMIT 55",
+
+  # "s":"ua.id, ua.emcId, ua.profileId, ua.mntcId, ua.status, ut.completedModuleCount, DATEDIFF(CURRENT_TIMESTAMP, ua.mntcCreatedAt) trainingDays, ut.certAwardedAt, ut.failedModuleInfo, ut.passedModuleInfo, ut.updatedAt",
+  # "s":"ua.status, ut.completedModuleCount, count(0), group_concat(ua.id) uaIds, group_concat(ua.emcId) emcIds, group_concat(ua.profileId) pIds, group_concat(ua.mntcId) mtIds",
+  # "f":"userApplication ua inner join userTraining ut on ua.id = ut.userApplicationId",
+  # "w":"ua.status in (9,10,12,17,18,19,20) AND ut.certAwardedAt is null AND (ua.mntcCreatedAt < date_sub(current_date, interval {{DAYS_SECOND_MILESTONE}} day) OR (ua.mntcCreatedAt < date_sub(current_date, interval {{DAYS_FIRST_MILESTONE}} day) AND ua.mntcCreatedAt >= date_sub(current_date, interval {{DAYS_SECOND_MILESTONE}} day) AND ut.completedModuleCount < {{MODS_FIRST_MILESTONE}}) OR ut.failedModuleInfo is not null)",
+  # "w":"ua.status in (9,10,12,17,18,19,20) AND ut.certAwardedAt is null AND (ua.mntcCreatedAt < date_sub(current_date, interval {{DAYS_SECOND_MILESTONE}} day) OR (ua.mntcCreatedAt < date_sub(current_date, interval {{DAYS_FIRST_MILESTONE}} day) AND ua.mntcCreatedAt >= date_sub(current_date, interval {{DAYS_SECOND_MILESTONE}} day) AND ut.completedModuleCount < {{MODS_FIRST_MILESTONE}}) OR ut.failedModuleInfo is not null) and ua.profileId in (375757) group by ua.status",
+
+  # revive failedModuleInfo wrongly assigned
+  # "s":"status, profileId, ua.id uaId, ua.mntcId, emcId, ut.failedModuleInfo, ut.passedModuleInfo",
+  # "s":"status",
+  # "u":"failedModuleInfo=null",
+  # "f":"userApplication ua left join userTraining ut on ua.id = ut.userApplicationId",
+  # "w":"emcId in (123) group by status",
+  # "w":"ua.profileId in (376061,377559)",
+
+  # "r":"select count(0) from userTraining where milestone2Reminder2 is not null",
+  # "r":"update userApplication set mntcCreatedAt='2025-02-04 19:46:30' where profileId=542103",
+  # "r":"insert into userTraining(userApplicationId, mntcId, mntcCreatedAt,mntcUid,CompletedModuleCount) select id,mntcId,mntcCreatedAt,mntcUid,0 from userApplication where profileId in (539015,501121,506675,518133) and mntcCreatedAt is not null",
+  "r":"select count(0), group_concat(profileId) pids from userApplication ua left join userTraining ut on ua.id = ut.userApplicationId where  ut.id is null and ua.createdAt > '2025-01-01' and status in (17,18,19,20,9,10) and completedModuleCount =0",
+  # "r":"select id, profileId, mntcId, mntcCreatedAt from userApplication where profileId in (543147,544263,547411) and mntcCreatedAt is null",
+  "r":"select mntcId,mntcCreatedAt from userApplication where profileId in (539013,539015,501121,506675,518133,519877,527089,527693,527709,527817,502255,527851,527865,527899,528065,530033,539835,540907,540919,541363,541433,541485,527673,541065,541551,541443,497229,541677,541681,541683,541749,541753,529369,541777,542071,542291,542315,546049,549881,551313,554423,561145,490089,494275,494551,495745,496187,496689,496693,498535,501139,521845,527713,527787,518817,527857,527889,527891,528039,528047,528335,528357,528417,530021,530023,530037,530045,535357,535365,538693,539467,539477,539525,539529,539533,501195,539747,539789,539809,539811,539819,539817,539831,539865,539867,539913,539935,541317,541409,541481,541497,541501,540651,541503,537857,513627,541567,541571,541575,541587,541577,541631,541673,541691,541709,541711,541731,541619,534133,541743,541747,499721,541761,541763,541771,541757,541779,541819,541821,541825,534139,540391,541931,542019,541435,542123,542185,542189,542279,543131,543147,544263,547411)",
+  # "select "
+
+  {{devKey}}
+}
+
+
+### sql deact prelive training deactivations
+POST {{hostName}}common/process?
+{{checkEligibilityToken}}
+{{contentTypeJson}}
+
+{
+  # "s":"DATEDIFF(CURRENT_TIMESTAMP, ut.preLiveStartedAt) trainingDays, status, ua.id uaId, emcId, profileId, ua.mntcId, ut.missionModuleCompletedAt, ut.missionModuleStatus, ut.missionModuleScore, ut.preLiveStartedAt, ut.preLivecompletedAt, ut.preLiveModuleCount",
+  "s":"status, preLiveModuleCount, count(0)",
+  "f":"userApplication ua inner join userTraining ut on ua.id = ut.userApplicationId",
+  "w":"ua.status in (21,22,23) AND ut.preLiveStartedAt < date_sub(current_date, interval 7 day) AND ut.preLiveCompletedAt IS NULL /*and preLiveModuleCount > 10*/",
+  # "w":"ua.status in (21,22,23) AND ut.preLiveStartedAt < date_sub(current_date, interval 7 day) AND ut.preLiveCompletedAt IS NULL group by status, preLiveModuleCount with rollup",
+  {{devKey}}
+}
+
+
+### prisma-fix
+POST {{hostName}}common/process?
+{{checkEligibilityToken}}
+{{contentTypeJson}}
+
+{
+  # "r":"select DATEDIFF(CURRENT_TIMESTAMP, ut.preLiveStartedAt) trainingDays, ua.*, ut.missionModuleCompletedAt, ut.missionModuleStatus, ut.missionModuleScore, ut.preLiveStartedAt, ut.preLiveModuleCount from userApplication ua inner join userTraining ut on ua.id = ut.userApplicationId where ua.status in (21,22,23) AND ut.preLiveStartedAt < date_sub(current_date, interval 9 day) AND ut.preLiveCompletedAt IS NULL",
+  # "r":"ML;CREATE INDEX userApplication_profileId_IDX ON drpt_db.userApplication (profileId);",
+  # "r":"select * from _prisma_migrations order by started_at desc limit 2",
+  # "r":"update _prisma_migrations set finished_at = '2024-11-22 15:45:21', logs = null, applied_steps_count = '1' where id = '8a6e22da-3052-4b95-a093-8bb70888c9c8'",
+  {{devKey}}
+}
+
+###
+###
+POST {{hostName}}user-application/update-profileId
+{{contentTypeJson}}
+
+{
+  "profileId": 6,
+  "hrmId": 113382,
+  "contractStartDate": "2023-05-26 00:00:00",
+  "status": 33
+}
+
+
+###
+{{hostName}}user-application/cron-dev-bulk-rejection?{{dev}}
+  &limit=100
+  # &status=1
+  &waitMs=400
+  # &checkStatus=false
+  &reason=Training Failed
+  # &templateName=drpt_training_failed_acc_blocked
+###
+setInterval(()=>fetch('https://dreamport-api.asaptickets.com/api/user-application/cron-dev-bulk-rejection?dev=1&limit=100&waitMs=200').then(r => r.text()).then(console.log),22*1000)
+###
+{{hostName}}user-application/retry-rejection?{{dev}}
+  &limit=20
+
+###
+{{hostName}}user-application/reject-dev
+  ?{{dev}}
+  &profileIds=477449
+  # &hrmIds=222508,222612
+  # &emcIds=152759
+

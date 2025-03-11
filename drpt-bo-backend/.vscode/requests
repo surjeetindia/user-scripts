@@ -1,0 +1,947 @@
+@authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMDg0NzgiLCJ1c2VyTmFtZSI6IkFua2l0IEJhbnNhbCIsInNlc3Npb25LZXkiOiJhNWVmZjgxNWRhNTQ4NDJkYjMwN2MwYmZlZjVjODZiZiIsInJvbGVzIjpbInBsYXRmb3JtX2FkbWluIiwiYXBwbGljYW50X2FkbWluIiwibG9naW4iXSwiaWF0IjoxNjg3ODQ4OTA3LCJleHAiOjE2ODc4NzA1MDd9.b4-dLTQQTdwd-srTZ4ykSo7TY6UfPD8G7XYaATVjq0k
+# @auth = {{authType}} {{authorizeToken.request.headers.Header Name, *(Full Body), JSONPath or XPath}}
+@gid = 3{{$localDatetime 'MMDDHHmm'}}
+# unique for all
+@gidPhone = 3{{$localDatetime 'DDHHmmss'}}
+# gid for phone
+@randInt = {{$randomInt 111 999}}
+{{gidPhone}}
+{{
+  const random = new Date();
+  exports.randomized = random;
+  console.log(random);
+}}
+###
+GET https://httpbin.org/json
+###
+{{randomized}}
+###
+
+# LOGIN
+# === === === ===
+### getloginpage
+{{hostName}}emc/getloginpage
+
+###
+# @name authorizeToken
+{{hostName}}emc/authorizeToken
+  ?token=470fd0021217587a4042cf7f198ac171
+
+
+###
+# @authToken := {{authorizeToken.response.body.data.authData.accessToken}}
+@authType = authorization: Bearer
+@auth = {{authType}} {{authToken}}
+
+###
+{{hostName}}emc/doAuth
+{{auth}}
+
+###
+{{hostName}}emc/logout
+
+###
+{{hostName}}emc/search-user
+  ?search='emcId=72216'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+# PROFILE APIs
+###
+{{hostName}}profile/ping-sap
+
+### getprofiles
+POST {{hostName}}profile/get-profiles
+{{auth}}
+{{contentJson}}
+
+{
+  # "positionId": 2,
+  # "firstName": "test",
+  # "lastName": ""
+  # "cityId": 11,
+  # "countryId": 110,
+  # "statusIds": [4],
+  # "dateFrom": "2023-05-25",
+  # "dateTo": "2023-05-26 23:59:59",
+  "page": 1,
+  "limit": 10
+  # orderBy: "firstName"
+}
+
+
+###
+{{hostName}}profile/rem-profile-cache
+  ?profileId=5
+
+### oneprofile
+{{hostName}}profile/get-profile
+  ?profileId=2
+  # &fresh=true
+
+### proevents
+POST {{hostName}}profile/get-profile-events
+  ?fresh=true
+{{contentJson}}
+
+{
+  "profileId": 3
+  # "dateFrom": "2023-01-01",
+  # "dateTo": "2023-05-01"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+### update profile
+PUT {{hostName}}profile/
+{{contentJson}}
+{{auth}}
+
+{
+  "profileId": 2,
+  "key": "advertiserId",
+  "value": "2",
+  "metaData": {
+    "id": 2
+  }
+}
+
+###
+PUT {{hostName}}profile/
+{{contentJson}}
+{{auth}}
+
+{
+  "profileId": 5,
+  "key": "email",
+  "value": "surjeettest2@gmail.com",
+  "metaData": {
+    "id": 5
+  }
+}
+
+###
+PUT {{hostName}}profile/
+{{contentJson}}
+{{auth}}
+
+{
+  "profileId": 2,
+  "key": "primaryPhone",
+  "value": "919876543210",
+  "metaData": {
+    "id": 2
+  }
+}
+
+###
+PUT {{hostName}}profile/
+{{contentJson}}
+{{auth}}
+
+{
+  "profileId": 2,
+  "key": "skills",
+  "value": "2,3,4"
+}
+
+### update profile
+PUT {{hostName}}profile/
+{{contentJson}}
+{{auth}}
+
+{
+  "profileId": 2,
+  "key": "firstName",
+  "value": "SURJEET PRAKASH VERMA"
+}
+
+### update profile advertiser
+PUT {{hostName}}profile/
+{{contentJson}}
+{{auth}}
+
+{
+  "profileId": 2,
+  "key": "residencyCountry",
+  "value": "110"
+}
+
+### update user position
+PUT {{hostName}}profile/
+{{contentJson}}
+{{auth}}
+
+{
+  "profileId": 2,
+  "key": "description",
+  "value": "spv testing {{$guid}}"
+}
+
+### update user position
+PUT {{hostName}}profile/
+{{contentJson}}
+{{auth}}
+
+{
+  "profileId": 2,
+  "key": "position",
+  "value": "1",
+  "metaData": {
+    "id": 2
+  }
+}
+
+###
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}profile/is-applicant
+  ?emailUid=XHJJZ4JKGVU
+  &phoneUid=TQPGMQCL1OI
+
+
+###
+{{hostName}}profile/check-profile-existance?
+  &emailUid=3THAF288BIF
+  # &phoneUid=C8DQWEY7CH7
+  # &email=gffgs@gmail.com
+  # &email=surjeet.verma@dyninno.in
+  # &phone=916757575757
+  # &firstName=abc
+  # &lastName=deg
+  # &dob=2011-01-01
+  # &check=all
+
+###
+{{hostName}}profile/is-employee-hrm?
+  # &emailUid=9L5LDW9MXR3
+  # &email=a.bansal@dyninno.in
+  &email=surjeet.verma@dyninno.in
+
+###
+{{hostName}}profile/is-employee-sap?
+  &email=ankita.choubey@dyninno.in
+  # &email=EJR8KRQMD1W
+
+###
+{{hostName}}profile/is-employee-anywhere?
+  &emailUid=AQJ73420IN3
+
+
+
+
+
+###
+# BLACKLIST
+### on dreamport
+{{hostName}}profile/is-blacklisted?
+  &emailUid=3THAF288BIF
+  &phoneUid=SL2QGZ3M4MM
+  # &email=gffgs@gmail.com
+  # &email=surjeet.verma@dyninno.in
+  # &phone=916757575757
+  # &firstName=abc
+  # &lastName=deg
+  # &dob=2011-01-01
+
+### on hrm
+
+{{hostName}}profile/is-blacklisted-hrm?
+  &emailUid=9L5LDW9MXR3
+  &phoneUid=E1W4X4MQPYM
+
+### on sap
+{{hostName}}profile/is-blacklisted-sap?
+  &emailUid=L8YVMNY8F9B
+  &phoneUid=E1W4X4MQPYM
+  # &firstName=firstName302241727357
+  # &lastName=v
+
+
+
+
+
+###
+{{hostName}}profile/pre-reg-check?
+  &email=credentialtest@yopmail.com
+  &phone=917382739827
+  # &email=surjeet313123146@yopmail.com
+  # &phone=919313114713
+  # &emailUid=2YGMWNCSWSJ
+  # &phoneUid=X0QJ49B81Q5
+
+###
+{{hostName}}profile/check-existance?
+  # applicant: hrm
+  # &email=freelancer1@gmail.com
+  # &email=surjeet313114713@yopmail.com
+  # &phone=919313114713
+  # &emailUid=HN800914D8S
+  # &emailUid=TPAGTYMKVPC
+  &check=employee
+  &emailUid=UFLLKVDZT8W
+  &phoneUid=X0QJ49B81Q5
+Authorization: Bearer dXNlcm5hbWU6c2FwI3Bhc3N3b3JkOnF3ZXJ0eQ==
+
+###
+{{hostName}}profile/check-eligibility?
+# {{hostName}}profile/check-existance?
+  &email=sdafgadsg@gmail.com
+  &phone=+919823432534
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+POST {{hostName}}profile/init-reject
+{{contentJson}}
+
+{
+  "profileId": 12,
+  # "rejectReasonId": 94,
+  "comment": "spv test some comment goes here"
+}
+
+
+
+### masters
+# @crudtab = experience
+# @crudtab = education
+# @crudtab = language
+@crudtab = skill
+@crudtab = reject-reason
+
+### Sync from HRM
+# @name syncFromHrm
+{{hostName}}{{crudtab}}/sync-from-hrm
+
+
+### list all
+{{hostName}}{{crudtab}}?stageId=0
+
+
+
+### get one
+{{hostName}}{{crudtab}}
+
+### create/update
+POST {{hostName}}{{crudtab}}
+{{contentJson}}
+
+{
+  # "id": 661,
+  "name": "{{crudtab}}",
+  "status":1
+}
+
+### create/update language
+POST {{hostName}}{{crudtab}}
+{{contentJson}}
+
+{
+  # "id": 661,
+  "name": "{{crudtab}}",
+  "iso": "iso",
+  "code": "code",
+  "status":1
+}
+
+
+### create/update
+POST {{hostName}}reject-reason
+{{contentJson}}
+
+{
+  "id": 100,
+  "name": "{{crudtab}}1",
+  "status":1,
+  "stages":[1,3]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Util
+###
+{{hostName}}util/keys-cache?pattern=DreamPort:*
+###
+{{hostName}}util/get-cache?key=DreamPort:APP:user_status
+###
+{{hostName}}util/del-cache?key=DreamPort:APP:user_status
+###
+{{hostName}}util/get-cache?key=DreamPort:CCS:emailCFO22S1XSEL
+###
+{{hostName}}util/get-cache?key=DreamPort:CCS:phone916757575757
+###
+{{hostName}}util/del-cache?key=DreamPort:CCS:phone916757575757
+###
+{{hostName}}util/env
+###
+{{hostName}}util/env
+###
+# @name truncateTableBeforeSync
+{{hostName}}util/dev
+  # ?q=select * from skill
+  # ?q=truncate {{crudtab}}
+  ?q=ALTER1 TABLE {{crudtab}} AUTO_INCREMENT=1;
+
+###
+{{hostName}}util/dev
+  ?q=select * from setting
+
+
+###
+{{hostName}}util/debug?
+  # &a=s
+  &w=debug
+###
+{{hostName}}util/debug
+
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}setting?
+  # &key=REGISTER
+  # &categoryId=1
+{{auth}}
+###
+{{hostName}}registration
+{{auth}}
+###
+{{hostName}}assessment
+{{auth}}
+###
+{{hostName}}assessment/tag
+{{auth}}
+###
+{{hostName}}assessment/survey
+{{auth}}
+###
+{{hostName}}training
+{{auth}}
+
+
+
+
+
+
+
+
+
+
+###
+###
+POST https://dreamport-bo-api.dev-travel.com/api/jsonService.php
+  ?serviceName=drpt
+  &functionName=test
+  &credentials={"project":"SAP","login":"sap111","passwd":"qwerty"}
+  &params={"credentials":"saplogintoken"}
+
+
+###
+POST https://dreamport-bo-api.dev-travel.com/api/jsonService.php
+  ?serviceName=drpt
+  &functionName=getDocuments
+{{contentJson}}
+
+{
+  "params":{"credentials":"saplogintoken"}
+}
+
+
+###
+"http://geo-services.stage-travel.com/jsonService?mantis_id=0&credentials=%7B%22project%22%3A%22DRPT%22%2C%20%22tempToken%22%3A%228HZc3DE4eXbR7wdbFD190wA0LRUGqL%403kkW1N3TUfGyOOwsHmtb%40%4047eCpEBqAEQ%22%7D&serviceName=default&serviceName=city&functionName=&functionName=getCityById&params={"id":"118366"}
+
+
+
+
+###
+{{hostName}}profile/get-status-list
+###
+{{hostName}}profile/get-status?term=ASSESSMENT_PENDING
+###
+{{hostName}}profile/get-status
+  ?term=11
+  # &recache=true
+
+
+###
+{{hostName}}profile/get-fe-status-list
+###
+{{hostName}}profile/get-fe-status
+###
+{{hostName}}profile/get-fe-status?term=REJECTED
+###
+{{hostName}}profile/get-fe-status?term=31
+
+
+
+
+###
+{{hostName}}profile/suggest-fname?term=sur
+###
+{{hostName}}profile/suggest-lname?term=verm
+###
+{{hostName}}profile/suggest-advertiser?term=fac
+
+
+
+
+
+
+
+
+
+
+
+### createprofile
+{{gidPhone}}
+###
+@uid = 319171854
+POST {{hostName}}profile/create-profile
+# {{auth}}
+{{contentJson}}
+
+{
+  "originId": 2,
+  "firstName": "Surjeet{{uid}}",
+  "lastName": "Verma",
+  # "firstName": "Test",
+  # "lastName": "User",
+  "positionId": 1,
+  "educationLevelId": 1,
+  "experienceLevelId": 2,
+  "emails": [{ "uid": "IMI09D9JIPP" }],
+  "phones": [{ "uid": "QINY0K59IEP" }],
+  # "emails": [{ "name": "a.bansal@dyninno.in", "typeId": 1 }],
+  # "emails": [{ "name": "surjeet{{uid}}@yopmail.com" }],
+  # "phones": [{ "name": "+91 9{{uid}}" }],
+  "addresses": [
+    {
+      "address": "Delhi, India",
+      "cityId": 119889,
+      "countryId": 105,
+      "cityName": "Delhi",
+      "countryName": "India"
+      # "iso2": "in"
+    }
+  ],
+  "skills": [1, 2],
+  "languages": [
+    { "languageId": 3, "languageLevelId": 1 },
+    { "languageId": 5, "languageLevelId": 1 }
+  ]
+}
+
+# surjeet302241724706@drpt.com B809U15H8OU
+# 919811437993 E1W4X4MQPYM
+
+###
+POST {{hostName}}profile/create-profile
+# {{auth}}
+{{contentJson}}
+
+{
+  "statusId": 11,
+  "firstName": "firstName{{gid}}{{randInt}}",
+  # "middleName?": "",
+  "lastName": "lastName{{gid}}{{randInt}}",
+  # "gender"?: string;
+  # "dob"?: Date;
+  # "birthPlace"?: string,
+  # "maritalStatus"?: number,
+  "educationLevelId": 1,
+  "experienceLevelId": 1,
+  "positionId": 1,
+  "originId": 1,
+  # "emcId"?: number,
+  # "mntcId"?: number,
+  # "mntcSeriesName"?: string,
+  # "mntcStartedAt"?: Date,
+  # "mntcCompletedAt"?: Date,
+  # "cancelledAt"?: Date,
+  # "cancelReasonid"?: number,
+  # "cancelComment"?: string,
+  # "createdAt": Date,
+  # "updatedAt": Date,
+  "advertiser": "twitter",
+  # "description"?: string,
+  # "photo"?: string,
+  # "verifiedAt"?: Date,
+  # "verifyToken"?: string,
+
+  "phones": [
+    {
+      # "isPrimary"?: false,
+      # "isEmergency"?: false,
+      # "category"?:2,
+      //category: EMAIL | MOBILE | FAX
+      "uid":"+919{{gidPhone}}",
+      "typeId":1
+      //typeId: Work | Home
+    }
+  ],
+  "emails": [
+    {
+      # "isPrimary"?: false,
+      # "isEmergency"?: false,
+      # "category"?:1,
+      # // category: EMAIL | MOBILE | FAX
+      "uid":"surjeet{{gid}}{{randInt}}@drpt.com",
+      "typeId":1
+      # // typeId: Work | Home
+    }
+  ],
+  "addresses": [
+    {
+      "typeId": 1,
+      # //typeId: Work | Home
+      "address": "address{{gid}}{{randInt}}",
+      "cityId": 1,
+      "cityName": "cityName",
+      "countryId": 1,
+      "countryName": "countryName"
+      # "isPrimary": false
+    }
+  ],
+  "skills": [1,2,3],
+  "languages": [
+    { "languageId": 1, "languageLevelId": 1 },
+    { "languageId": 3, "languageLevelId": 2 },
+    { "languageId": 5, "languageLevelId": 3 }
+  ]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+@filePathPhoto = /home/spv/Pictures/
+@fileNamePhoto = trashTestImage.png
+POST {{hostName}}user-application/profile/upload-photo
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="profilePhoto"; filename="{{fileNamePhoto}}"
+Content-Type: image/png
+
+< {{filePathPhoto}}{{fileNamePhoto}}
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="profileId"
+
+1
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+POST {{hostName}}user-application/profile/reset-photo
+{{contentJson}}
+
+{
+  "profileId":2
+}
+
+###
+{{hostName}}profile/mark-photo-private
+  ?profileId=11&status=false
+
+###
+POST {{hostName}}profile/mark-blacklist
+{{contentJson}}
+
+{
+  "profileId":12,
+  "status":true,
+  "comment":"comment goes here"
+}
+
+
+
+
+
+
+###
+@filePathAsset = /home/spv/Pictures/
+@fileNameAsset = trashTestImage.png
+POST {{hostName}}common/upload-asset
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="asset"; filename="{{fileNameAsset}}"
+Content-Type: image/png
+
+< {{filePathAsset}}{{fileNameAsset}}
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="dynamicName"
+
+false
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="s3"
+
+false
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}profile/reveal-email
+  ?emailUid=2YGMWNCSWSJ
+  &profileId=12
+
+###
+{{hostName}}profile/reveal-phone
+  ?phoneUid=3PWCLSR0IJ5
+  &profileId=10
+
+###
+{{hostName}}profile/suggest-fname
+  ?term=rstn
+
+###
+{{hostName}}profile/suggest-lname
+  ?term=stn
+
+
+###
+{{hostName}}profile/positions
+
+###
+{{hostName}}profile/get-position-history?profileId=2&incFormerApps1=true
+
+###
+{{hostName}}profile/get-locations
+
+
+
+
+###
+{{hostName}}profile/advertiser
+###
+{{hostName}}profile/advertiser?name=e
+
+
+
+
+###
+{{hostName}}profile/searchProfileById?term=3
+
+###
+{{hostName}}profile/searchProfileByEmailUid?term=
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}geo/city/IN,del
+###
+{{hostName}}geo/city-by-id/111
+###
+{{hostName}}geo/country-by-id/103
+
+###
+{{hostName}}geo/search/city/del
+
+###
+{{hostName}}geo/countries
+
+###
+{{hostName}}geo/whiltelisted-countries
+
+###
+{{hostName}}geo/allowed-countries
+{{auth}}
+
+
+###
+
+
+
+
+
+
+
+
+
+### CCS
+{{hostName}}ccs/save-email
+  # ?email=surjeet{{uid}}@yopmail.com
+  ?email=credentialtest@yopmail.com
+###
+{{hostName}}ccs/save-phone
+  ?phone=917382739827
+###
+{{hostName}}ccs/get-email
+  ?email=4PIXHYO02JB
+###
+{{hostName}}ccs/get-phone
+  ?phone=NHS76OKQSKO
+###
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+{{hostName}}reminder
+
+
+###
+{{hostName}}reminder/status
+
+
+###
+POST {{hostName}}reminder
+{{contentTypeJson}}
+
+{
+  # "id":18,
+  "name":"Reminder Notification test",
+  "status":0,
+  "statusIds":"Assessment Pending",
+  "frequency":3,
+  "template":"Assessment Reminder"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+### es
+###
+{{hostName}}es/get
+###
+{{hostName}}es/get-by-id
+###
+{{hostName}}es/sync

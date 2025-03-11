@@ -1,0 +1,60 @@
+{
+  "rest-client.environmentVariables": {
+    "$shared": {
+      "version": "v1",
+      "createdAt": "{{$datetime iso8601}}",
+      "modifiedBy": "{{$processEnv USERNAME}}",
+      "authType": "Authorization: Bearer",
+      "checkEligibilityToken": "Authorization: Bearer dXNlcm5hbWU6c2FwI3Bhc3N3b3JkOmRyZWFtcG9ydA=="
+    },
+    "local": {
+      "hostName": "https://dreamport-bo-api.dev-travel.com/api/"
+    },
+    "stage": {
+      "hostName": "https://dreamport-bo-api.stage-travel.com/api/"
+    },
+    "prod": {
+      "hostName": "https://dreamport-bo-api.asaptickets.com/api/",
+      "checkEligibilityToken": "Authorization: Bearer dXNlcm5hbWU6c2FwI3Bhc3N3b3JkOmRyZWFtcG9ydA=="
+    }
+  },
+  "httpyac.environmentVariables": {
+    ".": {
+      "hostName": "https://dreamport-bo-api.dev-travel.com/api/",
+      "envName": "dev"
+    },
+    "rev": {
+      "hostName": "https://dreamport-bo-api-3683-release-2-updates-112.do.stage-travel.com/api/",
+      "envName": "stage"
+    },
+    "stg": {
+      "hostName": "https://dreamport-bo-api.stage-travel.com/api/",
+      "envName": "stage"
+    },
+    "prod": {
+      "hostName": "https://dreamport-bo-api.asaptickets.com/api/",
+      "envName": "prod"
+    }
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#d161c1",
+    "activityBar.background": "#d161c1",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#c5d46b",
+    "activityBarBadge.foreground": "#15202b",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#d161c1",
+    "statusBar.background": "#c639b2",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#d161c1",
+    "statusBarItem.remoteBackground": "#c639b2",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#c639b2",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#c639b299",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#c639b2",
+  "postman.settings.dotenv-detection-notification-visibility": false
+}

@@ -1,0 +1,113 @@
+#!/bin/bash
+docker-compose up -d mnta-backend
+
+git bp 'feat-DRPT-4284-users-data-update'
+git branch -m 'feat-DRPT-4284-users-profile-fields-in-logs'
+git push origin :feat-DRPT-4284-users-data-update
+git push origin HEAD
+git cp 'feat: DRPT-4284 users-profile-fields-in-logs'
+
+docker exec mnta-backend sh -c "/home/app/bin/app syncData series"
+docker exec mnta-backend sh -c "/home/app/bin/app syncData module"
+docker exec mnta-backend sh -c "/home/app/bin/app syncData seriesmodule"
+docker exec mnta-backend sh -c "/home/app/bin/app syncData user"
+docker exec mnta-backend sh -c "/home/app/bin/app syncData usergroup"
+docker exec mnta-backend sh -c "/home/app/bin/app syncData certificate"
+docker exec mnta-backend sh -c "/home/app/bin/app syncData performance"
+docker exec mnta-backend sh -c "/home/app/bin/app syncData usercertificate"
+
+
+
+
+===========================================
+===========================================
+nvm use 16
+pipeline-manager authenticate travel
+
+===========================================
+pipeline-manager access-desc dataset | grep drpt
+
+===========================================
+pipeline-manager dataset-desc mnta_module
+# pipeline-manager dataset-desc mnta_user_status_log
+# pipeline-manager dataset-desc mnta_certificate
+# pipeline-manager dataset-desc mnta_performance
+# pipeline-manager dataset-desc mnta_performance_log
+# pipeline-manager dataset-desc mnta_user_series
+# pipeline-manager dataset-desc mnta_user
+pipeline-manager dataset-desc drpt_live_training
+pipeline-manager dataset-desc drpt_contract
+pipeline-manager dataset-desc drpt_user_language
+
+
+===========================================
+pipeline-manager dataset-sample mnta_test sys_import_date
+
+# pipeline-manager dataset-sample mnta_series sys_import_date
+pipeline-manager dataset-sample mnta_module sys_import_date
+# pipeline-manager dataset-sample mnta_series_module sys_import_date
+# pipeline-manager dataset-sample mnta_group sys_import_date
+# pipeline-manager dataset-sample mnta_user_group sys_import_date
+# pipeline-manager dataset-sample mnta_user_series sys_import_date
+# pipeline-manager dataset-sample mnta_certificate sys_import_date
+# pipeline-manager dataset-sample mnta_performance sys_import_date
+# pipeline-manager dataset-sample mnta_performance_log created_at
+# pipeline-manager dataset-sample mnta_user sys_import_date
+# pipeline-manager dataset-sample mnta_user_status_log sys_import_date
+pipeline-manager dataset-sample drpt_live_training sys_import_date
+pipeline-manager dataset-sample drpt_contract sys_import_date
+
+
+===========================================
+pipeline-manager import-errors mnta_series -d 2024-10-08
+pipeline-manager import-errors drpt_live_training -d 2025-02-28
+
+
+===========================================
+pipeline-manager import-errors drpt_live_training -d 2025-03-06
+pipeline-manager import-file-sample retry-manifest/dataset=drpt_live_training/year=2025/month=03/day=06/hour=03/drpt_live_training-2025-03-06-03-18-12-1c623413-4117-4d8b-87ed-b17416291c36.manifest
+
+===========================================
+# redshift status
+pipeline-manager pipeline-status
+pipeline-manager pipeline-status --details
+===========================================
+
+pipeline-manager dataset-stats -d drpt_live_training
+pipeline-manager dataset-stats received 1d --datasets drpt_contract
+
+pipeline-manager import-file-sample 'retry-manifest/dataset=drpt_events/year=2024/month=10/day=19/hour=01/drpt_events-2024-10-19-01-50-52-d9ebfbf9-d385-47f0-974d-78b0a04108cc.manifest'
+# pipeline-manager import-file-trash processed-invalid/anal.travel.test_table_1/2020/6/4/85cceb41-7bbb-4035-b3b2-eee3c69a6e24.b0.gzip
+# pipeline-manager import-file-trash retry-manifest/dataset=mnta_user_group/year=2024/month=09/day=12/hour=11/mnta_user_group-2024-09-12-11-06-00-2ba6adf2-34de-46df-b9ae-14f2dd7fa2b4.manifest
+
+
+===========================================
+# XXXXXX REMOVE datasets
+# pipeline-manager dataset-remove mnta_series
+# pipeline-manager dataset-remove drpt_live_training
+
+===========================================
+# XXXX CREATE datasets
+# pipeline-manager dataset-create documents/looker/mnta_certificate.json
+pipeline-manager dataset-create ../drpt-backend-v2/documents/looker/drpt_live_training.json
+
+===========================================
+# adding column
+# pipeline-manager dataset-column-add mnta_performance_log added_on "timestamp"
+# pipeline-manager dataset-column-add mnta_performance_log result "VARCHAR(50)"
+pipeline-manager dataset-column-add drpt_user_info preferred_language "VARCHAR(2)"
+
+===========================================
+# updating columns
+pipeline-manager dataset-column-change drpt_live_training module_name "VARCHAR(250)"
+# pipeline-manager dataset-column-change drpt_live_training module_name "NUMERIC(4,2)"
+# pipeline-manager dataset-column-change drpt_live_training user_application_id "INTEGER"
+pipeline-manager dataset-desc drpt_live_training
+
+
+
+make migrate MIGRATION_NAME=perf-logs-result
+
+make .migrate MIGRATE_ARGS=version
+make .migrate MIGRATE_ARGS=down 1
+make .migrate MIGRATE_ARGS=up

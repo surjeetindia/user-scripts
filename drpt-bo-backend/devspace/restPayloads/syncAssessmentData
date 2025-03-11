@@ -1,0 +1,63 @@
+{
+  "id": 56,
+  "userApplicationId": 3110,
+  "vendorAssessmentId": 801910,
+  "vendorRequestId": 7183161,
+  "hash": "84b4d9b0-70a4-46de-869a-d1c1177ae7fd",
+  "maxScore": 100,
+  "score": 25,
+  "result": 1,
+  "status": 2,
+  "createdAt": "2024-02-21T14:13:07.000Z",
+  "updatedAt": "2024-02-21T14:16:39.000Z",
+  "assessmentTagScore": [
+    {
+      "id": 21,
+      "assessmentId": 56,
+      "tagId": 807374,
+      "score": 12,
+      "createdAt": "2024-02-21T14:16:39.000Z",
+      "updatedAt": "2024-02-21T14:16:39.000Z",
+      "tag": {
+        "id": 807374,
+        "vendorAssessmentId": 823346,
+        "name": "B2C telesales",
+        "status": 1,
+        "createdAt": "2024-02-21T06:37:33.000Z",
+        "updatedAt": "2024-02-21T06:37:33.000Z"
+      }
+    },
+    {
+      "id": 19,
+      "assessmentId": 56,
+      "tagId": 936597,
+      "score": 20,
+      "createdAt": "2024-02-21T14:16:39.000Z",
+      "updatedAt": "2024-02-21T14:16:39.000Z",
+      "tag": {
+        "id": 936597,
+        "vendorAssessmentId": 801910,
+        "name": "English (intermediate/B1)",
+        "status": 1,
+        "createdAt": "2024-02-21T08:16:45.000Z",
+        "updatedAt": "2024-02-21T08:16:45.000Z"
+      }
+    },
+    {
+      "id": 20,
+      "assessmentId": 56,
+      "tagId": 1325346,
+      "score": 43,
+      "createdAt": "2024-02-21T14:16:39.000Z",
+      "updatedAt": "2024-02-21T14:16:39.000Z",
+      "tag": {
+        "id": 1325346,
+        "vendorAssessmentId": 823346,
+        "name": "Negotiation",
+        "status": 1,
+        "createdAt": "2024-02-21T06:37:33.000Z",
+        "updatedAt": "2024-02-21T06:37:33.000Z"
+      }
+    }
+  ]
+}

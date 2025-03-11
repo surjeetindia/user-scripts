@@ -1,0 +1,82 @@
+[
+  {
+    "id": 2,
+    "categoryId": 5,
+    "key": "RULES",
+    "value": "{\"dos\":[\"Be on time\",\"Be polite\",\"Consider timezone\",\"Regular follow-up\",\"Leave voicemails\",\"Speak Speak positive\",\"Listen carefully\",\"Follow your promises\",\"Provide best service\",\"Look for best solution\"],\"donts\":[\"Be on time\",\"Be polite\",\"Consider timezone\",\"Regular follow-up\",\"Leave voicemails\",\"Speak positive\",\"Listen carefully\",\"Follow your promises\",\"Provide best service\",\"Look for best solution\"]}",
+    "type": "json",
+    "status": 1,
+    "createdAt": "2022-09-30T12:53:40.000Z",
+    "updatedAt": "2022-09-30T12:53:40.000Z"
+  },
+  {
+    "id": 4,
+    "categoryId": 1,
+    "key": "REGISTER",
+    "value": "{\"regLinkExpiry\":\"24\",\"maxAttemptCount\":\"10\",\"countries\":[19,65,105,140,165,179,236],\"countriesErr\":false,\"regLinkExpiryErr\":false}",
+    "type": "json",
+    "status": 1,
+    "createdAt": "2022-09-30T12:57:02.000Z",
+    "updatedAt": "2022-09-30T12:57:02.000Z"
+  },
+  {
+    "id": 6,
+    "categoryId": 2,
+    "key": "ASSESSMENT",
+    "value": "{\"assessmentIds\":[null,null],\"assessmentIdError\":false,\"minPassPercent\":40,\"minPassPercentErr\":false, \"userAttemptDayGap\": 90}",
+    "type": "json",
+    "status": 1,
+    "createdAt": "2022-09-30T12:58:03.000Z",
+    "updatedAt": "2022-09-30T12:58:03.000Z"
+  },
+  {
+    "id": 8,
+    "categoryId": 3,
+    "key": "TRAINING",
+    "value": "{\"waitingDays\":\"14\",\"seriesDuration\":20,\"minAvgPercent\":60,\"timeForRestrictedModules\":\"15\",\"timeRestrictedModules\":\"1636018608874019812,1635957078405747906\"}",
+    "type": "json",
+    "status": 1,
+    "createdAt": "2022-09-30T12:58:59.000Z",
+    "updatedAt": "2022-09-30T12:58:59.000Z"
+  },
+  {
+    "id": 10,
+    "categoryId": 7,
+    "key": "EXCEPMSG",
+    "value": "[{\"key\":\"REGISTER.INVALID_FNAME\",\"value\":\"Invalid first Name\"},{\"key\":\"ASSESSMENT.INELIGIBLE\",\"value\":\"You are not eligible to take the test\"}]",
+    "type": "json",
+    "status": 1,
+    "createdAt": "2022-09-30T12:59:57.000Z",
+    "updatedAt": "2022-09-30T12:59:57.000Z"
+  },
+  {
+    "id": 12,
+    "categoryId": 4,
+    "key": "LINKS",
+    "value": "[{\"name\":\"CMS\",\"link\":\"https://www.google.co.in/\"},{\"name\":\"Calendar\",\"link\":\"https://www.google.co.in/\"},{\"name\":\"Invoicing\",\"link\":\"https://www.google.co.in/\"},{\"name\":\"Gamification\",\"link\":\"https://www.google.co.in/\"},{\"name\":\"Performance\",\"link\":\"https://www.google.co.in/\"}]",
+    "type": "json",
+    "status": 1,
+    "createdAt": "2022-09-30T13:03:19.000Z",
+    "updatedAt": "2022-09-30T13:03:19.000Z"
+  },
+  {
+    "id": 14,
+    "categoryId": 6,
+    "key": "DOCS",
+    "value": "[{\"name\":\"GBO manual\",\"link\":\"https://www.google.co.in/\"},{\"name\":\"DynaCraft manual\",\"link\":\"https://www.google.co.in/\"},{\"name\":\"GDS manual\",\"link\":\"https://www.google.co.in/\"},{\"name\":\"ProQuote manual\",\"link\":\"https://www.google.co.in/\"},{\"name\":\"DreamPort manual\",\"link\":\"https://www.google.co.in/\"}]",
+    "type": "json",
+    "status": 1,
+    "createdAt": "2022-10-04T01:33:03.000Z",
+    "updatedAt": "2022-10-04T01:33:03.000Z"
+  },
+  {
+    "id": 16,
+    "categoryId": 10,
+    "key": "SETTINGS",
+    "value": "[{\"training\":{\"waitingDays\":14,\"trainingApplicable\":true,\"passScreenText\":\"\"},\"assessment\":{\"minPassPercentage\":40,\"assessmentNames\":[{\"assessments\":[\"DRP_Trevolution_English_Q3_2024\",\"DRP_Trevolution_English(re-attemp)_Q3_2024\"]},{\"assessments\":[\"DRP_Trevolution_English_Q3_2024\",\"DRP_Trevolution_English(re-attemp)_Q3_2024\"]},{\"assessments\":[\"DRP_Trevolution_English_Q3_2024\",\"DRP_Trevolution_English(re-attemp)_Q3_2024\"]}],\"legacyAssessmentIds\":[823346,608298,642599,695297,695300,727752,727770,802635,974365,925753,802661,802658,801910,614804],\"assessmentApplicable\":true,\"passScreenText\":\"\",\"rejectionDays\":30},\"registration\":{\"userTotalAttempt\":2,\"userAttemptDayGap\":90,\"hrTotalAttempt\":3,\"hrAttemptDayGap\":0,\"countries\":[3,15,6,62,11,1,8,5,9,4,10,7,14,13,12,16,32,23,19,18,20,37,25,27,33,29,30,17,35,34,31,106,240,28,22,21,24,52,117,47,38,125,41,216,46,48,54,39,49,119,45,50,98,53,55,56,40,59,58,60,61,63,65,211,88,64,214,69,72,74,71,70,75,80,176,217,76,85,79,57,82,83,89,84,78,87,92,91,81,86,93,94,99,96,97,95,100,109,105,101,107,102,104,103,110,44,112,114,111,113,126,115,118,123,124,116,127,128,133,132,137,130,134,135,149,143,157,159,156,146,154,144,151,152,155,247,158,73,140,139,148,141,153,138,160,147,161,170,169,252,162,172,166,163,165,171,164,145,150,168,173,179,186,184,174,177,187,175,182,180,185,183,188,42,189,190,193,26,201,120,129,142,181,238,245,206,210,194,207,191,251,196,205,200,212,204,202,195,208,248,90,122,68,131,209,203,199,43,229,220,230,219,167,222,218,221,225,227,224,226,223,215,228,241,232,231,77,234,233,235,236,243,237,242,244,246,249,250],\"position\":[{\"id\":1,\"name\":\"Independant Travel Manager\"}],\"settingName\":\"Independent Travel Manager\",\"blackListCities\":[]}},{\"training\":{\"waitingDays\":0,\"trainingApplicable\":false,\"passScreenText\":\"\"},\"assessment\":{\"minPassPercentage\":40,\"assessmentNames\":[{\"assessments\":[\"DRP_Trevolution_English_Q3_2024\",\"DRP_Trevolution_English(re-attemp)_Q3_2024\"]},{\"assessments\":[\"DRP_Trevolution_English_Q3_2024\",\"DRP_Trevolution_English(re-attemp)_Q3_2024\"]}],\"legacyAssessmentIds\":[0],\"assessmentApplicable\":true,\"passScreenText\":\"\",\"rejectionDays\":7},\"registration\":{\"userTotalAttempt\":1,\"userAttemptDayGap\":90,\"hrTotalAttempt\":2,\"hrAttemptDayGap\":0,\"countries\":[3,15,6,62,11,1,8,5,9,4,10,7,14,13,12,16,32,23,19,18,20,37,25,27,33,29,30,17,35,34,31,106,240,28,22,21,24,52,117,47,38,125,41,216,46,48,54,39,49,119,45,50,98,53,55,56,40,59,58,60,61,63,65,211,88,64,214,69,72,74,71,70,75,80,176,217,76,85,79,57,82,83,89,84,78,87,92,91,81,86,93,94,99,96,97,95,100,109,105,101,107,102,104,103,110,44,112,114,111,113,126,115,118,123,124,116,127,128,133,132,137,130,134,135,149,143,157,159,156,146,154,144,151,152,155,247,158,73,140,139,148,141,153,138,160,147,161,170,169,252,162,172,166,163,165,171,164,145,150,168,173,179,186,184,174,177,187,175,182,180,185,183,188,42,189,190,193,26,201,120,129,142,181,238,245,206,210,194,207,191,251,196,205,200,212,204,202,195,208,248,90,122,68,131,209,203,199,43,229,220,230,219,167,222,218,221,225,227,224,226,223,215,228,241,232,231,77,234,233,235,236,243,237,242,244,246,249,250],\"position\":[{\"id\":3,\"name\":\"Customer Service Consultant\"},{\"id\":7,\"name\":\"Customer Service Consultant (OOJO)\"},{\"id\":9,\"name\":\"Dedicated Customer Solutions (Re-Protection) Consultant\"}],\"settingName\":\"Customer Service Consultant\",\"blackListCities\":[{\"id\":83983,\"name\":\"Sao Paulo\",\"cityCode\":\"BR-SAAWX\",\"state\":\"São Paulo\"}]}},{\"training\":{\"waitingDays\":0,\"trainingApplicable\":false,\"passScreenText\":\"\"},\"assessment\":{\"minPassPercentage\":0,\"assessmentNames\":[{\"assessments\":[\"\"]}],\"legacyAssessmentIds\":[0],\"assessmentApplicable\":false,\"passScreenText\":\"\",\"rejectionDays\":0},\"registration\":{\"userTotalAttempt\":1,\"userAttemptDayGap\":90,\"hrTotalAttempt\":2,\"hrAttemptDayGap\":0,\"countries\":[3,15,6,62,11,1,8,5,9,4,10,7,14,13,12,16,32,23,19,18,20,37,25,27,33,29,30,17,35,34,31,106,240,28,22,21,24,52,117,47,38,125,41,216,46,48,54,39,49,119,45,50,98,53,55,56,40,59,58,60,61,63,65,211,88,64,214,69,72,74,71,70,75,80,176,217,76,85,79,57,82,83,89,84,78,87,92,91,81,86,93,94,99,96,97,95,100,109,105,101,107,102,104,103,110,44,112,114,111,113,126,115,118,123,124,116,127,128,133,132,137,130,134,135,149,143,157,159,156,146,154,144,151,152,155,247,158,73,140,139,148,141,153,138,160,147,161,170,169,252,162,172,166,163,165,171,164,145,150,168,173,179,186,184,174,177,187,175,182,180,185,183,188,42,189,190,193,26,201,120,129,142,181,238,245,206,210,194,207,191,251,196,205,200,212,204,202,195,208,248,90,122,68,131,209,203,199,43,229,220,230,219,167,222,218,221,225,227,224,226,223,215,228,241,232,231,77,234,233,235,236,243,237,242,244,246,249,250],\"position\":[{\"id\":2,\"name\":\"Independent Chat Travel Manager\"},{\"id\":5,\"name\":\"Cross sale\"},{\"id\":11,\"name\":\"Freelance Excellence Specialist\"},{\"id\":13,\"name\":\"Independent Travel Manager (SLT)\"},{\"id\":15,\"name\":\"Independent Mentorship Consultant\"},{\"id\":17,\"name\":\"Independent Sales Quality Consultant\"},{\"id\":21,\"name\":\"Independent Mentorship and Coordinating Consultant\"},{\"id\":19,\"name\":\"Advisor\"},{\"id\":23,\"name\":\"Independent Sales Quality Consultant on Nesting Stage\"},{\"id\":25,\"name\":\"Independent Quality Management Consultant\"},{\"id\":27,\"name\":\"Nesting Advisor\"},{\"id\":29,\"name\":\"Independent Nesting Advisor\"},{\"id\":31,\"name\":\"Independent Advisor\"},{\"id\":33,\"name\":\"Independent Learning Consultant\"},{\"id\":35,\"name\":\"Independent Training Support Consultant\"},{\"id\":37,\"name\":\"Independent Training Consultant (Scope 1)\"},{\"id\":39,\"name\":\"Independent Training Consultant (Scope 2)\"},{\"id\":41,\"name\":\"Independent Training Consultant (Scope 3)\"},{\"id\":43,\"name\":\"Freelance Project Excellence Lead\"},{\"id\":45,\"name\":\"Independent Travel Manager (SLT BQ)\"},{\"id\":47,\"name\":\"Independent Chat Travel Manager (SLT)\"},{\"id\":49,\"name\":\"Advisor (SLT)\"},{\"id\":51,\"name\":\"Sales Process Improvement Consultant\"},{\"id\":53,\"name\":\"Sales Quality Compliance Consultant\"},{\"id\":55,\"name\":\"Independent Sales Quality Consultant (VIP)\"},{\"id\":57,\"name\":\"Independent Travel Manager (SEMI-OTA)\"}],\"settingName\":\"Direct Contract Workflow\",\"blackListCities\":[]}}]",
+    "type": "json",
+    "status": 1,
+    "createdAt": "2024-03-11T07:51:07.000Z",
+    "updatedAt": "2024-03-11T07:51:07.000Z"
+  }
+]

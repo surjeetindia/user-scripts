@@ -1,0 +1,17 @@
+import { HttpService } from 'nestjs-http-promise';
+
+// const emcIds = [
+//   195448, 195440, 195655, 195675, 195997, 196011, 196010, 195272, 196469,
+//   196475, 196477, 196462, 196484, 196499, 196483, 196482, 196509, 196497,
+//   196515, 196516, 196523, 197806,
+// ];
+const emcIds = [195448, 195440];
+
+// const axios = require('axios');
+const http = new HttpService();
+for (const id of emcIds) {
+  const url = new URL(`https://dreamport-bo-api.asaptickets.com/api/emc/deactivate-user`);
+  url.searchParams.set('emcId', String(id));
+  const resp = await http.get(url.toString());
+  console.log('response', resp.data);
+}

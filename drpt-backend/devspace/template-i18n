@@ -1,0 +1,922 @@
+=====common
+{assign var=common_translation value=[
+    'en'=>[
+        'TITLE'=>'DreamPort',
+        'RIGHTS_RESERVED'=>'All rights reserved.',
+		'FOOTER_A_PART_OF'=>'A part of',
+		'FOOTER_A_PARTNER_TO'=>'A partner to',
+		'FOOTER_FOR_QUESTIONS'=>'For any questions visit our',
+		'FOOTER_VISIT_FAQ'=>'FAQ Page',
+        'GREETING' => 'Dear ',
+        'FAQ' => 'FAQ',
+        'CONTACT_TRAINING' => 'For any additional inquiries or training-related concerns, reach out to us at:',
+        'CONTACT_TECH' => 'For technical issues, contact:',
+        'GOOD_LUCK' => 'Good luck, and keep pushing forward!',
+        'REGARDS' => 'Kind regards,',
+        'TEAM' => 'The Dreamport Team'
+    ],
+    'es'=>[
+        'TITLE'=>'DreamPort',
+        'RIGHTS_RESERVED'=>'Todos los derechos reservados.',
+		'FOOTER_A_PART_OF'=>'Una parte de',
+		'FOOTER_A_PARTNER_TO'=>'Un socio de',
+		'FOOTER_FOR_QUESTIONS'=>'Para cualquier pregunta, visite nuestra',
+		'FOOTER_VISIT_FAQ'=>'Página de preguntas frecuentes',
+        'GREETING' => 'Estimado/a ',
+        'REMINDER' => 'Queremos recordarle que tiene módulos vencidos en su programa de certificación...',
+        'WARNING' => 'Le quedan 2 días para completar sus módulos asignados...',
+        'KEY_INFO' => 'Información clave:',
+        'NOTE' => 'Tenga en cuenta que si no completa los módulos de aprendizaje dentro de las fechas límite, se cerrará su acceso.',
+        'FAQ' => 'Preguntas Frecuentes',
+        'CONTACT_TRAINING' => 'Para consultas adicionales o inquietudes relacionadas con la capacitación, contáctenos en:',
+        'CONTACT_TECH' => 'Para problemas técnicos, comuníquese con:',
+        'GOOD_LUCK' => '¡Buena suerte y siga adelante!',
+        'REGARDS' => 'Atentamente,',
+        'TEAM' => 'El equipo de Dreamport'
+    ]
+]}
+
+{if !isset($translation)}
+	{assign var=translation value=['en'=>[], 'es'=>[]]}
+{/if}
+
+{assign var=no_translation value=[
+	EMAIL_TRAINING=>'training@dreamport.me',
+    EMAIL_HELP=>'help@dreamport.me'
+]}
+{assign var=prep_translation value=[
+    'en' => $translation.en|@array_merge:$common_translation.en,
+    'es' => $translation.es|@array_merge:$common_translation.es
+]}
+
+{$defaultLang = 'en'}
+{$lang=($langCode) ? $langCode : $defaultLang}
+{assign var=mid_context value=$prep_translation.$lang}
+{assign var=context value=array_merge($mid_context, $no_translation) scope=parent}
+{if $print}{foreach from=$context key=k item=foo}<li>{$k}: {$foo}</li>{/foreach}{/if}
+
+
+
+
+
+
+=====FOOTER
+{includeFile fileName='drpt_translation' type='html'}
+<tr>
+    <td style="padding: 24px; padding-top: 16px;">
+       <div style="background: #F2F2F8;border-radius: 8px;">
+          <div style="
+             display: table;
+             margin: 0px auto;padding: 16px 8px 24px;
+             ">
+             <div style="display: table-row;vertical-align: middle; ">
+                <div style="display: table-cell;
+                   border-bottom: 1px solid rgba(21, 17, 45, 0.1);
+                   padding-bottom: 16px;
+                   ">
+                   <div style="display: block;padding-bottom: 10px;">
+                      <p style="font-size: 12px;font-weight: 400; margin: 0 auto;display: table;text-align: center;vertical-align: middle;
+                         color: rgba(21, 17, 45, 0.5);
+                         ">
+                        {$context.FOOTER_A_PART_OF}
+                         A part of
+                      </p>
+                   </div>
+                   <div style="display:table;margin: 0px auto">
+                   <p style="
+                      margin: 0;
+                      display: table-cell;
+                      vertical-align: middle;
+                      border-right: 1px solid rgba(21, 17, 45, 0.1);
+                      padding-right: 8px;
+                      min-width: 112px; 
+                      width: 112px; 
+                      max-width: 112px; 
+                      height: 24px;
+                      ">
+                      <img src="https://cdn.dreamport.me/Dyninno.png" alt='dyninno'
+                         style="max-width: 100%; width: 100%; height: auto;">
+                   </p>
+                   <p style="
+                      margin: 0;
+                      padding-left: 8px;
+                      display: table-cell;
+                      vertical-align: middle;
+                      min-width: 112px;
+                      width: 112px; 
+                      max-width: 112px; 
+                      height: 24px;
+                      ">
+                      <img src="https://cdn.dreamport.me/Trevolushion.png" alt='trevolution'
+                         style="max-width: 100%; width: 100%; height: auto;">
+                   </p>
+                   </div>
+                </div>
+             </div>
+             <div style="display: table-cell;vertical-align: middle; padding-top:16px;border-bottom: 1px solid rgba(21, 17, 45, 0.1);
+    padding-bottom: 16px;">
+                <div style="display: block;padding-bottom: 10px;">
+                   <p style="
+                      margin: 0 auto;
+                      font-size: 12px;
+                      font-weight: 400;
+                      display: table; text-align: center;
+                      vertical-align: middle; color: rgba(21, 17, 45, 0.5);
+                      ">
+                     {$context.FOOTER_A_PARTNER_TO}
+                      A partner to
+                   </p>
+                   
+                </div>
+                <div style="display: table-row;">
+                   <p style="
+                      margin: 0;
+                      padding-right: 8px;
+                      display: table-cell;
+                      vertical-align: middle;border-right: 1px solid rgba(21, 17, 45, 0.1);
+                      min-width: 112px;
+                      width: 112px; 
+                      max-width: 112px; 
+                      height: 24px;
+                      ">
+                      <img src="https://cdn.dreamport.me/Asap Tickets.png" alt='asap_logo'
+                         style="max-width: 100%; width: 100%; height: auto;">
+                   </p>
+                   <p style="
+                      margin: 0;
+                      display: table-cell;
+                      vertical-align: middle;
+                      min-width: 112px;
+                      width: 112px; padding-left: 8px;
+                      padding-right: 8px;
+                      border-right: 1px solid rgba(21, 17, 45, 0.1);
+                      max-width: 112px; 
+                      height: 24px;
+                      ">
+                      <img src="https://cdn.dreamport.me/SLT.png" alt='skylux_logo'
+                         style="max-width: 100%;width: 100%; height: auto;">
+                   </p>
+                   <p style="
+                      margin: 0;
+                      display: table-cell;
+                      vertical-align: middle;
+                      min-width: 112px;
+                      width: 112px; padding-left: 8px;
+                      max-width: 112px; 
+                      height: 24px;
+                      ">
+                      <img src="https://cdn.dreamport.me/Triplicity_Logo.png" alt='Triplicity_Logo'
+                         style="max-width: 100%;width: 100%; height: auto;">
+                   </p>
+                </div>
+                
+             </div>
+             <div style="display:table-row">
+                  <div style="display: block;padding-top:18px;line-height:14.4px;letter-spacing:0.24px;">
+                      <p style="font-size: 12px;font-weight: 400; margin: 0 auto;display: table;text-align: center;vertical-align: middle;
+                         color: rgba(21, 17, 45, 0.5);
+                         ">
+                        {$context.FOOTER_FOR_QUESTIONS}
+                       For any questions visit our <a style='color:#8073EB' target="_blank" href="https://www.dreamport.me/faq">{$context.FOOTER_VISIT_FAQ}FAQ Page</a>
+                      </p>
+                   </div>
+                </div>
+          </div>
+       </div>
+    </td>
+ </tr>
+ <tr>
+    <td style=" text-align: center; border-radius: 0px 0px 8px 8px;" colspan="2">
+       <p style="
+          margin: 0 auto;   
+          display: inline-flex;
+          vertical-align: middle;
+          min-width: 64px;
+          width: 64px; 
+          max-width: 64px; 
+          height: 64px;
+          ">
+          <img src="https://attachment-storage.asaptickets.com/362/838/20a37b67a0e6d0be015a814c9781ec5f.jpeg"
+             alt='award_logo' style="max-width: 100%; width: 100%; height: auto;">
+       </p>
+    </td>
+ </tr>
+ 
+ <tr>
+    <td style="padding: 24px 0px 24px; text-align: center; border-radius: 0px 0px 8px 8px;" colspan="2">
+       <span style="
+          color: #1e1320;
+          height: 14px;
+          font-family: 'Arial';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 14px;
+          ">
+          © 2022 Dreamport. {$context.RIGHTS_RESERVED}
+       </span>
+    </td>
+ </tr>
+
+
+
+
+
+ =====SUBJECT
+{if $user.lang == 'es'} esversion {else} 2 Days Left Before Access to Dreamport Ends! {/if}
+
+
+
+
+
+=====BODY
+{assign var=translation value=[ 'en'=>[ 'REMINDER_TEXT' => 'We want to remind
+you that you have overdue modules in your Certification program. To progress,
+make sure you complete all assigned modules and pass your Missions and Knowledge
+assessments. Once completed, you’ll be invited to the final "General Knowledge
+Assessment." Please set aside 1 hour to dedicate to this module.',
+'DEADLINE_WARNING' => 'You have 2 days left to complete your assigned modules
+and take the General Knowledge Assessment.', 'KEY_INFORMATION' => 'Key
+Information:', 'KEY_INFO_DETAIL_TITLE' => 'Dreamport online program is designed
+to be completed in <strong>16 days:</strong>', 'KEY_INFO_DETAILS_LI1' =>
+'<strong>10 days</strong> for the Certification stage', 'KEY_INFO_DETAILS_LI2'
+=> '<strong>6 days</strong> for the Pre-Live stage', 'KEY_INFO_DETAILS_LI3' =>
+'<strong>Mission reviews</strong> can take up to 24 hours, so please don\'t
+delay your progress.', 'KEY_INFO_DETAILS_LI4' => 'If your assessment scores
+aren’t sufficient, it may take additional time to reattempt, so be sure to stay
+on track.', 'KEY_INFO_DETAILS_LI5' => 'Each stage includes a final module to
+progress to the next. You must complete and pass all assigned modules to unlock
+it.', 'KEY_INFO_DETAILS_LI6' => 'Upon completion of the entire program, you will
+receive a <strong>Dreamport Certificate.</strong>', 'CHECK_FAQ' =>'If you have
+any questions, check out our ', 'PAGE' =>'page.', 'NOTE' => 'Please note, if you
+do not complete the learning modules within the due dates, your access will be
+closed.', 'GOOD_LUCK' => 'Good luck, and keep pushing forward!' ], 'es'=>[
+'REMINDER_TEXT' => 'Queremos recordarle que tiene módulos atrasados ​​en su
+programa de Certificación. Para avanzar, asegúrese de completar todos los
+módulos asignados y aprobar sus evaluaciones de Misiones y Conocimientos. Una
+vez completados, será invitado a la "Evaluación de Conocimientos Generales"
+final. Reserve 1 hora para dedicarse a este módulo.', 'DEADLINE_WARNING' => 'Le
+quedan 2 días para completar los módulos asignados y realizar la Evaluación de
+Conocimientos Generales.', 'KEY_INFORMATION' => 'Información clave:',
+'KEY_INFO_DETAIL_TITLE' => 'El programa en línea Dreamport está diseñado para
+completarse en 16 días:', 'KEY_INFO_DETAILS_LI1' => '<strong>10 días</strong>
+para la etapa de Certificación', 'KEY_INFO_DETAILS_LI2' => '<strong
+  >6 días</strong
+>
+para la etapa Pre-Live', 'KEY_INFO_DETAILS_LI3' => '<strong
+  >Las revisiones de las Misiones</strong
+>
+pueden demorar hasta 24 horas, así que no demore su progreso.',
+'KEY_INFO_DETAILS_LI4' => 'Si sus puntajes de evaluación no son suficientes,
+puede llevar más tiempo volver a intentarlo, así que asegúrese de mantenerse
+encaminado.', 'KEY_INFO_DETAILS_LI5' => 'Cada etapa incluye un módulo final para
+avanzar a la siguiente. Debe completar y aprobar todos los módulos asignados
+para desbloquearlo.', 'KEY_INFO_DETAILS_LI6' => 'Una vez completado todo el
+programa, recibirá un <strong>Certificado Dreamport.</strong>', 'CHECK_FAQ'
+=>'Si tiene alguna pregunta, consulte nuestra ', 'PAGE' =>'página.', 'NOTE' =>
+'Tenga en cuenta que si no completa los módulos de aprendizaje dentro de las
+fechas límite, se cerrará su acceso.', 'GOOD_LUCK' => '¡Buena suerte y siga
+adelante!' ] ]} {includeFile fileName='drpt_translation' type='html'}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <!-- One of ways to prevent colored phone numbers on iPhone. -->
+    <title>Dreamport Training Second Warning</title>
+  </head>
+  <body>
+    <div
+      style="
+        margin: 0px;
+        min-width: 100%;
+        background-color: #f2f2f8;
+        padding: 10% 0px;
+      "
+    >
+      <table
+        cellpadding="0"
+        cellspacing="0"
+        style="
+          margin: auto;
+          max-width: 581px;
+          font-family: Arial;
+          border-spacing: 0px;
+          border-radius: 8px;
+          background-color: white;
+          border: 1px solid #b8bfcc;
+        "
+      >
+        <tbody>
+          {$headerImage = 'PAPER_ROCKET'} {includeFile fileName='drpt_header'
+          type='html'}
+          <tr>
+            <td valign="top" style="padding: 24px 24px 0px; color: #1e1320">
+              <p
+                style="
+                  font-weight: bold;
+                  font-size: 18px;
+                  margin-top: 0px;
+                  margin-bottom: 0px;
+                  line-height: 27px;
+                "
+              >
+                {$context.GREETING} {$user.fName} {$user.lName},
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" style="padding: 24px 24px 0px; color: #1e1320">
+              <p
+                style="
+                  font-weight: normal;
+                  font-family: Arial;
+                  font-size: 16px;
+                  margin-top: 0px;
+                  margin-bottom: 0px;
+                  line-height: 24px;
+                "
+              >
+                {$context.REMINDER_TEXT}
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td valign="top" style="padding: 24px 24px 0px; color: #1e1320">
+              <div
+                style="
+                  display: table;
+                  width: calc(100% - 32px);
+                  color: #fc5555;
+                  background-color: #fee;
+                  font-size: 14px;
+                  padding: 16px;
+                  border-radius: 12px;
+                "
+              >
+                <div style="display: inline-table; vertical-align: middle">
+                  <img src="https://cdn.dreamport.me/alertIcon.png" />
+                </div>
+                <p
+                  style="
+                    font-size: 14px;
+                    display: table-cell;
+                    font-weight: 400;
+                    line-height: 21px;
+                    margin: 0px;
+                    padding-left: 8px;
+                  "
+                >
+                  {$context.DEADLINE_WARNING}
+                </p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" style="padding: 24px 24px 0px; color: #1e1320">
+              <p
+                style="
+                  font-size: 16px;
+                  font-weight: 700;
+                  line-height: 24px;
+                  margin-top: 0px;
+                  margin-bottom: 0px;
+                "
+              >
+                {$context.KEY_INFORMATION}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" style="padding: 12px 24px 0px; color: #1e1320">
+              <div
+                style="
+                  color: #1e1320;
+                  background-color: #f6f5ff;
+                  color: #fc5555;
+                  font-size: 14px;
+                  padding: 24px 16px;
+                  border-radius: 8px;
+                "
+              >
+                <div style="display: table">
+                  <p
+                    style="
+                      font-size: 14px;
+                      display: table-cell;
+                      font-weight: 400;
+                      line-height: 21px;
+                      color: #1e1320;
+                      margin: 0px;
+                    "
+                  >
+                    {$context.KEY_INFO_DETAIL_TITLE}
+                  </p>
+                </div>
+                <div style="display: table; margin-top: 16px">
+                  <div
+                    style="
+                      width: 20px;
+                      min-width: 20px;
+                      height: 20px;
+                      max-height: 20px;
+                      background-color: #8073eb;
+                      border-radius: 100%;
+                      font-size: 12px;
+                      font-weight: 800;
+                      color: white;
+                      text-align: center;
+                      line-height: 20px;
+                      display: inline-table;
+                    "
+                  >
+                    1
+                  </div>
+                  <p
+                    style="
+                      font-size: 14px;
+                      display: table-cell;
+                      font-weight: 400;
+                      line-height: 21px;
+                      color: #1e1320;
+                      margin: 0px;
+                      padding: 0px 8px;
+                    "
+                  >
+                    {$context.KEY_INFO_DETAILS_LI1}
+                  </p>
+                </div>
+                <div style="display: table; margin-top: 16px">
+                  <div
+                    style="
+                      width: 20px;
+                      min-width: 20px;
+                      height: 20px;
+                      max-height: 20px;
+                      background-color: #8073eb;
+                      border-radius: 100%;
+                      font-size: 12px;
+                      font-weight: 800;
+                      color: white;
+                      text-align: center;
+                      line-height: 20px;
+                      display: inline-table;
+                    "
+                  >
+                    2
+                  </div>
+                  <p
+                    style="
+                      font-size: 14px;
+                      display: table-cell;
+                      font-weight: 400;
+                      line-height: 21px;
+                      color: #1e1320;
+                      margin: 0px;
+                      padding: 0px 8px;
+                    "
+                  >
+                    {$context.KEY_INFO_DETAILS_LI2}
+                  </p>
+                </div>
+                <div style="display: table; margin-top: 16px">
+                  <div
+                    style="
+                      width: 20px;
+                      min-width: 20px;
+                      height: 20px;
+                      max-height: 20px;
+                      background-color: #8073eb;
+                      border-radius: 100%;
+                      font-size: 12px;
+                      font-weight: 800;
+                      color: white;
+                      text-align: center;
+                      line-height: 20px;
+                      display: inline-table;
+                    "
+                  >
+                    3
+                  </div>
+                  <p
+                    style="
+                      font-size: 14px;
+                      display: table-cell;
+                      font-weight: 400;
+                      line-height: 21px;
+                      color: #1e1320;
+                      margin: 0px;
+                      padding: 0px 8px;
+                    "
+                  >
+                    {$context.KEY_INFO_DETAILS_LI3}
+                  </p>
+                </div>
+                <div style="display: table; margin-top: 16px">
+                  <div
+                    style="
+                      width: 20px;
+                      min-width: 20px;
+                      height: 20px;
+                      max-height: 20px;
+                      background-color: #8073eb;
+                      border-radius: 100%;
+                      font-size: 12px;
+                      font-weight: 800;
+                      color: white;
+                      text-align: center;
+                      line-height: 20px;
+                      display: inline-table;
+                    "
+                  >
+                    4
+                  </div>
+                  <p
+                    style="
+                      font-size: 14px;
+                      display: table-cell;
+                      font-weight: 400;
+                      line-height: 21px;
+                      color: #1e1320;
+                      margin: 0px;
+                      padding: 0px 8px;
+                    "
+                  >
+                    {$context.KEY_INFO_DETAILS_LI4}
+                  </p>
+                </div>
+                <div style="display: table; margin-top: 16px">
+                  <div
+                    style="
+                      width: 20px;
+                      min-width: 20px;
+                      height: 20px;
+                      max-height: 20px;
+                      background-color: #8073eb;
+                      border-radius: 100%;
+                      font-size: 12px;
+                      font-weight: 800;
+                      color: white;
+                      text-align: center;
+                      line-height: 20px;
+                      display: inline-table;
+                    "
+                  >
+                    5
+                  </div>
+                  <p
+                    style="
+                      font-size: 14px;
+                      display: table-cell;
+                      font-weight: 400;
+                      line-height: 21px;
+                      color: #1e1320;
+                      margin: 0px;
+                      padding: 0px 8px;
+                    "
+                  >
+                    {$context.KEY_INFO_DETAILS_LI5}
+                  </p>
+                </div>
+                <div style="display: table; margin-top: 16px">
+                  <div
+                    style="
+                      width: 20px;
+                      min-width: 20px;
+                      height: 20px;
+                      max-height: 20px;
+                      background-color: #8073eb;
+                      border-radius: 100%;
+                      font-size: 12px;
+                      font-weight: 800;
+                      color: white;
+                      text-align: center;
+                      line-height: 20px;
+                      display: inline-table;
+                    "
+                  >
+                    6
+                  </div>
+                  <p
+                    style="
+                      font-size: 14px;
+                      display: table-cell;
+                      font-weight: 400;
+                      line-height: 21px;
+                      color: #1e1320;
+                      margin: 0px;
+                      padding: 0px 8px;
+                    "
+                  >
+                    {$context.KEY_INFO_DETAILS_LI6}
+                  </p>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td valign="top" style="padding: 12px 24px 0px; color: #1e1320">
+              <p
+                style="
+                  font-weight: normal;
+                  font-style: italic;
+                  font-family: Arial;
+                  font-size: 16px;
+                  margin-top: 0px;
+                  margin-bottom: 0px;
+                  line-height: 24px;
+                "
+              >
+                {$context.NOTE}
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td valign="top" style="padding: 24px 24px 0px; color: #1e1320">
+              <p
+                style="
+                  font-weight: normal;
+                  font-family: Arial;
+                  font-size: 16px;
+                  margin-top: 0px;
+                  margin-bottom: 0px;
+                  line-height: 24px;
+                "
+              >
+                {$context.CHECK_FAQ}
+                <a
+                  href="https://docs.google.com/document/d/1MDP_Dm0txD8guGJxsFZ5OhmlnFf8oMXzb50a2Nu-Qw4/edit#heading=h.wmsqhobg90g2"
+                  target="_blank"
+                  style="color: #8073eb; font-weight: 700"
+                  >{$context.FAQ}</a
+                >
+                {$context.PAGE}.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" style="padding: 24px 24px 0px; color: #1e1320">
+              <p
+                style="
+                  font-weight: normal;
+                  font-family: Arial;
+                  font-size: 16px;
+                  margin-top: 0px;
+                  margin-bottom: 0px;
+                  line-height: 24px;
+                "
+              >
+                {$context.CONTACT_TRAINING}
+                <a
+                  href="mailto:{$context.EMAIL_TRAINING}"
+                  style="color: #8073eb; font-weight: 700"
+                  >{$context.EMAIL_TRAINING}</a
+                >
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" style="padding: 24px 24px 0px; color: #1e1320">
+              <p
+                style="
+                  font-weight: normal;
+                  font-family: Arial;
+                  font-size: 16px;
+                  margin-top: 0px;
+                  margin-bottom: 0px;
+                  line-height: 24px;
+                "
+              >
+                {$context.CONTACT_TECH}
+                <a
+                  href="mailto:{$context.EMAIL_HELP}"
+                  style="color: #8073eb; font-weight: 700"
+                  >{$context.EMAIL_HELP}</a
+                >
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" style="padding: 24px 24px 0px; color: #1e1320">
+              <p
+                style="
+                  font-weight: normal;
+                  font-family: Arial;
+                  font-size: 16px;
+                  margin-top: 0px;
+                  margin-bottom: 0px;
+                  line-height: 24px;
+                "
+              >
+                {$context.GOOD_LUCK}
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td valign="top" style="padding: 24px 24px 0px; color: #1e1320">
+              <p
+                style="
+                  font-weight: 400;
+                  font-size: 16px;
+                  font-family: Arial;
+                  margin-bottom: 4px;
+                "
+              >
+                {$context.REGARDS}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" style="padding: 4px 24px 32px; color: #1e1320">
+              <p
+                style="
+                  font-weight: 400;
+                  font-family: Arial;
+                  font-size: 16px;
+                  margin-top: 0px;
+                "
+              >
+                {$context.TEAM}
+              </p>
+            </td>
+          </tr>
+          {includeFile fileName='drpt_footer' type='html'}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+==================FOOTER
+{includeFile fileName='drpt_translation' type='html'}
+<tr>
+    <td style="padding: 24px; padding-top: 16px;">
+       <div style="background: #F2F2F8;border-radius: 8px;">
+          <div style="
+             display: table;
+             margin: 0px auto;padding: 16px 8px 24px;
+             ">
+             <div style="display: table-row;vertical-align: middle; ">
+                <div style="display: table-cell;
+                   border-bottom: 1px solid rgba(21, 17, 45, 0.1);
+                   padding-bottom: 16px;
+                   ">
+                   <div style="display: block;padding-bottom: 10px;">
+                      <p style="font-size: 12px;font-weight: 400; margin: 0 auto;display: table;text-align: center;vertical-align: middle;
+                         color: rgba(21, 17, 45, 0.5);
+                         ">
+                        {$context.FOOTER_A_PART_OF}
+                         A part of
+                      </p>
+                   </div>
+                   <div style="display:table;margin: 0px auto">
+                   <p style="
+                      margin: 0;
+                      display: table-cell;
+                      vertical-align: middle;
+                      border-right: 1px solid rgba(21, 17, 45, 0.1);
+                      padding-right: 8px;
+                      min-width: 112px; 
+                      width: 112px; 
+                      max-width: 112px; 
+                      height: 24px;
+                      ">
+                      <img src="https://cdn.dreamport.me/Dyninno.png" alt='dyninno'
+                         style="max-width: 100%; width: 100%; height: auto;">
+                   </p>
+                   <p style="
+                      margin: 0;
+                      padding-left: 8px;
+                      display: table-cell;
+                      vertical-align: middle;
+                      min-width: 112px;
+                      width: 112px; 
+                      max-width: 112px; 
+                      height: 24px;
+                      ">
+                      <img src="https://cdn.dreamport.me/Trevolushion.png" alt='trevolution'
+                         style="max-width: 100%; width: 100%; height: auto;">
+                   </p>
+                   </div>
+                </div>
+             </div>
+             <div style="display: table-cell;vertical-align: middle; padding-top:16px;border-bottom: 1px solid rgba(21, 17, 45, 0.1);
+    padding-bottom: 16px;">
+                <div style="display: block;padding-bottom: 10px;">
+                   <p style="
+                      margin: 0 auto;
+                      font-size: 12px;
+                      font-weight: 400;
+                      display: table; text-align: center;
+                      vertical-align: middle; color: rgba(21, 17, 45, 0.5);
+                      ">
+                     {$context.FOOTER_A_PARTNER_TO}
+                      A partner to
+                   </p>
+                   
+                </div>
+                <div style="display: table-row;">
+                   <p style="
+                      margin: 0;
+                      padding-right: 8px;
+                      display: table-cell;
+                      vertical-align: middle;border-right: 1px solid rgba(21, 17, 45, 0.1);
+                      min-width: 112px;
+                      width: 112px; 
+                      max-width: 112px; 
+                      height: 24px;
+                      ">
+                      <img src="https://cdn.dreamport.me/Asap Tickets.png" alt='asap_logo'
+                         style="max-width: 100%; width: 100%; height: auto;">
+                   </p>
+                   <p style="
+                      margin: 0;
+                      display: table-cell;
+                      vertical-align: middle;
+                      min-width: 112px;
+                      width: 112px; padding-left: 8px;
+                      padding-right: 8px;
+                      border-right: 1px solid rgba(21, 17, 45, 0.1);
+                      max-width: 112px; 
+                      height: 24px;
+                      ">
+                      <img src="https://cdn.dreamport.me/SLT.png" alt='skylux_logo'
+                         style="max-width: 100%;width: 100%; height: auto;">
+                   </p>
+                   <p style="
+                      margin: 0;
+                      display: table-cell;
+                      vertical-align: middle;
+                      min-width: 112px;
+                      width: 112px; padding-left: 8px;
+                      max-width: 112px; 
+                      height: 24px;
+                      ">
+                      <img src="https://cdn.dreamport.me/Triplicity_Logo.png" alt='Triplicity_Logo'
+                         style="max-width: 100%;width: 100%; height: auto;">
+                   </p>
+                </div>
+                
+             </div>
+             <div style="display:table-row">
+                  <div style="display: block;padding-top:18px;line-height:14.4px;letter-spacing:0.24px;">
+                      <p style="font-size: 12px;font-weight: 400; margin: 0 auto;display: table;text-align: center;vertical-align: middle;
+                         color: rgba(21, 17, 45, 0.5);
+                         ">
+                        {$context.FOOTER_FOR_QUESTIONS}
+                       For any questions visit our <a style='color:#8073EB' target="_blank" href="https://www.dreamport.me/faq">{$context.FOOTER_VISIT_FAQ}FAQ Page</a>
+                      </p>
+                   </div>
+                </div>
+          </div>
+       </div>
+    </td>
+ </tr>
+ <tr>
+    <td style=" text-align: center; border-radius: 0px 0px 8px 8px;" colspan="2">
+       <p style="
+          margin: 0 auto;   
+          display: inline-flex;
+          vertical-align: middle;
+          min-width: 64px;
+          width: 64px; 
+          max-width: 64px; 
+          height: 64px;
+          ">
+          <img src="https://attachment-storage.asaptickets.com/362/838/20a37b67a0e6d0be015a814c9781ec5f.jpeg"
+             alt='award_logo' style="max-width: 100%; width: 100%; height: auto;">
+       </p>
+    </td>
+ </tr>
+ 
+ <tr>
+    <td style="padding: 24px 0px 24px; text-align: center; border-radius: 0px 0px 8px 8px;" colspan="2">
+       <span style="
+          color: #1e1320;
+          height: 14px;
+          font-family: 'Arial';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 14px;
+          ">
+         {$context.RIGHTS_RESERVED}
+       © 2022 Dreamport. All rights reserved.
+       </span>
+    </td>
+ </tr>

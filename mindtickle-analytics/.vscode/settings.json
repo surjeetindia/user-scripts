@@ -1,0 +1,38 @@
+{
+  "rest-client.environmentVariables": {
+    "$shared": {
+      "host": "https://mnta-api.dev-travel.com/api/",
+      // local
+      // "authMt": "Authorization: Basic NDA4NjRfMTA4NDc4OmlsZDJhMmZx"
+      // prod
+      "authMt": "Authorization: Basic MTE0MV81OTg6azIzaWg0YWk="
+    },
+    "stage": {
+      "host": "https://mindtickle-analytics-api.stage-travel.com/api/"
+    },
+    "prod": {
+      "host": "https://mindtickle-analytics-api.services.asaptickets.com/api/",
+      "authMt": "Authorization: Basic MTE0MV81OTg6azIzaWg0YWk="
+    }
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#007c81",
+    "activityBar.background": "#007c81",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#ff80fa",
+    "activityBarBadge.foreground": "#15202b",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#007c81",
+    "statusBar.background": "#004b4e",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#007c81",
+    "statusBarItem.remoteBackground": "#004b4e",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#004b4e",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#004b4e99",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#004b4e"
+}
