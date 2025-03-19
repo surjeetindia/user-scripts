@@ -9,10 +9,11 @@ cp ~/.config/Code/User/snippets/surjeet-global-snippet.code-snippets ~/.config/C
 mkdir -p vscode/.config/Code/User
 
 # backup all the request.http and devspace from repo
-cp -r ../drpt-backend-v2/.vscode ../drpt-backend-v2/devspace drpt-backend/.
-cp -r ../drpt-bo-backend-v2/.vscode ../drpt-bo-backend-v2/devspace ../drpt-bo-backend-v2/prisma/seed.ts drpt-bo-backend/.
-cp -r ../mindtickle-v2/.vscode ../mindtickle-v2/devspace mindtickle/.
-cp -r ../mindtickle-analytics/.vscode ../mindtickle-analytics/devspace mindtickle-analytics/.
+cp -r ../drpt-backend-v2/.vscode ../drpt-backend-v2/devspace ../drpt-backend-v2/.env drpt-backend/.
+cp -r ../drpt-bo-backend-v2/.vscode ../drpt-bo-backend-v2/devspace ../drpt-bo-backend-v2/.env ../drpt-bo-backend-v2/prisma/seed.ts drpt-bo-backend/.
+cp -r ../mindtickle-v2/.vscode ../mindtickle-v2/.env ../mindtickle-v2/devspace mindtickle/.
+cp -r ../mindtickle-analytics/.vscode ../mindtickle-analytics/.env ../mindtickle-analytics/devspace mindtickle-analytics/.
+
 
 
 

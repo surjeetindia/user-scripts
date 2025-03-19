@@ -937,7 +937,7 @@ POST {{hostName}}emc/trigger-emc-update-users
 
 {
   "emcIds":[
-419611
+436057,436118,436906,441718,445996,446673,446958,447416,452675,458759,461720
   ]
 }
 
@@ -1219,6 +1219,16 @@ Post {{hostName}}util/set-cache
 ###
 {{hostName}}ccs/get-emails
   ?emails=B2K9QQJ353M,UNLO1TKUOSG,ZLAPGQYGI46
+
+###
+POST {{hostName}}ccs/save-emails
+{{contentJson}}
+
+{
+  "emails":[
+    
+  ]
+}
 
 ###
 {{hostName}}ccs/get-phone
@@ -1731,7 +1741,7 @@ https://localhost:3002/api/jsonService?serviceName=
 
 ###sql
 POST {{hostName}}common/process?
-{{drptAuthToken}}
+{{apiAuth}}
 {{contentJson}}
 
 {
@@ -1751,7 +1761,7 @@ POST {{hostName}}common/process?
   # "s":"datediff(current_date, mntcCreatedAt) trainingDays, id, profileId, emcId, mntcId", 
   # "s":"status, count(1) cnt, group_concat(profileId) PUB_pids, group_concat(emcId) emcIds, group_concat(mntcId) mntcIds",
   # "f":"userApplication",
-  # "w":"status in (6) and createdAt < current_date group by status",
+  # "w":"status in (11) and createdAt < current_timestamp() group by status",
   # "w":"status in (22,23) and preLiveStartedAt >= '2024-07-20' group by status",
 
   # "s":"datediff(initRejectAt, ua.mntcFailedAt) trainingDays, ua.status, count(1) cnt, group_concat(profileId) PUB_pids",
@@ -1787,7 +1797,7 @@ POST {{hostName}}common/process?
 
 ###
 POST {{hostName}}common/process?
-{{drptAuthToken}}
+{{apiAuth}}
 {{contentJson}}
 
 {
@@ -1837,7 +1847,7 @@ replace with $1(space)$2
 REJECTION_PENDING(1), REJECTION_PASSED(2), REJECTION_FAILED(3), 
 ### DEV-BULK-REJECTION
 POST {{hostName}}common/process?
-{{drptAuthToken}}
+{{apiAuth}}
 {{contentJson}}
 
 {
@@ -1870,7 +1880,7 @@ POST {{hostName}}common/process?
 @DAYS_SECOND_MILESTONE=12
 @DAYS_PRELIVE=7
 POST {{hostName}}common/process?
-{{drptAuthToken}}
+{{apiAuth}}
 {{contentJson}}
 
 {
@@ -1904,7 +1914,7 @@ POST {{hostName}}common/process?
 
 ### sql deact prelive training deactivations
 POST {{hostName}}common/process?
-{{drptAuthToken}}
+{{apiAuth}}
 {{contentJson}}
 
 {
@@ -1919,7 +1929,7 @@ POST {{hostName}}common/process?
 
 ### prisma-fix
 POST {{hostName}}common/process?
-{{drptAuthToken}}
+{{apiAuth}}
 {{contentJson}}
 
 {
