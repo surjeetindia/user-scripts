@@ -1,0 +1,158 @@
+{
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.stickyScroll.enabled": true,
+  "editor.fontLigatures": true,
+  "editor.fontFamily": "'JetBrains Mono', 'Droid Sans Mono', 'monospace', monospace",
+  "editor.tokenColorCustomizations": {},
+  "editor.mouseWheelZoom": true,
+  "workbench.iconTheme": "material-icon-theme",
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "rest-client.defaultHeaders": {
+    "User-Agent": "user-agent"
+  },
+  "rest-client.previewResponseInUntitledDocument": true,
+  "rest-client.showResponseInDifferentTab": true,
+  "prettier.singleQuote": true,
+  "rest-client.environmentVariables": {
+    "$shared": {
+      "version": "v1",
+      "mntcDevHostName": "https://mindtickle.dev-travel.com/api/",
+      "mntcHostName": "https://admin.mindtickle.com/Odata.svc/",
+      "contentJson": "content-type: application/json",
+      "localTime": "{{$localDatetime 'YYYY-MM-DDTHH:mm:ss.SSSZZ'}}",
+      "createdAt": "{{$datetime iso8601}}",
+      "modifiedBy": "{{$processEnv USERNAME}}",
+      "authBearer": "Authorization: Bearer",
+      "authBasic": "Authorization: Basic",
+      "skipRole": "skipRole=1",
+      "dev": "dev=1",
+      "devKey": "\"dev\":1",
+
+      "userAgent": "user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36",
+      "userAgent1": "user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+      "userAgentpm": "user-agent: PostmanRuntime/7.37.3",
+
+      "temp-randInt3": "{{$randomInt 111 999}}",
+      "temp-localDatetime": "{{$localDatetime 'YYYY-MM-DDTHH:mm:ss.SSSZZ'}}",
+      "temp-sharedVariable": "{{$shared randInt3}}",
+
+      "checkEligibilityToken": "Authorization: Bearer dXNlcm5hbWU6ZHJlYW1wb3J0I3Bhc3N3b3JkOnF3ZXJ0eQ==",
+
+      "trainingSeriesId": "1776227665558674326",
+      "trainingFirstModuleId": "1776228518519777609",
+      "trainingT1ModuleId": "507999385687172797",
+      "trainingT2ModuleId": "507999359799977001",
+      "trainingT3ModuleId": "507999250731259134",
+      "trainingGKModuleId": "514523349993434777",
+      "certModuleId": "1776227966911083372",
+      "preliveFirstModuleId": "1792504229001094075",
+      "preliveMissionModuleId": "1792504328513597697",
+      "preliveLastModuleId": "1803724563113665823"
+    },
+    "local": {
+      "env": "local"
+    },
+    "stage": {
+      "env": "stage"
+    },
+    "prod": {
+      "env": "prod",
+      "checkEligibilityToken": "Authorization: Bearer dXNlcm5hbWU6ZHJlYW1wb3J0I3Bhc3N3b3JkOlh3ak9xY3lsdHByMmtScw==",
+
+      "trainingSeriesId": "1526899855350414157",
+      "trainingFirstModuleId": "1636018608874019812",
+      "trainingT1ModuleId": "1572878489965222314",
+      "trainingT2ModuleId": "1576911454451910803",
+      "trainingT3ModuleId": "1577980015323864486",
+      "trainingGKModuleId": "465245417156660147",
+      "certModuleId": "1537447296067453233",
+      "preliveFirstModuleId": "1784834644105265048",
+      "preliveMissionModuleId": "1635957078405747906",
+      "preliveLastModuleId": "1795842646743859793"
+    }
+  },
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "workbench.colorTheme": "Default Light+",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "editor.accessibilitySupport": "off",
+  "workbench.editor.empty.hint": "hidden",
+  "editor.rulers": [120],
+  "editor.cursorBlinking": "phase",
+  "totalTypeScript.hideAllTips": false,
+  "totalTypeScript.hideBasicTips": false,
+  "gitlens.gitCommands.skipConfirmations": [
+    "fetch:command",
+    "stash-push:command"
+  ],
+  "editor.fastScrollSensitivity": 6,
+  "editor.scrollbar.verticalScrollbarSize": 20,
+  "editor.smoothScrolling": true,
+  "editor.find.addExtraSpaceOnTop": false,
+  "search.exclude": {
+    "**/*.md": true,
+    "**/*.spec.ts": true
+  },
+  "window.titleBarStyle": "custom",
+  "workbench.tree.enableStickyScroll": true,
+  "multiDiffEditor.experimental.enabled": true,
+  "nxConsole.showNodeVersionOnStartup": false,
+  "window.menuBarVisibility": "compact",
+  "code-runner.temporaryFileName": "spvtemp",
+  "better-comments.multilineComments": true,
+  "better-comments.highlightPlainText": false,
+  "diffEditor.ignoreTrimWhitespace": true,
+  "editor.minimap.maxColumn": 60,
+  "editor.minimap.renderCharacters": false,
+  "editor.minimap.autohide": true,
+  "editor.lineHeight": 2.25,
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "prisma.showPrismaDataPlatformNotification": false,
+  "gopls": {
+    "ui.semanticTokens": true
+  },
+  "go.toolsManagement.autoUpdate": true,
+  "[go]": {
+    "editor.defaultFormatter": "golang.go"
+  },
+  "redhat.telemetry.enabled": false,
+  "editor.formatOnSave": true,
+  "files.participants.timeout": 0,
+  "editor.minimap.size": "fill",
+  "database-client.autoSync": true,
+  "gitlens.views.scm.grouped.views": {
+    "commits": true,
+    "branches": true,
+    "remotes": true,
+    "stashes": false,
+    "tags": true,
+    "worktrees": true,
+    "contributors": true,
+    "repositories": true,
+    "searchAndCompare": false,
+    "launchpad": false
+  },
+  "codeium.disableSupercomplete": true,
+  "editor.copyWithSyntaxHighlighting": false,
+  "terminal.integrated.fontLigatures": true,
+  "typescript.experimental.expandableHover": true,
+  "terminal.integrated.suggest.enableExtensionCompletions": true,
+  "workbench.editor.enablePreview": false,
+  "codeium.enableCodeLens": false,
+  "prisma.enableCodeLens": true,
+  "editor.occurrencesHighlightDelay": 1000,
+  "terminal.integrated.suggest.quickSuggestions": {
+    "commands": "on",
+    "arguments": "on",
+    "unknown": "off"
+  }
+}

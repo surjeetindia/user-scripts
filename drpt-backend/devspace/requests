@@ -27,8 +27,8 @@
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOjUxNTE4LCJ1YUlkIjozODQ5LCJpYXQiOjE3MzY0MDY4NzMsImV4cCI6MTczNjQyODQ3M30.NFuzo8bP_tUVqKrzIgOFg1RjVm-ekGIllsUXXQIez3s
 @token = {{directAuthToken}}
 # @token = {{authorizeToken.response.body.data.authUser.accessToken}}
-@auth = {{authType}} {{token}}
-@apiAuth = {{authType}} {{apiAuthToken}}
+@auth = {{authBearer}} {{token}}
+@apiAuth = {{authBearer}} {{drptAuthToken}}
 
 ###
 # @name doAuth
@@ -118,7 +118,7 @@ Authorization: Bearer dXNlcm5hbWU6ZHJlYW1wb3J0I3Bhc3N3b3JkOlh3ak9xY3lsdHByMmtScw
 ###
 POST {{hostName}}user-application/log-action
 User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36x
-{{contentTypeJson}}
+{{contentJson}}
 
 {
   "action": "reg_step_1_fake",
@@ -155,7 +155,7 @@ false
 
 ###
 {{hostName}}user-application/change-request
-{{contentTypeJson}}
+{{contentJson}}
 {{auth}}
 
 {
@@ -169,7 +169,7 @@ false
 Content-Type: multipart/form-data; boundary=---WebKitFormBoundary7MA4YWxkTrZu0gW
 
 -----WebKitFormBoundary7MA4YWxkTrZu0gW
-{{contentTypeJson}}
+{{contentJson}}
 
 {
   "comment": "this is change request"
@@ -446,7 +446,7 @@ Post {{hostName}}login/validate-auth-token
 ### CREATE ACCOUNT
 # @name createAccount
 POST {{hostName}}register/account
-{{contentTypeJson}}
+{{contentJson}}
 
 {
   "fname": "surjeet",
@@ -527,7 +527,7 @@ POST {{hostName}}register/account
 
 ###
 POST {{hostName}}register/cancel-post-registation
-{{contentTypeJson}}
+{{contentJson}}
 {{auth}}
 
 {
@@ -791,7 +791,7 @@ POST {{hostName}}assessment/process-result?{{dev}}
 ###
 # how a user receive the data on UI
 POST {{hostName}}mntc/training-performance-uaid
-{{contentTypeJson}}
+{{contentJson}}
 
 {
   "uaIds":[
@@ -824,7 +824,7 @@ POST {{hostName}}mntc/training-performance-uaid
 
 ###
 PUT {{hostName}}user-application/mark-photo-private
-{{contentTypeJson}}
+{{contentJson}}
 {{auth}}
 
 {
@@ -833,7 +833,7 @@ PUT {{hostName}}user-application/mark-photo-private
 ###
 PUT {{hostName}}user-application/mark-photo-private-dev
   ?{{dev}}
-{{contentTypeJson}}
+{{contentJson}}
 
 {
   "profileId":51222,
@@ -841,7 +841,7 @@ PUT {{hostName}}user-application/mark-photo-private-dev
 }
 ###
 POST {{hostName}}user-application/profile-state-update
-{{contentTypeJson}}
+{{contentJson}}
 {{mbsr_drp_profile_state_updated}}
 
 {
@@ -869,7 +869,7 @@ POST {{hostName}}user-application/profile-state-update
 
 ###
 POST {{hostName}}user-application/sync-profile-state-update
-{{contentTypeJson}}
+{{contentJson}}
 
 {
     "profileId": 51643,
@@ -919,7 +919,7 @@ POST {{hostName}}user-application/bo-event-init-contract
 ###
 POST {{hostName}}emc/emc-update
   ?skipff=true
-{{contentTypeJson}}
+{{contentJson}}
 {{mbsr_emc_update_event}}
 
 {
@@ -1271,7 +1271,7 @@ Post {{hostName}}util/set-cache
 
 ### contact us
 POST {{hostName}}register/contact-us-email
-{{contentTypeJson}}
+{{contentJson}}
 
 {
   "name": "Surjeet234234",
@@ -1450,7 +1450,7 @@ getLanguageLevel()
 ###
 # POST {{hostName}}analytics/send-event
 POST {{hostName}}analytics/send-event
-{{contentTypeJson}}
+{{contentJson}}
 
 {
   "eventStep": "Unsuccessful validation",
@@ -1471,7 +1471,7 @@ POST {{hostName}}analytics/send-event
 
 ###
 POST {{hostName}}analytics/confirm-events
-{{contentTypeJson}}
+{{contentJson}}
 
 {
   "source":"surjeet",
@@ -1554,7 +1554,7 @@ POST {{hostName}}analytics/confirm-events
 
 ###
 POST {{hostName}}analytics/post-events
-{{contentTypeJson}}
+{{contentJson}}
 {{apiAuth}}
 
 {
@@ -1581,7 +1581,7 @@ POST {{hostName}}analytics/post-events
 
 ###
 POST {{hostName}}analytics/post-event-for-training
-{{contentTypeJson}}
+{{contentJson}}
 {{apiAuth}}
 
 [
@@ -1594,7 +1594,7 @@ POST {{hostName}}analytics/post-event-for-training
 
 ###
 POST {{hostName}}analytics/post-event
-{{contentTypeJson}}
+{{contentJson}}
 {{apiAuth}}
 
 {
@@ -1653,7 +1653,7 @@ POST {{hostName}}analytics/post-event
 
 ###
 POST {{hostName}}gmail/send-mail
-{{contentTypeJson}} 
+{{contentJson}} 
 
 {
   "template":"drpt_training_passed",
@@ -1731,8 +1731,8 @@ https://localhost:3002/api/jsonService?serviceName=
 
 ###sql
 POST {{hostName}}common/process?
-{{checkEligibilityToken}}
-{{contentTypeJson}}
+{{drptAuthToken}}
+{{contentJson}}
 
 {
   # "s":"datediff(ua.mntcFailedAt, ua.mntcCreatedAt) trainingDays, datediff(current_timestamp, ua.mntcFailedAt) graceDays, ua.status, ua.profileId, ua.mntcFailedAt uamntcFailedAt, ua.loginName, ua.mntcId, ua.emcId, ut.completedModuleCount, ut.*",
@@ -1751,7 +1751,7 @@ POST {{hostName}}common/process?
   # "s":"datediff(current_date, mntcCreatedAt) trainingDays, id, profileId, emcId, mntcId", 
   # "s":"status, count(1) cnt, group_concat(profileId) PUB_pids, group_concat(emcId) emcIds, group_concat(mntcId) mntcIds",
   # "f":"userApplication",
-  # "w":"status in (10) and createdAt < current_date group by status",
+  # "w":"status in (6) and createdAt < current_date group by status",
   # "w":"status in (22,23) and preLiveStartedAt >= '2024-07-20' group by status",
 
   # "s":"datediff(initRejectAt, ua.mntcFailedAt) trainingDays, ua.status, count(1) cnt, group_concat(profileId) PUB_pids",
@@ -1787,8 +1787,8 @@ POST {{hostName}}common/process?
 
 ###
 POST {{hostName}}common/process?
-{{checkEligibilityToken}}
-{{contentTypeJson}}
+{{drptAuthToken}}
+{{contentJson}}
 
 {
   // #region remove-failedModuleInfo
@@ -1837,8 +1837,8 @@ replace with $1(space)$2
 REJECTION_PENDING(1), REJECTION_PASSED(2), REJECTION_FAILED(3), 
 ### DEV-BULK-REJECTION
 POST {{hostName}}common/process?
-{{checkEligibilityToken}}
-{{contentTypeJson}}
+{{drptAuthToken}}
+{{contentJson}}
 
 {
   # "s":"status, count(*)", "f":"bulkRejection","w":"1=1 group by status",
@@ -1870,8 +1870,8 @@ POST {{hostName}}common/process?
 @DAYS_SECOND_MILESTONE=12
 @DAYS_PRELIVE=7
 POST {{hostName}}common/process?
-{{checkEligibilityToken}}
-{{contentTypeJson}}
+{{drptAuthToken}}
+{{contentJson}}
 
 {
   # "r":"select DATEDIFF(CURRENT_TIMESTAMP, ua.mntcCreatedAt) trainingDays, ua.*, ut.completedModuleCount, ut.mandatoryModuleCompletedAt, ut.certAwardedAt, ut.failedModuleInfo from userApplication ua inner join userTraining ut on ua.id = ut.userApplicationId where ua.status in (9,10,12,17,18,19,20) AND ut.certAwardedAt is null AND (ua.mntcCreatedAt < DATE_SUB(CURRENT_DATE, INTERVAL {{DAYS_SECOND_MILESTONE}} DAY) OR  (ua.mntcCreatedAt < DATE_SUB(CURRENT_DATE, INTERVAL {{DAYS_FIRST_MILESTONE}} DAY) AND ua.mntcCreatedAt >= DATE_SUB(CURRENT_DATE, INTERVAL {{DAYS_SECOND_MILESTONE}} DAY) AND ut.completedModuleCount < {{MODS_FIRST_MILESTONE}}) OR ut.failedModuleInfo is not null) LIMIT 55",
@@ -1904,8 +1904,8 @@ POST {{hostName}}common/process?
 
 ### sql deact prelive training deactivations
 POST {{hostName}}common/process?
-{{checkEligibilityToken}}
-{{contentTypeJson}}
+{{drptAuthToken}}
+{{contentJson}}
 
 {
   # "s":"DATEDIFF(CURRENT_TIMESTAMP, ut.preLiveStartedAt) trainingDays, status, ua.id uaId, emcId, profileId, ua.mntcId, ut.missionModuleCompletedAt, ut.missionModuleStatus, ut.missionModuleScore, ut.preLiveStartedAt, ut.preLivecompletedAt, ut.preLiveModuleCount",
@@ -1919,8 +1919,8 @@ POST {{hostName}}common/process?
 
 ### prisma-fix
 POST {{hostName}}common/process?
-{{checkEligibilityToken}}
-{{contentTypeJson}}
+{{drptAuthToken}}
+{{contentJson}}
 
 {
   # "r":"select DATEDIFF(CURRENT_TIMESTAMP, ut.preLiveStartedAt) trainingDays, ua.*, ut.missionModuleCompletedAt, ut.missionModuleStatus, ut.missionModuleScore, ut.preLiveStartedAt, ut.preLiveModuleCount from userApplication ua inner join userTraining ut on ua.id = ut.userApplicationId where ua.status in (21,22,23) AND ut.preLiveStartedAt < date_sub(current_date, interval 9 day) AND ut.preLiveCompletedAt IS NULL",
@@ -1933,7 +1933,7 @@ POST {{hostName}}common/process?
 ###
 ###
 POST {{hostName}}user-application/update-profileId
-{{contentTypeJson}}
+{{contentJson}}
 
 {
   "profileId": 6,

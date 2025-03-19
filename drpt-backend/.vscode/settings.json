@@ -2,14 +2,9 @@
   "rest-client.environmentVariables": {
     "$shared": {
       "version": "v1",
-      "mntcDevHostName": "https://mindtickle.dev-travel.com/api/",
-      "mntcHostName": "https://admin.mindtickle.com/Odata.svc/",
-      "contentTypeJson": "content-type: application/json",
       "createdAt": "{{$datetime iso8601}}",
       "modifiedBy": "{{$processEnv USERNAME}}",
-      "authType": "Authorization: Bearer",
-      "userAgent": "user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36",
-      "apiAuthToken": "dXNlcm5hbWU6ZHJlYW1wb3J0I3Bhc3N3b3JkOnF3ZXJ0eQ=="
+      "drptAuthToken": "dXNlcm5hbWU6ZHJlYW1wb3J0I3Bhc3N3b3JkOnF3ZXJ0eQ=="
     },
     "local": {
       "hostName": "https://dreamport-api.dev-travel.com/api/",
@@ -23,31 +18,31 @@
       "env": "stage"
     },
     "prod": {
-      "apiAuthToken": "dXNlcm5hbWU6ZHJlYW1wb3J0I3Bhc3N3b3JkOlh3ak9xY3lsdHByMmtScw==",
+      "drptAuthToken": "dXNlcm5hbWU6ZHJlYW1wb3J0I3Bhc3N3b3JkOlh3ak9xY3lsdHByMmtScw==",
       "hostName": "https://dreamport-api.asaptickets.com/api/",
       "mntcSpaApp": "https://mtspa.asaptickets.com",
       "env": "prod"
     }
   },
   "workbench.colorCustomizations": {
-    "activityBar.activeBackground": "#d3eb1f",
-    "activityBar.background": "#d3eb1f",
+    "activityBar.activeBackground": "#aab69e",
+    "activityBar.background": "#aab69e",
     "activityBar.foreground": "#15202b",
     "activityBar.inactiveForeground": "#15202b99",
-    "activityBarBadge.background": "#109db0",
+    "activityBarBadge.background": "#3870a7",
     "activityBarBadge.foreground": "#e7e7e7",
     "commandCenter.border": "#15202b99",
-    "sash.hoverBorder": "#d3eb1f",
-    "statusBar.background": "#b0c512",
+    "sash.hoverBorder": "#aab69e",
+    "statusBar.background": "#90a081",
     "statusBar.foreground": "#15202b",
-    "statusBarItem.hoverBackground": "#86960e",
-    "statusBarItem.remoteBackground": "#b0c512",
+    "statusBarItem.hoverBackground": "#768866",
+    "statusBarItem.remoteBackground": "#90a081",
     "statusBarItem.remoteForeground": "#15202b",
-    "titleBar.activeBackground": "#b0c512",
+    "titleBar.activeBackground": "#90a081",
     "titleBar.activeForeground": "#15202b",
-    "titleBar.inactiveBackground": "#b0c51299",
+    "titleBar.inactiveBackground": "#90a08199",
     "titleBar.inactiveForeground": "#15202b99"
   },
-  "peacock.color": "#b0c512",
+  "peacock.color": "#90a081",
   "postman.settings.dotenv-detection-notification-visibility": false
 }

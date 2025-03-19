@@ -80,7 +80,7 @@
     "description": ""
   },
 
-  //   start events
+ //   start events
   "@todo": {
     "scope": "typescript, javascript",
     "prefix": "todo",
@@ -293,17 +293,13 @@
   "this.logger.logErr": {
     "scope": "typescript",
     "prefix": "spv.logErr",
-    "body": [
-      "this.logger.logErr(`$1 message: ${error.message}`, {error, $2});$3"
-    ],
+    "body": ["this.logger.logErr(`$1 message: ${error.message}`, {error, $2});$3"],
     "description": "Log output to kibana"
   },
   "this.logger.logItErr": {
     "scope": "typescript",
     "prefix": "spv.logItErr",
-    "body": [
-      "this.logger.logItErr(`$1 message: ${error.message}`, {error, $2});$3"
-    ],
+    "body": ["this.logger.logItErr(`$1 message: ${error.message}`, {error, $2});$3"],
     "description": "Log output to kibana"
   },
   "this.logger.log('fn')": {
@@ -352,7 +348,11 @@
   "prisma-seed-package": {
     "scope": "json",
     "prefix": "prisma-seed-package",
-    "body": ["\"prisma\": {", "  \"seed\": \"ts-node prisma/seed.ts\"", "},"],
+    "body": [
+      "\"prisma\": {",
+      "  \"seed\": \"ts-node prisma/seed.ts\"",
+      "},",
+    ],
     "description": ""
   },
 
@@ -394,7 +394,9 @@
   "cc": {
     "scope": "typescript, javascript",
     "prefix": "cc",
-    "body": ["${1/([^,]+)([,\\s]*|)/console.log(`$1`, $1)\n/g}"],
+    "body": [
+      "${1/([^,]+)([,\\s]*|)/console.log(`$1`, $1)\n/g}",
+    ],
     "description": "short console log"
   },
 
@@ -402,7 +404,7 @@
     "scope": "typescript, javascript",
     "prefix": "afn",
     "body": [
-      "${1/([^,]+)([,\\s]*|)/async $1(){\n  try {\n  } catch (error: any) {\n  }\n}\n/g}"
+      "${1/([^,]+)([,\\s]*|)/async $1(){\n  try {\n  } catch (error: any) {\n  }\n}\n/g}",
     ],
     "description": "Initialize Class"
   },
@@ -415,24 +417,30 @@
       "  private readonly logger: LoggerService,",
       "){",
       "  this.logger.setContext(this.constructor.name);",
-      "}"
+      "}",
     ],
     "description": "Initialize Class"
   },
 
   "tab": {
     "prefix": "tab",
-    "body": ["tab"],
+    "body": [
+      "tab"
+    ],
     "description": "Initialize Class"
   },
+
 
   // GO
   "log-info": {
     "scope": "go",
     "prefix": "log-info",
-    "body": ["log.FromCtx(ctx).Info(\"$1\")"],
+    "body": [
+      "log.FromCtx(ctx).Info(\"$1\")",
+    ],
     "description": "Initialize Class"
   },
+
 
   // regexp
   "regex timestamp to db": {
@@ -449,7 +457,9 @@
   "spv.teams generate links": {
     "scope": "",
     "prefix": "teams generate links",
-    "body": ["[$1](https://$2)"],
+    "body": [
+      "[$1](https://$2)"
+    ],
     "description": ""
   },
   "spv.emc profile link": {
@@ -461,7 +471,7 @@
     ]
   },
   // #endregion teams-tempalate
-
+  
   "spv.mysql docker restore dump": {
     "scope": "",
     "prefix": "mysql docker restore dump",
@@ -471,7 +481,7 @@
   },
 
   // #region go
-  "spv.go.main": {
+    "spv.go.main": {
     "scope": "",
     "prefix": "go main",
     "body": [
@@ -488,4 +498,5 @@
     ]
   }
   // #endregion go
+
 }

@@ -423,18 +423,7 @@ POST {{hostName}}emc/emc-update-dev
 
 {
   "userIds": [
- 424117,
-424118,
-424119,
-424416,
-426016,
-446724,
-447876,
-448135,
-448138,
-448139,
-448160,
-448193
+    199199
   ]
 }
 ###
@@ -537,8 +526,9 @@ Post {{hostName}}common/encrypt
   # &key=MAX_EMC_ID_LISTEN_CUTOFF_MBSR
   # &key=TEAMS_NOTIFY_EMAIL_TEMPLATE_LAST_USED_INFO
   # &key=PAUSE_EXECUTE_AMRS_DEACTIVATION
-  &key=ENABLE_HRMEC_DB_OVER_HRM
-  # &val=1
+  # &key=ENABLE_HRMEC_DB_OVER_HRM
+  &key=PAUSE_REVIEW_INVITE
+  &val=0
   # &exp=1
   # &def=false
 
@@ -724,11 +714,12 @@ POST {{hostName}}reject-reason
 # @pattern = DreamPort:EMC:UPDATE_USER_ID:*
 # @pattern = DreamPort:flags:*
 # @pattern = DreamPort:EMC:UPDATE_USER_ID:313686
+@patternReviewInvite = DreamPort:REVIEW_INVITE:LAST_RAN_INFO
 ###
 {{hostName}}util/get-cache?key=DreamPort:REVIEW_INVITE:LAST_RAN_INFO
 
 ###
-# {{hostName}}util/del-cache?key={{pattern}}
+{{hostName}}util/del-cache?key={{patternReviewInvite}}
   # &r=true
 ###
 {{hostName}}util/keys-cache?pattern=*
@@ -1964,11 +1955,11 @@ Authorization: Bearer dXNlcm5hbWU6c2FwI3Bhc3N3b3JkOmRyZWFtcG9ydA==
   ?{{devKey}}
   # &email=bunciuc.tatiana@gmail.com
   # &email=dontu.eugen@gmail.com
-  # &email=surjeetindia@gmail.com
+  &email=surjeetindia@gmail.com
   # hrmec blacklisted
   # &email=sukatiusa.1996@mail.ru
   # hrmec ex-employee
-  &email=ahmedgazar22@yahoo.com
+  # &email=ahmedgazar22@yahoo.com
   # &email=thakur.shikha3005@gmail.com
   # &email=j.smirnovs@dynatech.lv
   # &phone=+37369582082
@@ -1978,6 +1969,7 @@ Authorization: Bearer dXNlcm5hbWU6c2FwI3Bhc3N3b3JkOmRyZWFtcG9ydA==
   # &phone=+917483888605
   # &email=surjeet310142123@gmail.com
   # &phone=919310142121
+  &emcId=1
   # &actor=HR
   # &actor=User
   # &servicesToInclude=DRPT,HRM,SAP
@@ -2198,9 +2190,7 @@ Content-Disposition: form-data; name="profileId"
 
 ###
 @filePath = /home/spv/Downloads/
-@filePath = /home/spv/Pictures/
-@fileName = Dreamport_Data_Policy.pdf
-@fileName = test-image-1.png
+@fileName = Dreamport - Schedule 3 - Compensation - ITM 01-04-2025by notice.pdf
 POST {{hostName}}common/upload-asset
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
@@ -2215,6 +2205,10 @@ Content-Disposition: form-data; name="dynamicName"
 false
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="cdn"
+
+false
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="s3"
 
 true
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
@@ -2251,7 +2245,7 @@ true
 {{hostName}}profile/get-profile?{{dev}}
   &{{skipRole}}
   # &fresh=true
-  &profileId=584593
+  &profileId=51102
 
 
 
@@ -2278,7 +2272,7 @@ Post {{hostName}}profile/index-profiles
 
 {
   "profileIds": [
-    577817
+    51757
   ],
   "delayInSec":1
 }
@@ -2675,6 +2669,85 @@ POST {{hostName}}contract
 
 }
 
+
+
+
+###
+{{hostName}}contract/add-document
+  ?{{skipRole}}
+{{contentJson}}
+
+{
+  "document": "",
+  "profileId": 51757,
+  "profileContractId": 368,
+  "type": "Schedule 3"
+}
+
+
+
+
+
+
+
+
+
+###
+@reviseFilePath = /home/spv/Documents/
+@reviseFileName = Ubuntu Desktop Guide.pdf
+POST {{hostName}}contract/add-revise-document
+  ?{{skipRole}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryReviseDocument
+
+------WebKitFormBoundaryReviseDocument
+Content-Disposition: form-data; name="document"; filename="{{reviseFileName}}"
+Content-Type: application/pdf
+
+< {{reviseFilePath}}{{reviseFileName}}
+------WebKitFormBoundaryReviseDocument
+Content-Disposition: form-data; name="eventTitle"
+
+April 2025: ITM's compensation scheme was updated
+------WebKitFormBoundaryReviseDocument
+Content-Disposition: form-data; name="type"
+
+Schedule 3
+------WebKitFormBoundaryReviseDocument
+Content-Disposition: form-data; name="positionId"
+
+1
+------WebKitFormBoundaryReviseDocument--
+
+
+###
+POST {{hostName}}contract/add-revise-document-profiles
+  ?{{skipRole}}
+{{contentJson}}
+
+{
+  "all": 1,
+  # "profileIds": [
+  #   51672,51349,51670,51676,51668,51706,51708,51697,51726,51727,51686,51728,51729
+  # ],
+  "reviseDocId": 12,
+  "type": "Schedule 3"
+}
+
+
+###
+{{hostName}}contract/process-revise-document
+  ?{{skipRole}}
+  # &limit=1
+
+
+
+
+
+
+
+
+
+
 ###
 {{hostName}}itm/427767
   ?{{skipRole}}
@@ -2940,11 +3013,11 @@ Post {{hostName}}reminder
 # @hostName=https://dreamport-bo-api-3683-feat-drpt-4519-trustpilot-inte-799.do.stage-travel.com/api/
 ###
 {{hostName}}reminder/cron-invite-for-review
-  ?dev=1
+  ?limit=1
 
 ###
-{{hostName}}reminder/get-review-invitation
-  ?puid=eyJpZCI6NTE3MjgsInIiOjJ9
+{{hostName}}reminder/generate-review-invitation
+  ?puid=eyJpZCI6NTE3MjgsInIiOjR9
 
 
 
@@ -3118,6 +3191,8 @@ POST {{hostName}}common/process?
   
   # "r":"update userProfile up inner join userApplication ua on up.id=ua.profileId inner join userTraining ut on ua.profileId = ut.profileId set ua.statusId=23, ut.initRejectAt=null where ua.updatedAt > '2025-02-20' and ua.statusId in (25) and up.stateId = 1  and ua.profileId in ()",
   # "r":"select up.stateId, ua.profileId, ua.statusId, ut.initRejectAt from userProfile up inner join userApplication ua on up.id=ua.profileId inner join userTraining ut on ua.profileId = ut.profileId where ua.updatedAt > '2025-02-20' and ua.statusId in (25) and up.stateId = 1 and ua.profileId in ()",
+
+  "r":"select us.profileId, us.emcId from userProfile up inner join users us on up.id = us.profileId where up.stateId=3 and us.officeEmailUid is null",
 
   {{devKey}}
 }

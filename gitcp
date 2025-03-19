@@ -3,8 +3,10 @@
 # backup all the files
 cd ../my-user-scripts
 cp ~/.bashrc .
-cp ~/.config/Code/User/snippets/surjeet-global-snippet.code-snippets .
-cp ~/.config/Code/User/keybindings.json .
+cp ~/.config/Code/User/snippets/surjeet-global-snippet.code-snippets ~/.config/Code/User/keybindings.json ~/.config/Code/User/settings.json ./vscode/.config/Code/User/.
+
+# create nested directories
+mkdir -p vscode/.config/Code/User
 
 # backup all the request.http and devspace from repo
 cp -r ../drpt-backend-v2/.vscode ../drpt-backend-v2/devspace drpt-backend/.
@@ -12,20 +14,17 @@ cp -r ../drpt-bo-backend-v2/.vscode ../drpt-bo-backend-v2/devspace ../drpt-bo-ba
 cp -r ../mindtickle-v2/.vscode ../mindtickle-v2/devspace mindtickle/.
 cp -r ../mindtickle-analytics/.vscode ../mindtickle-analytics/devspace mindtickle-analytics/.
 
-cd ../drpt-bo-backend
-cd ../mindtickle
-cd ../mindtickle-analytics
 
 
-
-git remote set-url --push origin ssh://git@gitlab.dyninno.net:1022/dreamport/mindtickle-analytics.git
-git remote set-url --add --push origin https://github.com/surjeetindia/mindtickle-analytics.git
+# setting up extra git push url
+git remote set-url --push origin ssh://git@gitlab.dyninno.net:1022/dreamport/mindtickle.git
+git remote set-url --add --push origin https://github.com/surjeetindia/mindtickle.git
 
 git remote get-url --push --all origin
 
 git push --set-upstream origin master
-git remote set-url --delete --push origin ssh://git@gitlab.dyninno.net:1022/dreamport/mindtickle-analytics.git
-git remote set-url --delete --push origin https://github.com/surjeetindia/drpt-backend.git
+git remote set-url --delete --push origin ssh://git@gitlab.dyninno.net:1022/dreamport/mindtickle.git
+git remote set-url --delete --push origin https://github.com/surjeetindia/mindtickle.git
 
 git branch --unset-upstream
 git branch --set-upstream-to=origin/master
@@ -40,8 +39,6 @@ git cp 'updated-files'
 
 
 
-cd ../mindtickle-v2
-git remote add originn https://github.com/surjeetindia/mindtickle.git
 git status
 git checkout master
 git pull
