@@ -21,10 +21,10 @@
 ###
 # @name authorizeToken
 {{hostName}}emc/authorizeToken
-  ?token=4a87f9525812e5c0f69c582e5d304a19
+  ?token=163adc42e7730f550df7b3a4bae272b7
 
 ###
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOjUxNTE4LCJ1YUlkIjozODQ5LCJpYXQiOjE3MzY0MDY4NzMsImV4cCI6MTczNjQyODQ3M30.NFuzo8bP_tUVqKrzIgOFg1RjVm-ekGIllsUXXQIez3s
+# @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOjUxNjQzLCJ1YUlkIjozOTcyLCJpYXQiOjE3NDMwMDg4ODAsImV4cCI6MTc0MzAwODg4Mn0.DQCHuLr8xvj0cu8vJ8KqRP7KWxLGTtwnuXsXXTHC1tk
 @token = {{directAuthToken}}
 # @token = {{authorizeToken.response.body.data.authUser.accessToken}}
 @auth = {{authBearer}} {{token}}
@@ -92,13 +92,16 @@ http://cms.stage-travel.com/login
 
 ###
 {{hostName}}user-application/training-awaited
-Authorization: Bearer dXNlcm5hbWU6ZHJlYW1wb3J0I3Bhc3N3b3JkOlh3ak9xY3lsdHByMmtScw==
+# Authorization: Bearer dXNlcm5hbWU6ZHJlYW1wb3J0I3Bhc3N3b3JkOlh3ak9xY3lsdHByMmtScw==
 
 
 
 ###
 {{hostName}}user-application/profile
 {{auth}}
+###
+https://dreamport-api.dev-travel.com/api/user-application/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOjUxNjQzLCJ1YUlkIjozOTcyLCJpYXQiOjE3NDMwMDk5NDQsImV4cCI6MTc0MzAwOTk0Nn0.rcZbzw6GwfiHnIzyqcnUSGSMrq2fPdJJsbArbB9oVHA
 
 
 
@@ -329,10 +332,15 @@ POST {{hostName}}login
 
 
 
+### 
+# mock social registration
+# 1 get encrypted emailId and put in accessToken
+# 2 get btoa string
+# 3 append in the socialRegUrl
+console.log(btoa('{"email":"surjeet.sapchkactive@gmail.com","accessToken":"f3d78b07b1d9bcd2bb6aead2158e5d8a878bd4beaca147595a6e8ca0fd8aa9e8","firstName":"surjeet","lastName":"sapchkactive","provider":"google"}'))
+# console.log(btoa('{"email":"j.derums@dyninno.com","accessToken":"ffcd57cb820fa0b4857adb0d7ba6565e0bf2ad814808d74e189def33912753fc","firstName":"surjeet","lastName":"sapchkactive","provider":"google"}'))
 ###
-console.log(btoa('{"email":"mayank.gupta@dyninno.in","accessToken":"77959abaf8e72d07ebfcf09875c1e120ae19d4807f8a0eacb6e9e2faf2c462fc","firstName":"mayank test","lastName":"gupta","provider":"google"}'))
-###
-@socialRegAccessToken=eyJlbWFpbCI6Im1heWFuay5ndXB0YUBkeW5pbm5vLmluIiwiYWNjZXNzVG9rZW4iOiI3Nzk1OWFiYWY4ZTcyZDA3ZWJmY2YwOTg3NWMxZTEyMGFlMTlkNDgwN2Y4YTBlYWNiNmU5ZTJmYWYyYzQ2MmZjIiwiZmlyc3ROYW1lIjoibWF5YW5rIHRlc3QiLCJsYXN0TmFtZSI6Imd1cHRhIiwicHJvdmlkZXIiOiJnb29nbGUifQ==
+@socialRegAccessToken=eyJlbWFpbCI6ImouZGVydW1zQGR5bmlubm8uY29tIiwiYWNjZXNzVG9rZW4iOiJmZmNkNTdjYjgyMGZhMGI0ODU3YWRiMGQ3YmE2NTY1ZTBiZjJhZDgxNDgwOGQ3NGUxODlkZWYzMzkxMjc1M2ZjIiwiZmlyc3ROYW1lIjoic3VyamVldCIsImxhc3ROYW1lIjoic2FwY2hrYWN0aXZlIiwicHJvdmlkZXIiOiJnb29nbGUifQ
 ###
 @socialRegUrlWithAccessToken=https://apply.dreamport.me/registration?social_code={{socialRegAccessToken}}
 ###
@@ -418,8 +426,8 @@ Post {{hostName}}login/validate-auth-token
   &devId=surjeetindia@gmail.com
   # &devId=sagarsinghqa.03@gmail.com
   # &devId=shubham.batra17@gmail.com
-  &profileId=51646
-  &clear=1
+  &profileId=595795
+  # &clear=1
 
 ###
 
@@ -442,8 +450,7 @@ Post {{hostName}}login/validate-auth-token
 @uid = 302171502
 # @uid = {{gid}}
 
-
-### CREATE ACCOUNT
+### CREATE-PROFILE
 # @name createAccount
 POST {{hostName}}register/account
 {{contentJson}}
@@ -459,7 +466,8 @@ POST {{hostName}}register/account
   "countryName": "Niue",
   "provider": {{regProvider}},
   # google
-  "accessToken": "{{gAccessToken}}",
+  # "accessToken": "{{gAccessToken}}",
+  "accessToken": "{{encryption.response.body.0}}",
   # "email": "{{gEmail}}",
   # "phone": "+91 9{{uid}}",
   # std
@@ -471,7 +479,7 @@ POST {{hostName}}register/account
     # "email": "surjeet309161740@gmail.com",
     # "phone": "919309161740",
   # specific
-    "email": "uytuyutt@gmail.com",
+    "email": "surjeet.sapchkactive@dyninno.in",
     "phone": "917325725723",
   # "source": "local-dev",
   # "medium": "medium",
@@ -541,8 +549,9 @@ POST {{hostName}}register/cancel-post-registation
   # &email=s.thakur@dyninno.in
   # &phone=+91%2067876-56787
   # &email=ankita.choubey@dyninno.in&phone=+91%2098765-98798
-  # &email=uytuyutt@gmail.com
-  &phone=917325725723
+  &email=surjeet.sapchkactive@dyninno.in
+  &phone=919820032502
+  &positionId=104
   # &email=batta.raghav@gmail.com
   # &phone=915218629816
 
@@ -596,15 +605,19 @@ Post {{hostName}}common/decrypt
 }
 
 ###
+# @name encryption
 Post {{hostName}}common/encrypt?{{dev}}
 {{contentJson}}
 
 {
   "data":[
     # "surjeet{{uid}}@gmail.com"
-    "mayank.gupta@dyninno.in"
+    # "surjeet.sapchkactive@dyninno.in"
+    "j.derums@dyninno.com"
   ]
 }
+###
+{{encryption.response.body.0}}
 ###
 {{hostName}}common/config
   ?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiI0NDg4NjMiLCJ1YUlkIjoiNTY1ODczIiwiaWF0IjoxNzMzNDU1MDU5LCJleHAiOjE3MzM0NzY2NTl9.7QkCVWiuJO1SgcVe08UyNYGUQ_bRPTO0c7YbzyPmkUg
@@ -1745,18 +1758,6 @@ POST {{hostName}}common/process?
 {{contentJson}}
 
 {
-  # "s":"datediff(ua.mntcFailedAt, ua.mntcCreatedAt) trainingDays, datediff(current_timestamp, ua.mntcFailedAt) graceDays, ua.status, ua.profileId, ua.mntcFailedAt uamntcFailedAt, ua.loginName, ua.mntcId, ua.emcId, ut.completedModuleCount, ut.*",
-  # "s":"profileId, emcId, mntcId, status",
-  # "s":"status, count(0)",
-  # "u":"emcId=null",
-  # "s":"datediff(current_date, ua.mntcCreatedAt) trainingDays, ua.mntcCreatedAt, ua.id, profileId, emcId, ua.mntcId, status, completedModuleCount, preLiveModuleCount, failedModuleInfo, passedModuleInfo, ut.updatedAt",
-  # "f":"userTraining ut right join userApplication ua on ut.userApplicationId = ua.id",
-  # "f":"userApplication",
-  # "w":"profileId is null and emcId is not null and status in (2,3,11)",
-  # "w":"status in (9,10,11,12,17,18,19,20,21,22,23) group by status",
-  # "w":"failedModuleInfo is not null and status in (10)",
-  # "w":"emcId in (160708,174674,124551,176477,174674,160708,124551,176477,160708,176477,174674,124551,160708,176477,174674,124551,160708,176477,174674,124551,160708,176477,174674,124551,160708,176477,174674,124551,176477,174674,160708,124551,160708,176477,174674,124551,160708,160708,176477,174674,124551,160708,176477,174674,124551,160708,124551,176477,174674,160708,124551,176477,174674,174674,160708,124551,176477,174674,160708,124551,176477,174674,160708,124551,176477,160708,174674,160708,124551,176477,174674,160708,124551,176477,160708,174674,124551,176477,124551,176477,176477,124551,176477,124551,124551,176477,124551)",
-
   # get the profileIds statuswise
   # "s":"datediff(current_date, mntcCreatedAt) trainingDays, id, profileId, emcId, mntcId", 
   # "s":"status, count(1) cnt, group_concat(profileId) PUB_pids, group_concat(emcId) emcIds, group_concat(mntcId) mntcIds",
@@ -1783,13 +1784,12 @@ POST {{hostName}}common/process?
   # "w":"status between 9 and 20 and status <> 13 and lastSynchedAt between date_sub(current_date, interval 5 day) and date_sub(current_date, interval 4 day)",
   # "w":"status between 21 and 24 and preLiveModuleCount > 0 and lastSynchedAt > '2024-10-26' and lastSynchedAt < '2024-10-31'",
 
-  # "r":"select emcId, status from userApplication ua where status in (3,4,6,9,10,11,17,18,19,20,21,22,23,31,32,33,34) and emcId is not null order by emcId asc",
-
   # "r":"select counter, date_format(updatedAt, '%y-%m-%d') dd, count(*) from looker where counter > 10 and createdAt > '2025-01-01' group by counter, dd",
   # "r":"select * from looker where counter > 1 and createdAt > '2025-02-12'",
   # "r":"delete from lookerEvents where eventAt < '2025-01-01'",
+
   # "r":"select id from userApplication where profileId in (521125,522843,522847,522849,522851,522853,522855,522861,522997,523011,523937,531299,532411,532413)",
-  # "r":"select * from userApplication where loginName = 'pk147'",
+  "r":"select status, count(*), group_concat(profileId) pids, count(profileId) pidc, group_concat(emcId) eids, count(emcId) eidc from userApplication where mntcId is null and status in (6,9,10,11,12,13,17,18,19,20,21,22,23,24) group by status",
   
   # "l": "10",
   {{devKey}}
@@ -1974,3 +1974,4 @@ setInterval(()=>fetch('https://dreamport-api.asaptickets.com/api/user-applicatio
   # &hrmIds=222508,222612
   # &emcIds=152759
 
+###

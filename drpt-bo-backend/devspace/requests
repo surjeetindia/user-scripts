@@ -92,10 +92,10 @@ Post {{hostName}}emc/gen-jwt
   &details=false
 ###
 {{hostName}}emc/get-users?{{dev}}
-  # &version=19
-  &ids=424117,424118,424119,424416,426016,436057,436118,436906,441718,445996,446673,446724,446958,447416,449510,452675,456308,456511,457946,458063,458655,458759,460669,461330,461032,461048,461967,461696,461720
+  &version=19
+  &ids=424117,424118,424119,424416,426016,436057,436118
   # &ids=295754,379370,379371,379623,379624,392601,392643,389809,392539,392701,391015,391021,391081,392553,392709
-  # &showDeactivated=full
+  &showDeactivated=full
 
 
 ###
@@ -524,11 +524,12 @@ Post {{hostName}}common/encrypt
   # &key=pause_execute_amrs
   # &key=ENABLE_CHECK_BLACKLIST_SAP
   # &key=MAX_EMC_ID_LISTEN_CUTOFF_MBSR
-  # &key=TEAMS_NOTIFY_EMAIL_TEMPLATE_LAST_USED_INFO
+  &key=TEAMS_NOTIFY_EMAIL_TEMPLATE_LAST_USED_INFO
   # &key=PAUSE_EXECUTE_AMRS_DEACTIVATION
   # &key=ENABLE_HRMEC_DB_OVER_HRM
   # &key=PAUSE_REVIEW_INVITE
-  # &val=0
+  # &key=UPDATE_REVISE_DOCUMENT
+  # &val=1
   # &exp=1
   # &def=false
 
@@ -782,12 +783,24 @@ Post {{hostName}}util/set-cache
 {{hostName}}util/env?{{dev}}
 
 ###
+# enable DEBUG by adding new env entry
+# get debug mode status if no key passed
+# only after the debug is enabled sub will be available and work 
+{{hostName}}util/debug
+  ?{{dev}}
+  &key=ENV
+
+###
+# adds entry to env
 {{hostName}}util/set-env
   ?{{dev}}
   # &key=CC_EMC_ELASTIC_SEARCH_USER_CACHE_NODE&val=http://elk01sttr.stage-travel.com:80
   # &key=CC_EMC_ELASTIC_SEARCH_USER_CACHE_USER&val=emc
   # &key=CC_EMC_ELASTIC_SEARCH_USER_CACHE_PASS&val=JooslocNetvej4
-  &key=NODE_ENV&val=stage
+  # &key=NODE_ENV&val=stage
+  # &key=DEBUG&val=true
+  &key=DEBUG_ENV&val=true
+  # &del=1
 
 
 
@@ -1465,6 +1478,7 @@ POST {{hostName}}mntc/get-user-training-data
 ###
 POST {{hostName}}mntc/cron-sync-training-performance
 # POST {{hostName}}mntc/cron-sync-training-prelive-performance
+# POST {{hostName}}mntc/cron-sync-training-prelive-performance
 {{contentJson}}
 
 {
@@ -1609,8 +1623,8 @@ POST {{hostName}}mntc/verify-module-progress?{{dev}}
 ###
 {{hostName}}profile/delete-account
   ?{{dev}}
-  # &email=shubham.batra17@gmail.com
-  &email=surjeetindia@gmail.com
+  &email=shubhambatra6393@gmail.com
+  # &email=surjeetindia@gmail.com
   # &email=surjeetx@gmail.com
   # &email=sagarsinghqa.03@gmail.com
   # &email=ahmedgazar22@yahoo.com
@@ -1738,7 +1752,7 @@ POST {{hostName}}profile/init-reject
 {{contentJson}}
 
 {
-  "profileId": 369871,
+  "profileId": 51762,
   # "appStatusId": 13,
   # "rejectReasonId": 22,
   # "reason": "Training failed",
@@ -1951,11 +1965,22 @@ Authorization: Bearer dXNlcm5hbWU6c2FwI3Bhc3N3b3JkOmRyZWFtcG9ydA==
   # &phoneUid=918909630099
   &phoneUid=PZXGFTX3UEE
 ###
-{{hostName}}profile/check-eligibility
+{{hostName}}json/check-eligibility
   ?{{devKey}}
+  &positionId=104
+  # &email=indiadyninno.qa01@gmail.com
+  &emailUid=J37ZI3G22KN
+  # &phone=919820032501
+  # &phoneUid=F9VACPWYZDL
+  &phoneUid=R79AUZZUMBS
+###
+{{hostName}}profile/check-eligibility
+  ?{{devKey}} 
+  &positionId=104
   # &email=bunciuc.tatiana@gmail.com
   # &email=dontu.eugen@gmail.com
-  &email=surjeetindia@gmail.com
+  # &email=surjeetindia@gmail.com
+  &email=surjeet.sapchkactive@gmail.com
   # hrmec blacklisted
   # &email=sukatiusa.1996@mail.ru
   # hrmec ex-employee
@@ -1969,8 +1994,8 @@ Authorization: Bearer dXNlcm5hbWU6c2FwI3Bhc3N3b3JkOmRyZWFtcG9ydA==
   # &phone=+917483888605
   # &email=surjeet310142123@gmail.com
   # &phone=919310142121
-  &emcId=1
-  # &actor=HR
+  # &emcId=1
+  &actor=HR
   # &actor=User
   # &servicesToInclude=DRPT,HRM,SAP
   # &servicesToInclude=SAP
@@ -1981,10 +2006,9 @@ Authorization: Bearer dXNlcm5hbWU6c2FwI3Bhc3N3b3JkOmRyZWFtcG9ydA==
 ###
 {{hostName}}profile/emc-linked-info?
   # &dev=1
-  &term=6106
+  &term=112770
   # &term=u100
-  &emcId=6106
-{{checkEligibilityToken}}
+  # &emcId=6106
 
 
 
@@ -2053,8 +2077,8 @@ POST {{hostName}}profile/create-profile
   # "emails": [{ "name": "black.b@gmail.com", "typeId": 1 }],
   # spl
   # "emails": [{ "name": "ahmedgazar22@yahoo.com", "typeId": 1 }],
-  "emails": [{ "name": "sonusysh04@gmail.com", "typeId": 1 }],
-  "phones": [{ "name": "919310142123", "typeId": 1 }],
+  "emails": [{ "name": "sapchkactive.qa01@gmail.com", "typeId": 1 }],
+  # "phones": [{ "name": "919310142123", "typeId": 1 }],
 
   # existing emc user
   # "emcId": 122920,
@@ -2245,7 +2269,7 @@ true
 {{hostName}}profile/get-profile?{{dev}}
   &{{skipRole}}
   # &fresh=true
-  &profileId=51102
+  &profileId=51643
 
 
 
@@ -2272,7 +2296,7 @@ Post {{hostName}}profile/index-profiles
 
 {
   "profileIds": [
-    51757
+    51643
   ],
   "delayInSec":1
 }
@@ -2554,7 +2578,7 @@ POST {{hostName}}advertiser/get-or-create
 ###
 # @name saveEmail
 {{hostName}}ccs/save-email
-  ?email=rtestingravi@gmail.com
+  ?email=sapchkactive.qa01@gmail.com
   # ?email=rtesting{{uid}}@gmail.com
   # ?email=for.testsrz@gmail.com
   # ?email=mayank.sachan@dyninno.in
@@ -2598,7 +2622,7 @@ Post {{hostName}}ccs/get-emails
 ###
 {{hostName}}ccs/save-phone
   # ?phone=923194543338
-  ?phone=918909630099
+  ?phone=919820032502
   # ?phone=918909630093 TOML8FDCP5P
   # ?phone=918909630094 Y9UOBIXWGI9
   # ?phone=918909630095 M4RKLK4ZKMX
@@ -2732,37 +2756,37 @@ other
 ###
 # @hostName=https://dreamport-bo-api-3683-feat-drpt-4584-schedule3-updates-806.do.stage-travel.com/api/
 ###
-@reviseFilePath = /home/spv/Documents/
+@reviseFilePath = /home/spv/Downloads/
 # @reviseFileName = Ubuntu Desktop Guide.pdf
 @reviseFileName = Dreamport - Schedule 3 - Compensation - ITM 01-04-2025by notice.pdf
-POST {{hostName}}contract/add-revise-document
-  ?{{skipRole}}
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryReviseDocument
+POST {{hostName}}contract/add-revise-document?skipRole=1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
-------WebKitFormBoundaryReviseDocument
+------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="document"; filename="{{reviseFileName}}"
 Content-Type: application/pdf
 
 < {{reviseFilePath}}{{reviseFileName}}
-------WebKitFormBoundaryReviseDocument
+------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="eventTitle"
 
 April 2025: ITM's compensation scheme was updated
-------WebKitFormBoundaryReviseDocument
+------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="type"
 
 Schedule 3
-------WebKitFormBoundaryReviseDocument
+------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="positionId"
 
 1
-------WebKitFormBoundaryReviseDocument--
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
 
 
 ###
 {{hostName}}contract/get-revise-document
   ?{{skipRole}}
-  &documentId=19
+  &documentId=1
   
 ###
 POST {{hostName}}contract/cancel-revise-document
@@ -2770,19 +2794,18 @@ POST {{hostName}}contract/cancel-revise-document
 {{contentJson}}
 
 {
-  "docId": 12
-}
-###
-POST {{hostName}}contract/add-revise-document-profiles
+  # &limit=500
+  # "docId": 12
+  # &limit=500POST {{hostName}}contract/add-revise-document-profiles
   ?{{skipRole}}
 {{contentJson}}
 
 {
   # "all": 1,
   "profileIds": [
-    51672,51349,51670,51676,51668,51706,51708,51697,51726,51727,51686,51728,51729
+    
   ],
-  "reviseDocId": 19,
+  "reviseDocId": 1,
   "type": "Schedule 3"
 }
 
@@ -2790,7 +2813,7 @@ POST {{hostName}}contract/add-revise-document-profiles
 ###
 {{hostName}}contract/process-revise-document
   ?{{skipRole}}
-  # &limit=1
+  # &limit=150
 
 
 
@@ -2820,7 +2843,7 @@ POST {{hostName}}sap/is-employee?{{dev}}
   # &email=s.thakur@dyninno.in
   # &email=surjeet.verma@dyninno.in
   # &email=thakur.shikha3005@gmail.com
-  &email=mayank.gupta@dyninno.in
+  # &email=mayank.gupta@dyninno.in
   # &email=armaansharma4567@gmail.com
   # &email=salmakhabiry@yahoo.com
   # &email=dontu.eugen@gmail.com
@@ -2846,7 +2869,7 @@ POST {{hostName}}sap/is-blacklisted
 {{hostName}}hrmec/ping
 ###
 {{hostName}}hrmec/get-profile-by-id
-  ?profileId=200372
+  ?profileId=51643
 ###
 POST {{hostName}}hrmec/check-blacklisted-by-creds
 {{contentJson}}
@@ -3060,7 +3083,7 @@ Post {{hostName}}reminder
 ###
 {{hostName}}reminder/get-sent-reminders
   ?dev=1
-  &profileId=406933
+  &profileId=583063
 
 ###
 # @hostName=https://dreamport-bo-api-3683-feat-drpt-4519-trustpilot-inte-799.do.stage-travel.com/api/
@@ -3237,11 +3260,8 @@ POST {{hostName}}common/process?
   # "r":"select ua.* from userPosition up inner join userApplication ua on up.appId = ua.appId where positionId in (3,5) and statusId not in (-3,-2,5) and endedAt is null order by up.id desc limit 10",
 
   # "r":"select  id.country, id.taxCountry, id.residenceCountry, id.physicalCountry, count(0) from itmDetails id group by id.country, id.taxCountry, id.residenceCountry, id.physicalCountry",
-  # "r":"update userTraining set failedModuleInfo=null where mntcId in ()",
+  # "r":"select userTraining set failedModuleInfo=null where mntcId in ()",
   # "r":"select count(0), group_concat(id) from userProfile up where id in (577249,577411,577545,577347,577509,577343,577479,577355,577607,577421,577475,576121,577371,577609,577369,577527,577655,577451,577551,577467,577567,577533,577415,577639,577569,577465,577393,577521,577631,577557,577341,577473,577447,577615,577339,577493,577489,577671,577435,577593,577337,577505,577477,577439,577531,577623,577417,577651,577673,577459,577653,577401,577553,577469) and up.stateId = 1",
-
-  # "r":"update userProfile up inner join userApplication ua on up.id=ua.profileId inner join userTraining ut on ua.profileId = ut.profileId set ua.statusId=23, ut.initRejectAt=null where ua.updatedAt > '2025-02-20' and ua.statusId in (25) and up.stateId = 1  and ua.profileId in ()",
-  # "r":"select up.stateId, ua.profileId, ua.statusId, ut.initRejectAt from userProfile up inner join userApplication ua on up.id=ua.profileId inner join userTraining ut on ua.profileId = ut.profileId where ua.updatedAt > '2025-02-20' and ua.statusId in (25) and up.stateId = 1 and ua.profileId in ()",
 
   # User office email is null
   # "r":"select us.profileId, us.emcId from userProfile up inner join users us on up.id = us.profileId where up.stateId=3 and us.officeEmailUid is null",
@@ -3251,7 +3271,10 @@ POST {{hostName}}common/process?
 
   # "r":"select ua.statusId, count(distinct up.id), group_concat(up.id) pids, group_concat(us.mntcId) mids from userProfile up inner join userApplication ua on up.id = ua.profileId inner join users us on up.id = us.profileId and us.status=1 where up.id in (575055,576569,587127,595123,595533,598927,600265,604559,605327,605361,605321,606733,607357) group by ua.statusId",
 
-  "r":"select up.id profileId, up.stateId, uid from userEmails ue inner join userProfile up on ue.profileId = up.id where stateId=3 and isPrimary=1 and uid in ('B2K9BMM7O0A','Z9A8ZD261HT')",
+  # "r":"select up.id profileId, up.stateId, uid from userEmails ue inner join userProfile up on ue.profileId = up.id where stateId=3 and isPrimary=1 and uid in ('B2K9BMM7O0A','Z9A8ZD261HT')",
+
+  # "r":"select * from users where mntcId in ('1834206624399908864','1807003676194230272','1542879717134344192','1651324952708947968','1838976686348894208','1811317146336731136')",
+  "r":"select * from userApplication where statusId = 32 and nickName is not null",
   {{devKey}}
 }
 
@@ -3541,3 +3564,4 @@ Authorization: Bearer sntryu_cb11c7c3734613cba9130502973619c8c3d75e96b4e3318c0e0
   "status": "in_progress"
   # "status": "ok"
 }
+###

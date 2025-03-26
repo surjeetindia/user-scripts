@@ -31,13 +31,13 @@ pipeline-manager access-desc dataset | grep drpt
 pipeline-manager dataset-desc mnta_module
 # pipeline-manager dataset-desc mnta_user_status_log
 # pipeline-manager dataset-desc mnta_certificate
-# pipeline-manager dataset-desc mnta_performance
+pipeline-manager dataset-desc mnta_performance
 # pipeline-manager dataset-desc mnta_performance_log
 # pipeline-manager dataset-desc mnta_user_series
 # pipeline-manager dataset-desc mnta_user
-pipeline-manager dataset-desc drpt_live_training
-pipeline-manager dataset-desc drpt_contract
-pipeline-manager dataset-desc drpt_user_language
+# pipeline-manager dataset-desc drpt_live_training
+# pipeline-manager dataset-desc drpt_contract
+# pipeline-manager dataset-desc drpt_user_language
 
 
 ===========================================
@@ -50,12 +50,12 @@ pipeline-manager dataset-sample mnta_module sys_import_date
 # pipeline-manager dataset-sample mnta_user_group sys_import_date
 # pipeline-manager dataset-sample mnta_user_series sys_import_date
 # pipeline-manager dataset-sample mnta_certificate sys_import_date
-# pipeline-manager dataset-sample mnta_performance sys_import_date
+pipeline-manager dataset-sample mnta_performance sys_import_date
 # pipeline-manager dataset-sample mnta_performance_log created_at
 # pipeline-manager dataset-sample mnta_user sys_import_date
 # pipeline-manager dataset-sample mnta_user_status_log sys_import_date
-pipeline-manager dataset-sample drpt_live_training sys_import_date
-pipeline-manager dataset-sample drpt_contract sys_import_date
+# pipeline-manager dataset-sample drpt_live_training sys_import_date
+# pipeline-manager dataset-sample drpt_contract sys_import_date
 
 
 ===========================================
@@ -95,11 +95,11 @@ pipeline-manager dataset-create ../drpt-backend-v2/documents/looker/drpt_live_tr
 # adding column
 # pipeline-manager dataset-column-add mnta_performance_log added_on "timestamp"
 # pipeline-manager dataset-column-add mnta_performance_log result "VARCHAR(50)"
-pipeline-manager dataset-column-add drpt_user_info preferred_language "VARCHAR(2)"
+pipeline-manager dataset-column-add mnta_user uname "VARCHAR(20)"
 
 ===========================================
 # updating columns
-pipeline-manager dataset-column-change drpt_live_training module_name "VARCHAR(250)"
+pipeline-manager dataset-column-change mnta_user uname "VARCHAR(50)"
 # pipeline-manager dataset-column-change drpt_live_training module_name "NUMERIC(4,2)"
 # pipeline-manager dataset-column-change drpt_live_training user_application_id "INTEGER"
 pipeline-manager dataset-desc drpt_live_training

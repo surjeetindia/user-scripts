@@ -113,7 +113,7 @@
   "editor.minimap.maxColumn": 60,
   "editor.minimap.renderCharacters": false,
   "editor.minimap.autohide": true,
-  "editor.lineHeight": 2.25,
+  "editor.lineHeight": 2.5,
   "javascript.preferences.importModuleSpecifier": "relative",
   "typescript.preferences.importModuleSpecifier": "relative",
   "prisma.showPrismaDataPlatformNotification": false,

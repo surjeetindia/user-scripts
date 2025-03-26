@@ -10,16 +10,16 @@
 // working stage
 
 @trainingSeriesClause=SeriesId eq '{{trainingSeriesId}}'
+@trainingSeriesEsClause=SeriesId eq '{{trainingSeriesIdEs}}'
 @hasStarted=HasStarted eq 'True'
 @hasCompleted=HasCompleted eq 'True'
-@trainingSecondModuleClause=ModuleId eq '{{trainingSecondModuleId}}'
+@trainingSecondModuleClause=ModuleId eq '{{trainingFirstModuleId}}'
 @trainingT1ModuleClause=ModuleId eq '{{trainingT1ModuleId}}'
 @trainingT2ModuleClause=ModuleId eq '{{trainingT2ModuleId}}'
 @trainingT3ModuleClause=ModuleId eq '{{trainingT3ModuleId}}'
 @trainingILTModuleIdClause=ModuleId eq '{{trainingILTModuleId}}'
 @trainingGKModuleClause=ModuleId eq '{{trainingGKModuleId}}'
 @trainingMandatoryModule=({{trainingSecondModuleClause}} or {{trainingT1ModuleClause}} or {{trainingT2ModuleClause}} or {{trainingT3ModuleClause}} or {{trainingGKModuleClause}})
-# @certModuleClause=ModuleId eq '{{certModuleId}}'
 @preliveFirstModuleClause=ModuleId eq '{{preliveFirstModuleId}}'
 @preliveMissionModuleClause=ModuleId eq '{{preliveMissionModuleId}}'
 @preliveLastModuleClause=ModuleId eq '{{preliveLastModuleId}}'
@@ -95,7 +95,7 @@ Post {{hostName}}performance/cron-sync-learner-performance
 
 {
   # "next": "$format=json_compact&$pagination=true&$top=1",
-  "next": "$format=json_compact&$pagination=true&$filter=(ModuleId eq '525977373275878562' or ModuleId eq '1797658939935482083' or ModuleId eq '1821903969560004930' or ModuleId eq '1808492620947993201' or ModuleId eq '1694688980808204531' or ModuleId eq '1864979629839663358' or ModuleId eq '1537431395982263244' or ModuleId eq '1729620727639998333' or ModuleId eq '1882772414451620846' or ModuleId eq '1882773260937355287' or ModuleId eq '1887427393256611315' or ModuleId eq '1887430416491703385') and LastUpdatedTimestamp ge '2025-02-20 00:00:00'",
+  # "next": "$format=json_compact&$pagination=true&$filter=(ModuleId eq '525977373275878562' or ModuleId eq '1797658939935482083' or ModuleId eq '1821903969560004930' or ModuleId eq '1808492620947993201' or ModuleId eq '1694688980808204531' or ModuleId eq '1864979629839663358' or ModuleId eq '1537431395982263244' or ModuleId eq '1729620727639998333' or ModuleId eq '1882772414451620846' or ModuleId eq '1882773260937355287' or ModuleId eq '1887427393256611315' or ModuleId eq '1887430416491703385') and LastUpdatedTimestamp ge '2025-02-20 00:00:00'",
   # "syncDays": 1,
   "userIds": [
 # "1881241421665091584"
@@ -143,9 +143,9 @@ POST {{hostName}}cert/get-training-series-cert
 
 ###
 
-POST {{hostName}}series/sync-series
+POST {{hostName}}performance/sync-series
 ###
-POST {{hostName}}series/sync-modules
+POST {{hostName}}performance/sync-modules
 
 
 
@@ -165,8 +165,9 @@ POST {{hostName}}performance/training-performance
 
 {
   # "prelive": true,
+  # "langCode": "es",
   "userIds": [
-"1871854402858295296"
+# "1892595363052363776"
   ],
   "uids": [
   #   "1"
@@ -199,11 +200,11 @@ POST {{hostName}}performance/verify-progress
 
 {
   "userIds": [
-    "1844076786813849600"
+    "1892595363052363502"
   ],
   "count": true,
   # "mission": true,
-  "cert": true,
+  # "cert": true,
   "dev": true
 }
 
@@ -213,20 +214,28 @@ POST {{hostName}}performance/verify-module-progress
 
 {
   "userIds": [
-    "1871854402858295296"
+    "1892595363052363502"
   ],
   "moduleIds": [
+    # EN
     # online training modules
-    # "{{trainingSecondModuleId}}",
+    # "{{trainingFirstModuleId}}",
     # "{{trainingT1ModuleId}}",
     # "{{trainingT2ModuleId}}",
     # "{{trainingT3ModuleId}}",
     # "{{trainingGKModuleId}}"
     # prelive training modules
-    "{{preliveMissionModuleId}}",
-    "{{preliveLastModuleId}}"
+    # "{{preliveMissionModuleId}}",
+    # "{{preliveLastModuleId}}"
     # temp
     # "1776228518519777609"
+    # ES
+    # online training modules
+    "{{trainingEsFirstModuleId}}"
+    # "{{trainingEsT1ModuleId}}",
+    # "{{trainingEsT2ModuleId}}",
+    # "{{trainingEsT3ModuleId}}",
+    # "{{trainingEsGKModuleId}}"
   ],
   "db": true,
   {{devKey}}
@@ -250,6 +259,10 @@ POST {{hostName}}performance/reset-performance-update
 
 ###
 {{hostName}}performance/get-default-training-prelive-performance
+  # ?fresh=true
+
+###
+{{hostName}}performance/get-default-training-es-prelive-performance
   # ?fresh=true
 
 
@@ -338,7 +351,15 @@ POST {{hostName}}user/seed-user-ids
 
 {
   "userIds":[
-"213"
+"1892595363052363501",
+"1892595363052363502",
+"1892595363052363503",
+"1892595363052363504",
+"1892595363052363505",
+"1892595363052363506",
+"1892595363052363507",
+"1892595363052363508",
+"1892595363052363776"
   ]
 }
 
@@ -428,6 +449,7 @@ Post {{hostName}}cert/emit-user-recd-cert
 ###
 {{mtHostName}}SeriesCollection?{{FormatAndCounts}}
   # &$filter={{trainingSeriesClause}}
+  &$filter=SeriesId eq '1901921485685146832'
   # &$filter=CreationTime eq '2024-08-01T12:19:26Z'
   # &$filter=SeriesState eq 'published' and IsPublic eq 'True'
 {{authMt}}
@@ -436,7 +458,9 @@ Post {{hostName}}cert/emit-user-recd-cert
 {{mtHostName}}SeriesModules?{{FormatAndCounts}}
   # &$top=1
   # &$filter={{trainingSeriesClause}} and SeriesModuleState eq '{{trainingSeriesClause}}'
-  &$filter={{trainingSeriesClause}}
+  # &$filter=ModuleId eq '1901921978141308190'
+  # &$filter={{trainingSeriesClause}}
+  &$filter={{trainingSeriesEsClause}}
 {{authMt}}
 
 
@@ -473,9 +497,10 @@ Post {{hostName}}cert/emit-user-recd-cert
 
 ###
 {{mtHostName}}Modules?{{FormatAndCounts}}
+  # &$filter=ModuleName eq 'Conocimiento de la industria'
   # &$filter=ModuleState eq 'published'
   # and Certificate eq 'True'
-  &$filter=(ModuleId eq '1753398935644959278' or ModuleId eq '1754902676542395128' or ModuleId eq '1803042093967616408' or ModuleId eq '1803042121621571115' or ModuleId eq '1803898462566222336' or ModuleId eq '1803898331465580679' or ModuleId eq '1776228256400578923' or ModuleId eq '1776228281027008101' or ModuleId eq '1776228300469834833' or ModuleId eq '1826243479511941792' or ModuleId eq '1826243529734457867')
+  # &$filter=(ModuleId eq '1753398935644959278' or ModuleId eq '1754902676542395128' or ModuleId eq '1803042093967616408' or ModuleId eq '1803042121621571115' or ModuleId eq '1803898462566222336' or ModuleId eq '1803898331465580679' or ModuleId eq '1776228256400578923' or ModuleId eq '1776228281027008101' or ModuleId eq '1776228300469834833' or ModuleId eq '1826243479511941792' or ModuleId eq '1826243529734457867')
   # &$filter=ModuleState eq 'published' and (ModuleId eq '1636018608874019812' or ModuleId eq '1765685388983581230' or ModuleId eq '1526901978293431702' or ModuleId eq '1572878489965222314' or ModuleId eq '1562386986221486759' or ModuleId eq '1576911454451910803' or ModuleId eq '1667076553791911155' or ModuleId eq '1530168682366403366' or ModuleId eq '1539201414813982284' or ModuleId eq '1530203191469586028' or ModuleId eq '1572878760233118608' or ModuleId eq '1575801965008152408' or ModuleId eq '1530208502174908343' or ModuleId eq '1531175950609597399' or ModuleId eq '1580870645681606554' or ModuleId eq '1539233505793140658' or ModuleId eq '1577980015323864486' or ModuleId eq '1541443020029688981' or ModuleId eq '1547906251005771827' or ModuleId eq '1590660775512082434' or ModuleId eq '1564944258134055178' or ModuleId eq '1732529065224971855' or ModuleId eq '1537447296067453233' or ModuleId eq '1537431395982263244' or ModuleId eq '1694688980808204531' or ModuleId eq '1753398935644959278' or ModuleId eq '1696496057357372953' or ModuleId eq '1631579770300313840' or ModuleId eq '1631596174682689382' or ModuleId eq '465245417156660147' or ModuleId eq '1784834644105265048' or ModuleId eq '511041230860230601' or ModuleId eq '1783467441075330027' or ModuleId eq '1783468315844512217' or ModuleId eq '1550435352463894161' or ModuleId eq '1635957078405747906' or ModuleId eq '511045294067028720' or ModuleId eq '1783540047957018463' or ModuleId eq '1783806766546699567' or ModuleId eq '511045453333138632' or ModuleId eq '1783556503177738540' or ModuleId eq '1668577760832375353' or ModuleId eq '1666124990351007535' or ModuleId eq '1729840050319742585' or ModuleId eq '1666127147115540009')
   #  or ModuleId eq '1729929062080295725' or ModuleId eq '1664261267520177226' or ModuleId eq '1729620727639998333' or ModuleId eq '1666807441061269300' or ModuleId eq '1651555098625835670' or ModuleId eq '1666817681447969013')
   # &$filter=ModuleState ne 'deleted'
@@ -495,7 +520,8 @@ Post {{hostName}}cert/emit-user-recd-cert
 ###
 {{mtHostName}}LearnerModulePerformancesIncremental?{{FormatAndCounts}}
   &$pagination=true
-  &$filter=(ModuleId eq '525977373275878562' or ModuleId eq '1797658939935482083' or ModuleId eq '1821903969560004930' or ModuleId eq '1808492620947993201' or ModuleId eq '1694688980808204531' or ModuleId eq '1864979629839663358' or ModuleId eq '1537431395982263244' or ModuleId eq '1729620727639998333' or ModuleId eq '1882772414451620846' or ModuleId eq '1882773260937355287' or ModuleId eq '1887427393256611315' or ModuleId eq '1887430416491703385') and LastUpdatedTimestamp ge '2025-02-20 00:00:00'
+  # &$filter=(ModuleId eq '525977373275878562' or ModuleId eq '1797658939935482083' or ModuleId eq '1821903969560004930' or ModuleId eq '1808492620947993201' or ModuleId eq '1694688980808204531' or ModuleId eq '1864979629839663358' or ModuleId eq '1537431395982263244' or ModuleId eq '1729620727639998333' or ModuleId eq '1882772414451620846' or ModuleId eq '1882773260937355287' or ModuleId eq '1887427393256611315' or ModuleId eq '1887430416491703385') and LastUpdatedTimestamp ge '2025-02-20 00:00:00'
+  &$filter={{trainingSeriesEsClause}}
 {{authMt}}
 ###
 {{mtHostName}}LearnerModulePerformancesIncremental?{{FormatAndCounts}}
@@ -504,7 +530,8 @@ Post {{hostName}}cert/emit-user-recd-cert
   # &$filter=LearnerModuleState ne 'deactivated' and HasStarted eq 'True' and SeriesId eq '1526899855350414157' and Date gt '2023-09-25' and LastUpdatedTimestamp gt '2023-09-25T00:00:00Z' and LearnerState eq 'active'
   # &$filter=LastUpdatedTimestamp gt '2024-12-12 00:00:00' and {{trainingSeriesClause}}
   # &$filter=UserId eq '1865148250598293504' and ModuleId eq '1560228671424614153'
-  &$filter=UserId eq '1892933982362337280'
+  &$filter=UserId eq '1864681201575239680'
+  # &$filter=ModuleName eq 'DreamPass Plus - Maximize your earnings' and LearnerState eq 'active' and LearnerModuleState eq 'deactivated'
   # &$filter=(ModuleId eq '525977373275878562' or ModuleId eq '1797658939935482083' or ModuleId eq '1821903969560004930' or ModuleId eq '1808492620947993201' or ModuleId eq '1694688980808204531' or ModuleId eq '1864979629839663358' or ModuleId eq '1537431395982263244' or ModuleId eq '1729620727639998333' or ModuleId eq '1882772414451620846' or ModuleId eq '1882773260937355287' or ModuleId eq '1887427393256611315' or ModuleId eq '1887430416491703385') and LastUpdatedTimestamp ge '2025-02-27 00:00:00'
   # &$filter=ModuleId eq '1800538375974658048' and LastUpdatedTimestamp gt '2025-02-21 00:00:00Z' 
   # &$filter=ModuleId eq '1821903969560004930'
@@ -518,7 +545,7 @@ Post {{hostName}}cert/emit-user-recd-cert
   # &$select=LearnerModuleState,LearnerEmailId,ReattemptNo,HasCompleted,HasStarted,HasFailed,CompletionStatus,LearnerName,ModuleName
   # &$pagination=true
   # &$orderby=ModuleId
-  # &$top=10
+  &$top=1000
   &$orderby=LastUpdatedTimestamp desc
 {{authMt}}
 
