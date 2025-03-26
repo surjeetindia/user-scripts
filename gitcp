@@ -6,14 +6,13 @@ cp ~/.bashrc .
 cp ~/.config/Code/User/snippets/surjeet-global-snippet.code-snippets ~/.config/Code/User/keybindings.json ~/.config/Code/User/settings.json ./vscode/.config/Code/User/.
 
 # create nested directories
-mkdir -p vscode/.config/Code/User
+# mkdir -p vscode/.config/Code/User
 
 # backup all the request.http and devspace from repo
 cp -r ../drpt-backend-v2/.vscode ../drpt-backend-v2/devspace ../drpt-backend-v2/.env drpt-backend/.
 cp -r ../drpt-bo-backend-v2/.vscode ../drpt-bo-backend-v2/devspace ../drpt-bo-backend-v2/.env ../drpt-bo-backend-v2/prisma/seed.ts drpt-bo-backend/.
 cp -r ../mindtickle-v2/.vscode ../mindtickle-v2/.env ../mindtickle-v2/devspace mindtickle/.
 cp -r ../mindtickle-analytics/.vscode ../mindtickle-analytics/.env ../mindtickle-analytics/devspace mindtickle-analytics/.
-
 
 
 
@@ -31,6 +30,7 @@ git branch --unset-upstream
 git branch --set-upstream-to=origin/master
 
 git branch --set-upstream-to=origin/master master
+
 
 
 gst
